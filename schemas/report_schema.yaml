@@ -1,0 +1,33 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: AI-CATIA Run Report
+type: object
+required: [run_id, mode, classifications, feature_results]
+properties:
+  run_id:
+    type: string
+  mode:
+    type: string
+    enum: [user, developer]
+  catia_document:
+    type: string
+  classifications:
+    type: object
+  feature_results:
+    type: array
+    items:
+      type: object
+      required: [feature_id, recipe_id, classification]
+      properties:
+        feature_id:
+          type: string
+        recipe_id:
+          type: string
+        classification:
+          type: string
+          enum: [NATIVE_SUCCESS, GEOMETRY_EQUIVALENT, PARTIAL_SUCCESS, HONEST_FAILURE, UNSUPPORTED]
+        part_update_success:
+          type: boolean
+        verifier_passed:
+          type: boolean
+        notes:
+          type: string

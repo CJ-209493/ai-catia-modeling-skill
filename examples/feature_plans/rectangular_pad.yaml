@@ -1,0 +1,15 @@
+mode: user
+units: mm
+output_dir: outputs/demo_rectangular_pad
+features:
+  - id: base_pad
+    recipe_id: partdesign.rectangular_pad
+    params:
+      part_number: Demo_Rectangular_Pad
+      width: 120
+      height: 80
+      depth: 20
+      center: [0, 0]
+    expected:
+      native_feature: Pad
+      bounding_box: [120, 80, 20]

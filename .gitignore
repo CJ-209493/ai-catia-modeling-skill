@@ -1,0 +1,35 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# CATIA generated artifacts
+*.CATPart
+*.CATProduct
+*.CATDrawing
+*.cgr
+
+# Runtime outputs
+outputs/
+reports/
+logs/
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# Large or sensitive media
+screenshots/
+*.png
+*.jpg
+*.jpeg
+*.mp4
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

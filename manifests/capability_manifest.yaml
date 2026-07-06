@@ -1,0 +1,82 @@
+version: "1.0.0-draft"
+project: ai-catia-modeling-skill
+purpose: recipe_driven_catia_v5_modeling
+default_mode: user
+classification_values:
+  - NATIVE_SUCCESS
+  - GEOMETRY_EQUIVALENT
+  - PARTIAL_SUCCESS
+  - HONEST_FAILURE
+  - UNSUPPORTED
+recipe_status_allowed_user_mode:
+  - stable
+  - verified_repeatable
+  - live_verified_once
+recipe_status_developer_only:
+  - draft
+  - experimental
+  - deprecated
+native_feature_rules:
+  api_call_success_is_not_enough: true
+  part_update_required: true
+  verifier_required: true
+  geometry_equivalent_is_not_native: true
+capabilities:
+  partdesign:
+    pad:
+      status: live_verified_once
+      recipe_ids:
+        - partdesign.rectangular_pad
+    pocket:
+      status: live_verified_once
+    hole:
+      status: live_verified_once
+    counterbore_hole:
+      status: live_verified_once
+    rect_pattern:
+      status: live_verified_once
+    circ_pattern:
+      status: live_verified_once
+    mirror:
+      status: live_verified_once
+      verifier_note: must confirm native Mirror feature
+    shell:
+      status: live_verified_once
+      verifier_note: must confirm native Shell feature and removed face
+    fillet:
+      status: live_verified_once
+    chamfer:
+      status: live_verified_once
+    draft:
+      status: live_verified_once
+    stiffener:
+      status: live_verified_once
+    rib:
+      status: live_verified_once
+    split:
+      status: live_verified_once
+    intersect:
+      status: live_verified_once
+    shaft:
+      status: live_verified_once
+    groove:
+      status: live_verified_once
+    thread:
+      status: live_verified_once
+      caveat: verified CATIA Thread feature, not solid helical geometry
+    solid_loft:
+      status: unsupported
+      caveat: hybrid surface loft is verified; solid multi-section loft needs more work
+    solid_helix_sweep:
+      status: unsupported
+    sheet_metal:
+      status: unsupported
+  knowledgeware:
+    real_param_formula:
+      status: live_verified_once
+  assembly:
+    product_fix_constraint:
+      status: live_verified_once
+    brep_to_brep_constraints:
+      status: unsupported
+      caveat: Product.Position is not Assembly Constraint

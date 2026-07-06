@@ -1,0 +1,33 @@
+version: "1.0.0-draft"
+recipes:
+  - id: partdesign.rectangular_pad
+    title: Rectangular Pad on XY plane
+    domain: partdesign
+    native_feature: Pad
+    status: stable
+    recipe_card: recipes/partdesign/rectangular_pad.yaml
+    runner: runners/partdesign/rectangular_pad_runner.py
+    verifier:
+      - verifiers/feature_tree_verifier.py
+      - verifiers/geometry_verifier.py
+      - verifiers/semantic_classifier.py
+    user_mode_allowed: true
+    tags: [pad, rectangle, sketch, partdesign, base]
+  - id: knowledgeware.real_param_formula
+    title: Real parameter formula
+    domain: knowledgeware
+    native_feature: Formula
+    status: live_verified_once
+    recipe_card: recipes/knowledgeware/real_param_formula.yaml
+    runner: runners/knowledgeware/real_param_formula_runner.py
+    user_mode_allowed: true
+    tags: [formula, parameter, knowledgeware]
+  - id: assembly.product_fix_constraint
+    title: Product mono-element Fix constraint
+    domain: assembly
+    native_feature: Constraints
+    status: live_verified_once
+    recipe_card: recipes/assembly/product_fix_constraint.yaml
+    runner: runners/assembly/product_fix_constraint_runner.py
+    user_mode_allowed: true
+    tags: [assembly, product, constraint, fix]

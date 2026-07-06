@@ -1,0 +1,21 @@
+version: "1.0.0-draft"
+os:
+  required: Windows
+catia:
+  product: CATIA V5
+  automation: COM
+  license_required: true
+python:
+  minimum_version: "3.10"
+packages:
+  pycatia: ">=0.9.6"
+  PyYAML: ">=6.0"
+runtime_outputs:
+  default_dir: outputs
+  gitignored: true
+security:
+  commit_env_files: false
+  commit_api_keys: false
+  commit_catpart_outputs: false
+developer_mode:
+  required_for_recipe_promotion: true

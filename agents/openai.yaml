@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI-CATIA Modeling Skill"
+  short_description: "Recipe-driven CATIA V5 modeling with Codex and pycatia."
+  default_prompt: "Use this draft skill to create a CATIA V5 feature plan from natural language, select verified recipes, run pycatia runners, and report native/partial/unsupported results honestly."

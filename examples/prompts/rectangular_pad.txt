@@ -1,0 +1,1 @@
+Create a CATIA V5 Part named Demo_Rectangular_Pad. On the XY plane, create a centered 120 mm by 80 mm rectangle and pad it 20 mm along +Z. Use a native Pad feature.

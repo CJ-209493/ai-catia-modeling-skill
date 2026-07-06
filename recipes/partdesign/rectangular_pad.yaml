@@ -1,0 +1,45 @@
+id: partdesign.rectangular_pad
+title: Rectangular Pad on XY plane
+domain: partdesign
+native_feature: Pad
+status: stable
+runner: runners/partdesign/rectangular_pad_runner.py
+summary: Create a centered rectangle sketch on PlaneXY and build a native CATIA Pad.
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Rectangular_Pad
+  width:
+    type: number
+    unit: mm
+    required: true
+  height:
+    type: number
+    unit: mm
+    required: true
+  depth:
+    type: number
+    unit: mm
+    required: true
+  center:
+    type: array
+    required: false
+    default: [0, 0]
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Active document may be empty; runner creates a new Part.
+verified_pattern:
+  - create Part document
+  - create Sketch on OriginElements.PlaneXY
+  - draw four rectangle lines
+  - ShapeFactory.AddNewPad(sketch, depth)
+  - Part.Update()
+verification:
+  required_native_feature: Pad
+  part_update_required: true
+  geometry_checks:
+    bounding_box_from_params: [width, height, depth]
+caveats:
+  - This recipe does not add sketch dimensional constraints in v1.0.
+  - This recipe verifies native Pad creation, not downstream edge selection.

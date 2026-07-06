@@ -1,0 +1,17 @@
+id: assembly.product_fix_constraint
+title: Product Fix constraint
+domain: assembly
+native_feature: Constraints
+status: live_verified_once
+runner: runners/assembly/product_fix_constraint_runner.py
+summary: Create a Product, add child components, and create a mono-element Fix constraint.
+parameters:
+  product_number:
+    type: string
+    default: Product_Fix_Constraint
+verification:
+  required_native_feature: Constraints
+  product_update_required: true
+caveats:
+  - Product Fix is verified.
+  - BRep-to-BRep coax/contact constraints are not verified in v1.0.

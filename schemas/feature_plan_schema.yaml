@@ -1,0 +1,28 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: AI-CATIA Feature Plan
+type: object
+required: [mode, units, output_dir, features]
+properties:
+  mode:
+    type: string
+    enum: [user, developer]
+  units:
+    type: string
+    enum: [mm]
+  output_dir:
+    type: string
+  features:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [id, recipe_id, params]
+      properties:
+        id:
+          type: string
+        recipe_id:
+          type: string
+        params:
+          type: object
+        expected:
+          type: object

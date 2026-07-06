@@ -1,0 +1,25 @@
+id: knowledgeware.real_param_formula
+title: RealParam formula
+domain: knowledgeware
+native_feature: Formula
+status: live_verified_once
+runner: runners/knowledgeware/real_param_formula_runner.py
+summary: Create two Real parameters and bind one with a Knowledgeware formula.
+parameters:
+  input_name:
+    type: string
+    default: Input
+  output_name:
+    type: string
+    default: Output
+  input_value:
+    type: number
+    default: 5
+  expression:
+    type: string
+    default: "{input} * 2"
+verification:
+  required_native_feature: Formula
+  part_update_required: true
+caveats:
+  - v1.0 verifies RealParam-to-RealParam formulas, not full sketch-dimension binding.
