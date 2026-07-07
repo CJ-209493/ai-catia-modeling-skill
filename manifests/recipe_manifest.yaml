@@ -1,4 +1,4 @@
-version: 1.0.11-draft
+version: 1.0.12-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -304,6 +304,26 @@ recipes:
   - chamfer
   - selected_edge
   - edge_reference
+  - partdesign
+- id: partdesign.native_split_offset_plane
+  title: Native Split from explicit offset PlaneXY
+  domain: partdesign
+  native_feature: Split
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_split_offset_plane.yaml
+  runner: runners/partdesign/native_split_offset_plane_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.split_offset_plane_ref
+  promoted_from:
+  - partdesign.regression.t18_angled_cut
+  tags:
+  - split
+  - offset_plane
+  - in_work_object
   - partdesign
 - id: partdesign.native_shaft_centerline
   title: Native Shaft with same-sketch CenterLine

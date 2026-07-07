@@ -1,4 +1,4 @@
-version: "1.0.11-draft"
+version: "1.0.12-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -102,6 +102,21 @@ reference_patterns:
       - ordered fillet/chamfer edge grouping remains unpromoted
     promoted_recipe_ids:
       - partdesign.native_chamfer_selected_edge
+  - id: partdesign.split_offset_plane_ref
+    title: Explicit offset plane reference and target Body state for native Split
+    domain: partdesign
+    applies_to: [split]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/split_references.md
+    failure_memory:
+      - failures/regression/t18_angled_cut_unsupported.md
+    verifier_expectations:
+      - native feature tree contains Split after Part.Update
+      - split reference comes from a generated offset PlaneXY reference
+      - Part.InWorkObject is set to the target Body before ShapeFactory.AddNewSplit
+      - arbitrary angled cut plane synthesis remains unpromoted
+    promoted_recipe_ids:
+      - partdesign.native_split_offset_plane
   - id: partdesign.counterbore_hole_point_sketch
     title: Point sketch and COM properties for native counterbore Hole
     domain: partdesign

@@ -1,0 +1,16 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_split_offset_plane
+features:
+  - id: split_1
+    recipe_id: partdesign.native_split_offset_plane
+    params:
+      part_number: Demo_Native_Split_Offset_Plane
+      plate_width: 120
+      plate_height: 80
+      plate_depth: 40
+      split_offset: 20
+      split_side: 0
+    expected:
+      native_feature: Split
+      reference_pattern: partdesign.split_offset_plane_ref

@@ -1,0 +1,60 @@
+id: partdesign.native_split_offset_plane
+title: Native Split from explicit offset PlaneXY
+domain: partdesign
+native_feature: Split
+status: live_verified_once
+runner: runners/partdesign/native_split_offset_plane_runner.py
+summary: Create a base Pad and split it with a generated offset PlaneXY reference after setting Part.InWorkObject to the target Body.
+reference_pattern_ids:
+  - partdesign.split_offset_plane_ref
+source_regression_ids:
+  - partdesign.regression.t18_angled_cut
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Split_Offset_Plane
+  plate_width:
+    type: number
+    unit: mm
+    required: false
+    default: 120
+  plate_height:
+    type: number
+    unit: mm
+    required: false
+    default: 80
+  plate_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 40
+  split_offset:
+    type: number
+    unit: mm
+    required: false
+    default: 20
+  split_side:
+    type: integer
+    required: false
+    default: 0
+    enum_note: CatSplitSide.catPositiveSide
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and base Pad before creating the splitting plane.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad as the split target
+  - create HybridShapeFactory.AddNewPlaneOffset from OriginElements.PlaneXY
+  - create a reference from the generated offset plane
+  - set part.in_work_object = body before ShapeFactory.AddNewSplit
+  - ShapeFactory.AddNewSplit(split_plane_reference, split_side)
+  - native Split exists after Part.Update()
+verification:
+  required_native_feature: Split
+  part_update_required: true
+  required_reference_pattern: partdesign.split_offset_plane_ref
+caveats:
+  - This recipe verifies native Split from an explicit offset PlaneXY reference.
+  - It does not verify arbitrary angled cut plane synthesis.
+  - It does not infer split side from design intent; split_side must be supplied or defaulted.

@@ -1,4 +1,4 @@
-version: "1.0.11-draft"
+version: "1.0.12-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -254,10 +254,16 @@ capabilities:
       failure_card_ids:
         - failures/regression/t07_rib_or_stiffener_unsupported.md
     split:
-      status: unsupported
-      classification: UNSUPPORTED
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_split_offset_plane
+      reference_pattern_ids:
+        - partdesign.split_offset_plane_ref
+      user_mode: executable_runner_available
       failure_card_ids:
         - failures/regression/t18_angled_cut_unsupported.md
+      caveat: constrained native Split is promoted only for generated offset PlaneXY references with explicit target Body InWorkObject state; arbitrary angled cut plane synthesis remains future work
     intersect:
       status: unsupported
       classification: UNSUPPORTED
