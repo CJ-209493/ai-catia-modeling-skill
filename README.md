@@ -9,6 +9,7 @@ Direct Codex + pycatia modeling often fails because CATIA automation is sensitiv
 This project captures working patterns as:
 
 - recipe cards
+- reference selection patterns
 - executable runners
 - verifier logic
 - failure memory
@@ -18,7 +19,9 @@ The goal is not to benchmark CATIA ability. Benchmarking, boundary tests, and me
 
 ## Project Status
 
-This is v1.0 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
+This is v1.0.x draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
+
+The important modeling knowledge is not merely that pycatia exposes a method. Many CATIA APIs are callable while still failing because the selected reference is wrong. For example, native `Shaft` and `Groove` require an explicit revolution axis in the sketch; without that axis, Codex must not claim native success.
 
 ## Requirements
 
@@ -88,6 +91,14 @@ features:
 
 Use `templates/feature_plan_template.yaml` as the starting point.
 
+## Reference Selection Patterns
+
+Before executing a feature, Codex should check `manifests/reference_manifest.yaml` for required reference construction. The first v1.0.1 draft pattern is:
+
+- `partdesign.sketch_revolution_axis`: use for native `Shaft` and `Groove`; create the closed profile and a named construction Line2D revolution axis in the same sketch before calling `add_new_shaft(sketch)` or `add_new_groove(sketch)`.
+
+This pattern is documented in `references/partdesign/sketch_revolution_axis.md`. It is deliberately separate from executable recipe status: knowing the reference pattern does not by itself mean a stable User Mode runner exists.
+
 ## Run a Verified Recipe
 
 ```powershell
@@ -123,6 +134,7 @@ Geometry-equivalent output must not be reported as native CATIA feature success.
 - Solid rect-to-circle multi-section loft is not fully proven.
 - Full 3D rounded-path pipe sweep is not fully proven.
 - Solid helix sweep spring is not fully proven.
+- Shaft and Groove have a documented same-sketch axis reference pattern, but still need promoted executable User Mode recipes before they can be called as stable recipes.
 - Sheet Metal features are not supported in v1.0.
 - Product `Position` is not an assembly constraint.
 - BRep-to-BRep Product constraints are not fully proven.

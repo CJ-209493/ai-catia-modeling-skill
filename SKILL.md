@@ -1,15 +1,17 @@
 ---
 name: ai-catia-modeling-skill
-description: Use when Codex needs to model CATIA V5 parts or products from natural language through pycatia, especially when verified CATIA feature recipes, feature plans, native feature verification, or honest unsupported/failure reporting are required.
+description: Use when Codex needs to model CATIA V5 parts or products from natural language through pycatia, especially when verified CATIA feature recipes, reference selection patterns, native feature verification, or honest unsupported/failure reporting are required.
 ---
 
 # AI-CATIA Modeling Skill
 
-This skill is for Codex + pycatia CATIA V5 modeling. Use it to convert a user's modeling request into a Feature Plan, select verified recipes, execute recipe runners, verify the CATIA feature tree, and report results honestly.
+This skill is for Codex + pycatia CATIA V5 modeling. Use it to convert a user's modeling request into a Feature Plan, select verified recipes, apply required reference selection patterns, execute recipe runners, verify the CATIA feature tree, and report results honestly.
 
 ## Core Rule
 
 Prefer verified recipes and executable runners. Do not generate fresh pycatia code unless no verified recipe exists and Developer Mode is explicitly enabled.
+
+For CATIA features that are callable through pycatia but sensitive to reference construction, treat reference selection as part of the recipe. API availability is not capability.
 
 ## Modes
 
@@ -20,20 +22,28 @@ Prefer verified recipes and executable runners. Do not generate fresh pycatia co
 ## Workflow
 
 1. Parse the user request into a Feature Plan matching `schemas/feature_plan_schema.yaml`.
-2. Search `manifests/recipe_manifest.yaml` for verified recipes.
-3. Execute the matching runner from `runners/`.
-4. Run verifiers from `verifiers/`.
-5. Classify each feature as `NATIVE_SUCCESS`, `GEOMETRY_EQUIVALENT`, `PARTIAL_SUCCESS`, `HONEST_FAILURE`, or `UNSUPPORTED`.
-6. Write a run report matching `schemas/report_schema.yaml`.
+2. Read `manifests/capability_manifest.yaml` and `manifests/reference_manifest.yaml` for required reference selection patterns.
+3. Search `manifests/recipe_manifest.yaml` for verified recipes.
+4. Execute the matching runner from `runners/`.
+5. Run verifiers from `verifiers/`.
+6. Classify each feature as `NATIVE_SUCCESS`, `GEOMETRY_EQUIVALENT`, `PARTIAL_SUCCESS`, `HONEST_FAILURE`, or `UNSUPPORTED`.
+7. Write a run report matching `schemas/report_schema.yaml`.
 
 ## Mandatory Verification Rules
 
 - API call success is not enough. `Part.Update` and verification must pass.
 - Native Shell / Mirror / Circular Pattern / Sheet Metal / Assembly Constraint cannot be claimed unless the verifier confirms a native CATIA feature tree entry.
+- Native `Shaft` and `Groove` require the `partdesign.sketch_revolution_axis` reference pattern unless a recipe documents a stronger verified alternative.
 - `Product.Position` is not an Assembly Constraint.
 - Cosmetic thread is not solid thread.
 - Geometry-equivalent output must be reported as geometry equivalent.
 - Do not claim unsupported features as success.
+
+## Reference Selection Patterns
+
+Reference selection patterns live in `manifests/reference_manifest.yaml` and `references/`. Use them before writing or running any feature that depends on selected axes, faces, edges, profiles, or product references.
+
+For `Shaft` and `Groove`, read `references/partdesign/sketch_revolution_axis.md`. The core rule is: create the closed profile and an explicitly named construction Line2D revolution axis in the same sketch before calling `add_new_shaft(sketch)` or `add_new_groove(sketch)`.
 
 ## Recipe Selection
 
@@ -53,7 +63,9 @@ v1.0 primarily prevents common pycatia call mistakes by routing through known-go
 ## Key Files
 
 - `manifests/recipe_manifest.yaml`: searchable recipe index.
+- `manifests/reference_manifest.yaml`: reference selection patterns that recipes depend on.
 - `recipes/`: recipe cards with status and constraints.
+- `references/`: reusable reference construction notes for fragile CATIA selections.
 - `runners/`: executable pycatia patterns.
 - `verifiers/`: semantic and feature-tree classifiers.
 - `policies/`: native feature, execution, unsupported, and verification rules.

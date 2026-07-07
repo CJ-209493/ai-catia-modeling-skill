@@ -1,4 +1,4 @@
-version: "1.0.0-draft"
+version: "1.0.1-draft"
 recipes:
   - id: partdesign.rectangular_pad
     title: Rectangular Pad on XY plane

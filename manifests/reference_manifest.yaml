@@ -1,0 +1,15 @@
+version: "1.0.1-draft"
+reference_patterns:
+  - id: partdesign.sketch_revolution_axis
+    title: Same-sketch revolution axis for Shaft and Groove
+    domain: partdesign
+    applies_to: [shaft, groove]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/sketch_revolution_axis.md
+    failure_memory:
+      - failures/shaft_without_sketch_axis_not_native.md
+      - failures/groove_without_sketch_axis_not_native.md
+    verifier_expectations:
+      - sketch contains one named construction Line2D used as revolution axis
+      - native feature tree contains Shaft or Groove after Part.Update
+      - geometry-equivalent revolve/pocket approximations are not native success

@@ -1,4 +1,4 @@
-version: "1.0.0-draft"
+version: "1.0.1-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -58,9 +58,17 @@ capabilities:
     intersect:
       status: live_verified_once
     shaft:
-      status: live_verified_once
+      status: reference_pattern_known
+      user_mode: unsupported_without_verified_recipe
+      reference_pattern_ids:
+        - partdesign.sketch_revolution_axis
+      caveat: native Shaft requires an explicit same-sketch construction axis line; pycatia API availability is not enough
     groove:
-      status: live_verified_once
+      status: reference_pattern_known
+      user_mode: unsupported_without_verified_recipe
+      reference_pattern_ids:
+        - partdesign.sketch_revolution_axis
+      caveat: native Groove requires an explicit same-sketch construction axis line plus existing solid context; annular pockets are geometry equivalent
     thread:
       status: live_verified_once
       caveat: verified CATIA Thread feature, not solid helical geometry

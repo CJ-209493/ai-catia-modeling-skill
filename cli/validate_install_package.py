@@ -26,6 +26,7 @@ REQUIRED_DIRS = [
     "recipes",
     "runners",
     "verifiers",
+    "references",
     "policies",
     "failures",
     "cli",
@@ -102,6 +103,21 @@ def validate_skill_package(root):
                         errors.append(f"Recipe {recipe.get('id', '<unknown>')} points to missing {key}: {value}")
     else:
         warnings.append("Missing manifests/recipe_manifest.yaml")
+
+    reference_manifest = root / "manifests" / "reference_manifest.yaml"
+    if reference_manifest.exists():
+        try:
+            manifest = yaml.safe_load(reference_manifest.read_text(encoding="utf-8")) or {}
+        except yaml.YAMLError as exc:
+            errors.append(f"reference_manifest.yaml is invalid YAML: {exc}")
+        else:
+            for pattern in manifest.get("reference_patterns", []):
+                reference_doc = pattern.get("reference_doc")
+                if reference_doc and not (root / reference_doc).exists():
+                    errors.append(f"Reference pattern {pattern.get('id', '<unknown>')} points to missing reference_doc: {reference_doc}")
+                for failure_path in pattern.get("failure_memory", []):
+                    if not (root / failure_path).exists():
+                        errors.append(f"Reference pattern {pattern.get('id', '<unknown>')} points to missing failure memory: {failure_path}")
 
     for path in root.rglob("*"):
         if not path.is_file():
