@@ -1,0 +1,52 @@
+id: partdesign.rounded_rectangle_pad
+title: Native Pad from tangent-arc rounded rectangle sketch
+domain: partdesign
+native_feature: Pad
+status: live_verified_once
+runner: runners/partdesign/rounded_rectangle_pad_runner.py
+summary: Create a closed rounded-rectangle sketch from tangent lines and arcs, then build a native CATIA Pad.
+reference_pattern_ids:
+  - partdesign.tangent_arc_closed_profile
+source_regression_ids:
+  - partdesign.regression.t21_rounded_rectangle_pad
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Rounded_Rectangle_Pad
+  width:
+    type: number
+    unit: mm
+    required: false
+    default: 100
+  height:
+    type: number
+    unit: mm
+    required: false
+    default: 50
+  corner_radius:
+    type: number
+    unit: mm
+    required: false
+    default: 10
+  depth:
+    type: number
+    unit: mm
+    required: false
+    default: 8
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Corner radius must be smaller than half the width and height.
+verified_pattern:
+  - create Part document
+  - create sketch on OriginElements.PlaneXY
+  - draw tangent lines and corner arcs as one closed rounded-rectangle profile
+  - ShapeFactory.AddNewPad(sketch, depth)
+  - Part.Update()
+verification:
+  required_native_feature: Pad
+  part_update_required: true
+  required_reference_pattern: partdesign.tangent_arc_closed_profile
+caveats:
+  - This recipe verifies native Pad creation from a rounded sketch, not sketch constraint completeness.
+  - It does not create a separate native fillet feature.

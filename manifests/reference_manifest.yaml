@@ -1,4 +1,4 @@
-version: "1.0.7-draft"
+version: "1.0.8-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -71,3 +71,68 @@ reference_patterns:
       - manual wall construction is not native shell success
     promoted_recipe_ids:
       - partdesign.native_shell_selected_face
+  - id: partdesign.counterbore_hole_point_sketch
+    title: Point sketch and COM properties for native counterbore Hole
+    domain: partdesign
+    applies_to: [counterbore_hole]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/profile_and_hole_variants.md
+    failure_memory: []
+    verifier_expectations:
+      - native feature tree contains Hole after Part.Update
+      - counterbore uses native Hole type and head diameter/depth properties
+      - pocket-modeled counterbore is not native Hole success
+    promoted_recipe_ids:
+      - partdesign.native_counterbore_holes
+  - id: partdesign.offset_plane_support_ref
+    title: Explicit offset plane support reference for Pad
+    domain: partdesign
+    applies_to: [offset_plane_pad]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/profile_and_hole_variants.md
+    failure_memory: []
+    verifier_expectations:
+      - native feature tree contains Pad after Part.Update
+      - sketch support is a generated offset plane reference
+      - arbitrary support plane inference is not claimed
+    promoted_recipe_ids:
+      - partdesign.offset_plane_pad
+  - id: partdesign.tangent_arc_closed_profile
+    title: Tangent line/arc closed profile for rounded Pad
+    domain: partdesign
+    applies_to: [rounded_rectangle_pad]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/profile_and_hole_variants.md
+    failure_memory: []
+    verifier_expectations:
+      - native feature tree contains Pad after Part.Update
+      - sketch profile is built from tangent line and arc segments
+      - sketch constraint completeness is not overclaimed
+    promoted_recipe_ids:
+      - partdesign.rounded_rectangle_pad
+  - id: partdesign.capsule_profile_native_holes
+    title: Tangent capsule Pad with native point-sketch Holes
+    domain: partdesign
+    applies_to: [capsule_with_native_holes]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/profile_and_hole_variants.md
+    failure_memory: []
+    verifier_expectations:
+      - native feature tree contains Hole after Part.Update
+      - capsule body is a tangent-arc Pad before native Holes
+      - pocket-modeled holes are not native Hole success
+    promoted_recipe_ids:
+      - partdesign.capsule_with_native_holes
+  - id: partdesign.closed_spline_profile
+    title: Closed spline sketch profile for Pad
+    domain: partdesign
+    applies_to: [closed_spline_pad]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/profile_and_hole_variants.md
+    failure_memory: []
+    verifier_expectations:
+      - native feature tree contains Pad after Part.Update
+      - first spline point is repeated as final point
+      - arbitrary spline repair is not claimed
+    promoted_recipe_ids:
+      - partdesign.closed_spline_pad

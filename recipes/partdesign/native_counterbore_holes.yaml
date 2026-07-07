@@ -1,0 +1,68 @@
+id: partdesign.native_counterbore_holes
+title: Native counterbore Holes from point sketches
+domain: partdesign
+native_feature: Hole
+status: live_verified_once
+runner: runners/partdesign/native_counterbore_holes_runner.py
+summary: Create native CATIA counterbore Hole features from point sketches by setting Hole type, drill diameter, head diameter, and head depth.
+reference_pattern_ids:
+  - partdesign.counterbore_hole_point_sketch
+source_regression_ids:
+  - partdesign.regression.t04_native_counterbore_holes
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Counterbore_Holes
+  plate_width:
+    type: number
+    unit: mm
+    required: false
+    default: 120
+  plate_height:
+    type: number
+    unit: mm
+    required: false
+    default: 80
+  plate_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 16
+  positions:
+    type: array
+    required: false
+    default: [[-45, 25], [45, 25], [-45, -25], [45, -25]]
+  diameter:
+    type: number
+    unit: mm
+    required: false
+    default: 6.8
+  head_diameter:
+    type: number
+    unit: mm
+    required: false
+    default: 12
+  head_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 5
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and base Pad before creating the Holes.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad on OriginElements.PlaneXY
+  - create one point sketch per counterbore center
+  - ShapeFactory.AddNewHoleFromSketch(point_sketch, depth)
+  - set hole.type, hole.diameter.value, hole.head_diameter.value, and hole.head_depth.value
+  - Part.Update()
+verification:
+  required_native_feature: Hole
+  part_update_required: true
+  required_reference_pattern: partdesign.counterbore_hole_point_sketch
+caveats:
+  - This recipe verifies native counterbore Hole features, not pocket-modeled counterbore geometry.
+  - Countersink and threaded Hole variants still require separate promotion.
+  - Top/bottom visual direction is not independently measured by the current verifier.

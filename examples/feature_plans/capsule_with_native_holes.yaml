@@ -1,0 +1,16 @@
+mode: user
+units: mm
+output_dir: outputs/demo_capsule_with_native_holes
+features:
+  - id: capsule_holes_1
+    recipe_id: partdesign.capsule_with_native_holes
+    params:
+      part_number: Demo_Capsule_With_Native_Holes
+      half_center_distance: 35
+      capsule_radius: 15
+      pad_depth: 8
+      hole_depth: 20
+      hole_diameter: 10
+    expected:
+      native_feature: Hole
+      reference_pattern: partdesign.capsule_profile_native_holes

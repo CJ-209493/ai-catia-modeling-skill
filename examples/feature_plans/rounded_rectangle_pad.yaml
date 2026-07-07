@@ -1,0 +1,15 @@
+mode: user
+units: mm
+output_dir: outputs/demo_rounded_rectangle_pad
+features:
+  - id: rounded_rectangle_pad_1
+    recipe_id: partdesign.rounded_rectangle_pad
+    params:
+      part_number: Demo_Rounded_Rectangle_Pad
+      width: 100
+      height: 50
+      corner_radius: 10
+      depth: 8
+    expected:
+      native_feature: Pad
+      reference_pattern: partdesign.tangent_arc_closed_profile

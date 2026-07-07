@@ -1,4 +1,4 @@
-version: "1.0.7-draft"
+version: "1.0.8-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -33,10 +33,17 @@ capabilities:
       classification: NATIVE_SUCCESS
       executable_recipe_ids:
         - partdesign.rectangular_pad
+        - partdesign.offset_plane_pad
+        - partdesign.rounded_rectangle_pad
+        - partdesign.closed_spline_pad
       imported_recipe_ids:
         - partdesign.regression.t06_offset_plane_secondary_pad
         - partdesign.regression.t21_rounded_rectangle_pad
         - partdesign.regression.t23_closed_spline_pad
+      reference_pattern_ids:
+        - partdesign.offset_plane_support_ref
+        - partdesign.tangent_arc_closed_profile
+        - partdesign.closed_spline_profile
     pocket:
       status: live_verified_once
       classification: NATIVE_SUCCESS
@@ -50,19 +57,73 @@ capabilities:
       classification: NATIVE_SUCCESS
       executable_recipe_ids:
         - partdesign.native_hole_from_sketch
+        - partdesign.native_counterbore_holes
+        - partdesign.capsule_with_native_holes
       imported_recipe_ids:
         - partdesign.regression.t02_boss_with_native_through_hole
         - partdesign.regression.t03_four_native_holes
         - partdesign.regression.t04_native_counterbore_holes
         - partdesign.regression.t20_unit_conversion_native_hole
         - partdesign.regression.t22_capsule_with_native_holes
+      reference_pattern_ids:
+        - partdesign.counterbore_hole_point_sketch
+        - partdesign.capsule_profile_native_holes
       user_mode: executable_runner_available
     counterbore_hole:
       status: live_verified_once
       classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_counterbore_holes
       imported_recipe_ids:
         - partdesign.regression.t04_native_counterbore_holes
-      user_mode: imported_call_pattern_only
+      reference_pattern_ids:
+        - partdesign.counterbore_hole_point_sketch
+      user_mode: executable_runner_available
+      caveat: countersink and threaded Hole variants remain separate promotion work
+    offset_plane_pad:
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.offset_plane_pad
+      imported_recipe_ids:
+        - partdesign.regression.t06_offset_plane_secondary_pad
+      reference_pattern_ids:
+        - partdesign.offset_plane_support_ref
+      user_mode: executable_runner_available
+      caveat: generated offset PlaneXY support only; arbitrary support-plane inference remains future work
+    rounded_rectangle_pad:
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.rounded_rectangle_pad
+      imported_recipe_ids:
+        - partdesign.regression.t21_rounded_rectangle_pad
+      reference_pattern_ids:
+        - partdesign.tangent_arc_closed_profile
+      user_mode: executable_runner_available
+      caveat: creates native Pad from rounded sketch, not a separate native fillet feature
+    capsule_with_native_holes:
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.capsule_with_native_holes
+      imported_recipe_ids:
+        - partdesign.regression.t22_capsule_with_native_holes
+      reference_pattern_ids:
+        - partdesign.capsule_profile_native_holes
+      user_mode: executable_runner_available
+      caveat: end holes are native Hole features; capsule profile constraints are not fully asserted
+    closed_spline_pad:
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.closed_spline_pad
+      imported_recipe_ids:
+        - partdesign.regression.t23_closed_spline_pad
+      reference_pattern_ids:
+        - partdesign.closed_spline_profile
+      user_mode: executable_runner_available
+      caveat: first point must repeat as final spline point; arbitrary spline repair remains future work
     rect_pattern:
       status: live_verified_once
       classification: NATIVE_SUCCESS

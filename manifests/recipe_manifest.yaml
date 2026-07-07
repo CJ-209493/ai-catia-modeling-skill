@@ -1,4 +1,4 @@
-version: 1.0.7-draft
+version: 1.0.8-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -37,6 +37,48 @@ recipes:
   - sketch
   - point
   - partdesign
+- id: partdesign.native_counterbore_holes
+  title: Native counterbore Holes from point sketches
+  domain: partdesign
+  native_feature: Hole
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_counterbore_holes.yaml
+  runner: runners/partdesign/native_counterbore_holes_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.counterbore_hole_point_sketch
+  promoted_from:
+  - partdesign.regression.t04_native_counterbore_holes
+  tags:
+  - hole
+  - counterbore
+  - sketch
+  - point
+  - partdesign
+- id: partdesign.capsule_with_native_holes
+  title: Capsule Pad with native end Holes
+  domain: partdesign
+  native_feature: Hole
+  status: live_verified_once
+  recipe_card: recipes/partdesign/capsule_with_native_holes.yaml
+  runner: runners/partdesign/capsule_native_holes_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.capsule_profile_native_holes
+  promoted_from:
+  - partdesign.regression.t22_capsule_with_native_holes
+  tags:
+  - hole
+  - capsule
+  - tangent_arc
+  - profile
+  - partdesign
 - id: partdesign.native_slot_pocket
   title: Native slot Pocket from racetrack sketch
   domain: partdesign
@@ -54,6 +96,69 @@ recipes:
   - pocket
   - slot
   - racetrack
+  - sketch
+  - partdesign
+- id: partdesign.offset_plane_pad
+  title: Native Pad from sketch on offset PlaneXY
+  domain: partdesign
+  native_feature: Pad
+  status: live_verified_once
+  recipe_card: recipes/partdesign/offset_plane_pad.yaml
+  runner: runners/partdesign/offset_plane_pad_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.offset_plane_support_ref
+  promoted_from:
+  - partdesign.regression.t06_offset_plane_secondary_pad
+  tags:
+  - pad
+  - offset_plane
+  - support_reference
+  - sketch
+  - partdesign
+- id: partdesign.rounded_rectangle_pad
+  title: Native Pad from tangent-arc rounded rectangle sketch
+  domain: partdesign
+  native_feature: Pad
+  status: live_verified_once
+  recipe_card: recipes/partdesign/rounded_rectangle_pad.yaml
+  runner: runners/partdesign/rounded_rectangle_pad_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.tangent_arc_closed_profile
+  promoted_from:
+  - partdesign.regression.t21_rounded_rectangle_pad
+  tags:
+  - pad
+  - rounded_rectangle
+  - tangent_arc
+  - sketch
+  - partdesign
+- id: partdesign.closed_spline_pad
+  title: Native Pad from closed spline sketch
+  domain: partdesign
+  native_feature: Pad
+  status: live_verified_once
+  recipe_card: recipes/partdesign/closed_spline_pad.yaml
+  runner: runners/partdesign/closed_spline_pad_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.closed_spline_profile
+  promoted_from:
+  - partdesign.regression.t23_closed_spline_pad
+  tags:
+  - pad
+  - spline
+  - closed_profile
   - sketch
   - partdesign
 - id: partdesign.native_rectangular_pattern

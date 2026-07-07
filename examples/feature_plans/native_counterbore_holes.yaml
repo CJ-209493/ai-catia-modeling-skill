@@ -1,0 +1,19 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_counterbore_holes
+features:
+  - id: counterbore_holes_1
+    recipe_id: partdesign.native_counterbore_holes
+    params:
+      part_number: Demo_Native_Counterbore_Holes
+      plate_width: 120
+      plate_height: 80
+      plate_depth: 16
+      positions: [[-45, 25], [45, 25], [-45, -25], [45, -25]]
+      hole_depth: 30
+      diameter: 6.8
+      head_diameter: 12
+      head_depth: 5
+    expected:
+      native_feature: Hole
+      reference_pattern: partdesign.counterbore_hole_point_sketch

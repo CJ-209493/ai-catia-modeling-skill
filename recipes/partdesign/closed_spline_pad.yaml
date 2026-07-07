@@ -1,0 +1,41 @@
+id: partdesign.closed_spline_pad
+title: Native Pad from closed spline sketch
+domain: partdesign
+native_feature: Pad
+status: live_verified_once
+runner: runners/partdesign/closed_spline_pad_runner.py
+summary: Create CATIA 2D points, build a closed spline profile, and make a native Pad.
+reference_pattern_ids:
+  - partdesign.closed_spline_profile
+source_regression_ids:
+  - partdesign.regression.t23_closed_spline_pad
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Closed_Spline_Pad
+  points:
+    type: array
+    required: false
+    default: [[-50, 0], [-20, 8], [20, 6], [50, 0], [20, -6], [-20, -8], [-50, 0]]
+  depth:
+    type: number
+    unit: mm
+    required: false
+    default: 4
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - The first spline point is repeated as the final point to close the profile.
+verified_pattern:
+  - create Part document
+  - create CATIA 2D point objects in one sketch
+  - Factory2D.CreateSpline(tuple(point_objects)) with first point repeated at the end
+  - ShapeFactory.AddNewPad(sketch, depth)
+  - Part.Update()
+verification:
+  required_native_feature: Pad
+  part_update_required: true
+  required_reference_pattern: partdesign.closed_spline_profile
+caveats:
+  - This recipe verifies one closed spline Pad pattern, not arbitrary open/closed spline repair.
+  - Spline shape quality and parameterization are not checked by the current verifier.

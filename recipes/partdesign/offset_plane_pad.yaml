@@ -1,0 +1,68 @@
+id: partdesign.offset_plane_pad
+title: Native Pad from sketch on offset PlaneXY
+domain: partdesign
+native_feature: Pad
+status: live_verified_once
+runner: runners/partdesign/offset_plane_pad_runner.py
+summary: Create a base Pad, create an explicit offset plane, sketch on that support, and build a secondary native Pad.
+reference_pattern_ids:
+  - partdesign.offset_plane_support_ref
+source_regression_ids:
+  - partdesign.regression.t06_offset_plane_secondary_pad
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Offset_Plane_Pad
+  base_width:
+    type: number
+    unit: mm
+    required: false
+    default: 160
+  base_height:
+    type: number
+    unit: mm
+    required: false
+    default: 80
+  base_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 10
+  offset:
+    type: number
+    unit: mm
+    required: false
+    default: 10
+  wall_width:
+    type: number
+    unit: mm
+    required: false
+    default: 140
+  wall_height:
+    type: number
+    unit: mm
+    required: false
+    default: 10
+  wall_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 70
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and an explicit offset plane reference.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad on OriginElements.PlaneXY
+  - HybridShapeFactory.AddNewPlaneOffset(base_plane_ref, offset, False)
+  - sketch on the offset plane reference
+  - ShapeFactory.AddNewPad(sketch, depth)
+  - Part.Update()
+verification:
+  required_native_feature: Pad
+  part_update_required: true
+  required_reference_pattern: partdesign.offset_plane_support_ref
+caveats:
+  - This recipe verifies a generated offset PlaneXY support, not arbitrary support-plane inference.
+  - It does not claim robust feature direction correction beyond the promoted geometry.

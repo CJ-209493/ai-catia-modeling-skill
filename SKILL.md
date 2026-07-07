@@ -23,7 +23,9 @@ Imported regression recipes with `runner_kind: imported_call_pattern` are verifi
 
 `partdesign.native_shaft_centerline` and `partdesign.native_groove_centerline` are promoted User Mode runners for the verified same-sketch `CenterLine` reference pattern. Use them for the constrained segment-profile Shaft and rectangular Groove cases before considering Developer Mode exploration.
 
-`partdesign.native_hole_from_sketch` and `partdesign.native_slot_pocket` are promoted User Mode runners for constrained base-pad cut cases. Do not extrapolate them to counterbore/countersink/threaded Hole variants or native Slot features without Developer Mode promotion.
+`partdesign.native_hole_from_sketch`, `partdesign.native_counterbore_holes`, `partdesign.capsule_with_native_holes`, and `partdesign.native_slot_pocket` are promoted User Mode runners for constrained base-pad cut cases. Do not extrapolate them to countersink/threaded Hole variants or native Slot features without Developer Mode promotion.
+
+`partdesign.offset_plane_pad`, `partdesign.rounded_rectangle_pad`, and `partdesign.closed_spline_pad` are promoted User Mode runners for constrained Pad profile and support cases. They do not claim arbitrary support-plane inference, separate native Fillet features, sketch constraint completeness, or arbitrary spline repair.
 
 `partdesign.native_rectangular_pattern` and `partdesign.native_circular_pattern` are promoted User Mode runners for constrained seed-feature pattern cases. They require explicit construction direction, center, or axis references; copied geometry is only geometry-equivalent unless the native pattern feature verifies.
 
@@ -57,6 +59,8 @@ For `Shaft` and `Groove`, read `references/partdesign/sketch_revolution_axis.md`
 
 For `RectPattern` and `CircPattern`, read `references/partdesign/pattern_references.md`. For `Mirror` and `Shell`, read `references/partdesign/transform_shell_references.md`. Explicit copied geometry is not native pattern or mirror success, and manually built thin walls are not native Shell success.
 
+For native counterbore Holes, offset-plane Pads, tangent-arc rounded/capsule profiles, and closed spline Pads, read `references/partdesign/profile_and_hole_variants.md`. Pocket-modeled counterbores and holes are not native Hole success.
+
 ## Recipe Selection
 
 Read `manifests/capability_manifest.yaml` first to understand current v1.0 coverage. Then read only the recipe cards needed for the requested feature.
@@ -71,7 +75,7 @@ Use this order:
 
 ## Regression Memory
 
-`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.7-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`, `examples/reports/live_promoted_cut_runners_20260707.md`, `examples/reports/live_promoted_pattern_runners_20260707.md`, and `examples/reports/live_promoted_transform_shell_runners_20260707.md`.
+`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.8-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`, `examples/reports/live_promoted_cut_runners_20260707.md`, `examples/reports/live_promoted_pattern_runners_20260707.md`, `examples/reports/live_promoted_transform_shell_runners_20260707.md`, and `examples/reports/live_promoted_profile_hole_runners_20260707.md`.
 
 ## v1.0 Scope
 

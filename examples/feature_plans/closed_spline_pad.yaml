@@ -1,0 +1,13 @@
+mode: user
+units: mm
+output_dir: outputs/demo_closed_spline_pad
+features:
+  - id: closed_spline_pad_1
+    recipe_id: partdesign.closed_spline_pad
+    params:
+      part_number: Demo_Closed_Spline_Pad
+      points: [[-50, 0], [-20, 8], [20, 6], [50, 0], [20, -6], [-20, -8], [-50, 0]]
+      depth: 4
+    expected:
+      native_feature: Pad
+      reference_pattern: partdesign.closed_spline_profile

@@ -19,17 +19,18 @@ The goal is not to benchmark CATIA ability. Benchmarking, boundary tests, and me
 
 ## Project Status
 
-This is v1.0.7 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
+This is v1.0.8 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
 
 The important modeling knowledge is not merely that pycatia exposes a method. Many CATIA APIs are callable while still failing because the selected reference is wrong. For example, native `Shaft` and `Groove` require an explicit revolution axis in the sketch; without that axis, Codex must not claim native success.
 
 Current package state:
 
-- 11 executable User Mode runner recipes: rectangular Pad, native Hole from sketch point, native slot Pocket, native RectPattern, native CircPattern, native Mirror across PlaneYZ, native Shell from selected face reference, same-sketch CenterLine Shaft, same-sketch CenterLine Groove, real parameter formula, and Product Fix constraint.
+- 16 executable User Mode runner recipes: rectangular Pad, native Hole from sketch point, native counterbore Holes, native slot Pocket, offset Plane Pad, rounded rectangle Pad, capsule Pad with native Holes, closed spline Pad, native RectPattern, native CircPattern, native Mirror across PlaneYZ, native Shell from selected face reference, same-sketch CenterLine Shaft, same-sketch CenterLine Groove, real parameter formula, and Product Fix constraint.
 - 16 imported `NATIVE_SUCCESS` CATIA call patterns from the 30-case regression run.
 - 2 `PARTIAL_SUCCESS`, 11 `UNSUPPORTED`, and 1 `HONEST_FAILURE` regression memory entries.
 - Shaft and Groove now have promoted executable User Mode runners for the verified same-sketch `CenterLine` reference pattern. The imported regression cards remain as developer evidence and future extension material.
-- Hole and Pocket now have promoted executable User Mode runners for constrained base-pad cut cases. Counterbore/countersink/threaded hole variants and native Slot features remain separate promotion work.
+- Hole and Pocket now have promoted executable User Mode runners for constrained base-pad cut cases, native counterbore Hole cases, and capsule end-hole cases. Countersink/threaded hole variants and native Slot features remain separate promotion work.
+- Pad profile variants now include promoted executable User Mode runners for offset-plane support, tangent-arc rounded rectangles, and closed spline profiles.
 - RectPattern and CircPattern now have promoted executable User Mode runners with explicit construction direction/axis reference patterns.
 - Mirror and Shell now have promoted executable User Mode runners for constrained reference patterns. Mirror uses an explicit PlaneYZ reference; Shell uses a CATIA selection-derived face reference by index.
 - Latest live CATIA regression evidence: `catia_recipe_regression_20260706_232109`, recorded in `manifests/regression_manifest.yaml` and summarized in `examples/reports/live_regression_20260706_232109.md`.
@@ -37,6 +38,7 @@ Current package state:
 - Latest promoted cut runner evidence: `examples/reports/live_promoted_cut_runners_20260707.md`.
 - Latest promoted pattern runner evidence: `examples/reports/live_promoted_pattern_runners_20260707.md`.
 - Latest promoted transform/shell runner evidence: `examples/reports/live_promoted_transform_shell_runners_20260707.md`.
+- Latest promoted profile/hole variant evidence: `examples/reports/live_promoted_profile_hole_runners_20260707.md`.
 
 ## Requirements
 
@@ -116,8 +118,13 @@ Before executing a feature, Codex should check `manifests/reference_manifest.yam
 - `partdesign.circular_pattern_axis_ref`: use explicit center and axis references for native `CircPattern`.
 - `partdesign.mirror_plane_ref`: set the seed feature as `Part.InWorkObject` and pass an explicit mirror plane reference for native `Mirror`.
 - `partdesign.shell_selected_face_ref`: use CATIA selection to obtain a face reference before native `Shell`.
+- `partdesign.counterbore_hole_point_sketch`: create point sketches and set native Hole counterbore COM properties.
+- `partdesign.offset_plane_support_ref`: create and reference an explicit offset PlaneXY support for secondary Pads.
+- `partdesign.tangent_arc_closed_profile`: draw closed tangent line/arc profiles for rounded rectangle Pads.
+- `partdesign.capsule_profile_native_holes`: combine a tangent-arc capsule Pad with native point-sketch Holes.
+- `partdesign.closed_spline_profile`: repeat the first point as the final spline pole before creating a Pad.
 
-These patterns are documented in `references/partdesign/sketch_revolution_axis.md`, `references/partdesign/pattern_references.md`, and `references/partdesign/transform_shell_references.md`. Arbitrary revolved profiles, arbitrary pattern reference inference, arbitrary mirror planes, and semantic Shell face selection still require Developer Mode promotion work.
+These patterns are documented in `references/partdesign/sketch_revolution_axis.md`, `references/partdesign/pattern_references.md`, `references/partdesign/transform_shell_references.md`, and `references/partdesign/profile_and_hole_variants.md`. Arbitrary revolved profiles, arbitrary pattern reference inference, arbitrary mirror planes, semantic Shell face selection, arbitrary spline repair, and full sketch constraint inference still require Developer Mode promotion work.
 
 The 30-case imported regression memory is indexed in `manifests/regression_manifest.yaml`. Native-success entries are also indexed in `manifests/recipe_manifest.yaml` with `runner_kind: imported_call_pattern`, `runner: null`, and `user_mode_allowed: false`. They are useful for Developer Mode recipe promotion and for preventing Codex from rediscovering known pycatia mistakes. The current evidence run was executed live through CATIA COM and generated local CATPart artifacts that are intentionally not committed.
 
@@ -126,7 +133,12 @@ The 30-case imported regression memory is indexed in `manifests/regression_manif
 ```powershell
 python cli\run_feature_plan.py examples\feature_plans\rectangular_pad.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_hole_from_sketch.yaml
+python cli\run_feature_plan.py examples\feature_plans\native_counterbore_holes.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_slot_pocket.yaml
+python cli\run_feature_plan.py examples\feature_plans\offset_plane_pad.yaml
+python cli\run_feature_plan.py examples\feature_plans\rounded_rectangle_pad.yaml
+python cli\run_feature_plan.py examples\feature_plans\capsule_with_native_holes.yaml
+python cli\run_feature_plan.py examples\feature_plans\closed_spline_pad.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_rectangular_pattern.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_circular_pattern.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_mirror_plane.yaml
@@ -167,8 +179,11 @@ Geometry-equivalent output must not be reported as native CATIA feature success.
 - Solid rect-to-circle multi-section loft is not fully proven.
 - Full 3D rounded-path pipe sweep is not fully proven.
 - Solid helix sweep spring is not fully proven.
-- Counterbore/countersink/threaded Hole variants are not yet promoted to User Mode runners.
+- Countersink/threaded Hole variants are not yet promoted to User Mode runners.
 - A native Slot feature is not claimed; `partdesign.native_slot_pocket` creates a native Pocket from a slot-shaped sketch.
+- Counterbore is promoted only through native Hole type/head properties; visual top/bottom direction is not independently measured by the current verifier.
+- Rounded rectangle and capsule recipes use tangent-arc sketches; they do not claim separate native Fillet features or full sketch constraint completeness.
+- Closed spline Pad is promoted only for a first-point-repeated closed profile; arbitrary spline repair remains future work.
 - Pattern recipes are promoted only for generated construction references; inferring directions or axes from arbitrary model edges/faces remains future work.
 - Mirror is promoted only for a generated seed feature and explicit PlaneYZ reference; arbitrary mirror plane selection remains future work.
 - Shell is promoted only for a selection-index face reference; semantic top/front/side face selection remains future work.

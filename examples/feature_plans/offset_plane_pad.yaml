@@ -1,0 +1,18 @@
+mode: user
+units: mm
+output_dir: outputs/demo_offset_plane_pad
+features:
+  - id: offset_plane_pad_1
+    recipe_id: partdesign.offset_plane_pad
+    params:
+      part_number: Demo_Offset_Plane_Pad
+      base_width: 160
+      base_height: 80
+      base_depth: 10
+      offset: 10
+      wall_width: 140
+      wall_height: 10
+      wall_depth: 70
+    expected:
+      native_feature: Pad
+      reference_pattern: partdesign.offset_plane_support_ref
