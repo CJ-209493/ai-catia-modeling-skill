@@ -1,4 +1,4 @@
-version: "1.0.5-draft"
+version: "1.0.6-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -66,15 +66,23 @@ capabilities:
     rect_pattern:
       status: live_verified_once
       classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_rectangular_pattern
       imported_recipe_ids:
         - partdesign.regression.t08_rectangular_pattern
-      user_mode: imported_call_pattern_only
+      reference_pattern_ids:
+        - partdesign.rectangular_pattern_direction_refs
+      user_mode: executable_runner_available
     circ_pattern:
       status: live_verified_once
       classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_circular_pattern
       imported_recipe_ids:
         - partdesign.regression.t09_circular_pattern
-      user_mode: imported_call_pattern_only
+      reference_pattern_ids:
+        - partdesign.circular_pattern_axis_ref
+      user_mode: executable_runner_available
     mirror:
       status: live_verified_once
       classification: NATIVE_SUCCESS

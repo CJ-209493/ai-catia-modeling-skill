@@ -1,0 +1,21 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_circular_pattern
+features:
+  - id: circ_pattern_1
+    recipe_id: partdesign.native_circular_pattern
+    params:
+      part_number: Demo_Native_Circular_Pattern
+      disk_radius: 40
+      disk_depth: 20
+      center_hole_radius: 15
+      seed_x: 30
+      seed_y: 0
+      seed_radius: 4
+      pocket_depth: 45
+      instances: 6
+      angular_spacing: 60
+      total_angle: 360
+    expected:
+      native_feature: CircPattern
+      reference_pattern: partdesign.circular_pattern_axis_ref

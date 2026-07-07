@@ -1,0 +1,22 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_rectangular_pattern
+features:
+  - id: rect_pattern_1
+    recipe_id: partdesign.native_rectangular_pattern
+    params:
+      part_number: Demo_Native_Rectangular_Pattern
+      plate_width: 180
+      plate_height: 100
+      plate_depth: 12
+      seed_x: -60
+      seed_y: -30
+      seed_radius: 8
+      seed_depth: 8
+      instances_1: 4
+      instances_2: 3
+      spacing_1: 40
+      spacing_2: 30
+    expected:
+      native_feature: RectPattern
+      reference_pattern: partdesign.rectangular_pattern_direction_refs

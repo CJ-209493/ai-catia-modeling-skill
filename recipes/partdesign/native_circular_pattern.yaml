@@ -1,0 +1,61 @@
+id: partdesign.native_circular_pattern
+title: Native CircPattern from seed Pocket
+domain: partdesign
+native_feature: CircPattern
+status: live_verified_once
+runner: runners/partdesign/native_circular_pattern_runner.py
+summary: Create a seed Pocket and build a native CATIA CircPattern using explicit center point and Z-axis construction references.
+reference_pattern_ids:
+  - partdesign.circular_pattern_axis_ref
+source_regression_ids:
+  - partdesign.regression.t09_circular_pattern
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Circular_Pattern
+  disk_radius:
+    type: number
+    unit: mm
+    required: false
+    default: 40
+  disk_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 20
+  seed_radius:
+    type: number
+    unit: mm
+    required: false
+    default: 4
+  instances:
+    type: integer
+    required: false
+    default: 6
+  angular_spacing:
+    type: number
+    unit: deg
+    required: false
+    default: 60
+  total_angle:
+    type: number
+    unit: deg
+    required: false
+    default: 360
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document, disk Pad, seed Pocket, center point, and axis reference.
+verified_pattern:
+  - create Part document
+  - create disk Pad and seed circular Pocket
+  - create explicit center point and Z-axis HybridShape line references
+  - ShapeFactory.AddNewCircPattern(seed_feature, instances, angle, center_ref, axis_ref)
+  - native CircPattern exists after Part.Update()
+verification:
+  required_native_feature: CircPattern
+  part_update_required: true
+  required_reference_pattern: partdesign.circular_pattern_axis_ref
+caveats:
+  - This recipe verifies native CircPattern creation; explicit duplicated holes are geometry-equivalent only.
+  - Axis references are generated construction geometry, not inferred from cylindrical faces.

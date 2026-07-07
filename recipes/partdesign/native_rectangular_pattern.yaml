@@ -1,0 +1,70 @@
+id: partdesign.native_rectangular_pattern
+title: Native RectPattern from seed Pad
+domain: partdesign
+native_feature: RectPattern
+status: live_verified_once
+runner: runners/partdesign/native_rectangular_pattern_runner.py
+summary: Create a seed Pad and build a native CATIA RectPattern using explicit X/Y construction direction references.
+reference_pattern_ids:
+  - partdesign.rectangular_pattern_direction_refs
+source_regression_ids:
+  - partdesign.regression.t08_rectangular_pattern
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Rectangular_Pattern
+  plate_width:
+    type: number
+    unit: mm
+    required: false
+    default: 180
+  plate_height:
+    type: number
+    unit: mm
+    required: false
+    default: 100
+  plate_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 12
+  seed_radius:
+    type: number
+    unit: mm
+    required: false
+    default: 8
+  instances_1:
+    type: integer
+    required: false
+    default: 4
+  instances_2:
+    type: integer
+    required: false
+    default: 3
+  spacing_1:
+    type: number
+    unit: mm
+    required: false
+    default: 40
+  spacing_2:
+    type: number
+    unit: mm
+    required: false
+    default: 30
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document, base Pad, seed Pad, and construction direction references.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad and seed circular Pad
+  - create explicit X and Y HybridShape line direction references
+  - ShapeFactory.AddNewRectPattern(seed_feature, instances, spacing, direction_refs)
+  - native RectPattern exists after Part.Update()
+verification:
+  required_native_feature: RectPattern
+  part_update_required: true
+  required_reference_pattern: partdesign.rectangular_pattern_direction_refs
+caveats:
+  - This recipe verifies native RectPattern creation, not arbitrary seed-feature selection.
+  - Direction references are generated construction geometry, not inferred from model edges.

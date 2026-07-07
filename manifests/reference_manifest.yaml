@@ -1,4 +1,4 @@
-version: "1.0.5-draft"
+version: "1.0.6-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -16,3 +16,30 @@ reference_patterns:
     promoted_recipe_ids:
       - partdesign.native_shaft_centerline
       - partdesign.native_groove_centerline
+  - id: partdesign.rectangular_pattern_direction_refs
+    title: Explicit direction references for RectPattern
+    domain: partdesign
+    applies_to: [rect_pattern]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/pattern_references.md
+    failure_memory: []
+    verifier_expectations:
+      - native feature tree contains RectPattern after Part.Update
+      - direction references are explicit construction references
+      - explicit copied features are not native pattern success
+    promoted_recipe_ids:
+      - partdesign.native_rectangular_pattern
+  - id: partdesign.circular_pattern_axis_ref
+    title: Explicit center and axis references for CircPattern
+    domain: partdesign
+    applies_to: [circ_pattern]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/pattern_references.md
+    failure_memory:
+      - failures/circular_pattern_explicit_holes_not_native.md
+    verifier_expectations:
+      - native feature tree contains CircPattern after Part.Update
+      - center and axis references are explicit construction references
+      - explicit copied holes are geometry equivalent only
+    promoted_recipe_ids:
+      - partdesign.native_circular_pattern

@@ -19,20 +19,22 @@ The goal is not to benchmark CATIA ability. Benchmarking, boundary tests, and me
 
 ## Project Status
 
-This is v1.0.5 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
+This is v1.0.6 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
 
 The important modeling knowledge is not merely that pycatia exposes a method. Many CATIA APIs are callable while still failing because the selected reference is wrong. For example, native `Shaft` and `Groove` require an explicit revolution axis in the sketch; without that axis, Codex must not claim native success.
 
 Current package state:
 
-- 7 executable User Mode runner recipes: rectangular Pad, native Hole from sketch point, native slot Pocket, same-sketch CenterLine Shaft, same-sketch CenterLine Groove, real parameter formula, and Product Fix constraint.
+- 9 executable User Mode runner recipes: rectangular Pad, native Hole from sketch point, native slot Pocket, native RectPattern, native CircPattern, same-sketch CenterLine Shaft, same-sketch CenterLine Groove, real parameter formula, and Product Fix constraint.
 - 16 imported `NATIVE_SUCCESS` CATIA call patterns from the 30-case regression run.
 - 2 `PARTIAL_SUCCESS`, 11 `UNSUPPORTED`, and 1 `HONEST_FAILURE` regression memory entries.
 - Shaft and Groove now have promoted executable User Mode runners for the verified same-sketch `CenterLine` reference pattern. The imported regression cards remain as developer evidence and future extension material.
 - Hole and Pocket now have promoted executable User Mode runners for constrained base-pad cut cases. Counterbore/countersink/threaded hole variants and native Slot features remain separate promotion work.
+- RectPattern and CircPattern now have promoted executable User Mode runners with explicit construction direction/axis reference patterns.
 - Latest live CATIA regression evidence: `catia_recipe_regression_20260706_232109`, recorded in `manifests/regression_manifest.yaml` and summarized in `examples/reports/live_regression_20260706_232109.md`.
 - Latest promoted runner evidence: `examples/reports/live_promoted_revolution_runners_20260706.md`.
 - Latest promoted cut runner evidence: `examples/reports/live_promoted_cut_runners_20260707.md`.
+- Latest promoted pattern runner evidence: `examples/reports/live_promoted_pattern_runners_20260707.md`.
 
 ## Requirements
 
@@ -119,6 +121,8 @@ The 30-case imported regression memory is indexed in `manifests/regression_manif
 python cli\run_feature_plan.py examples\feature_plans\rectangular_pad.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_hole_from_sketch.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_slot_pocket.yaml
+python cli\run_feature_plan.py examples\feature_plans\native_rectangular_pattern.yaml
+python cli\run_feature_plan.py examples\feature_plans\native_circular_pattern.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_shaft_centerline.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_groove_centerline.yaml
 ```
@@ -157,6 +161,7 @@ Geometry-equivalent output must not be reported as native CATIA feature success.
 - Solid helix sweep spring is not fully proven.
 - Counterbore/countersink/threaded Hole variants are not yet promoted to User Mode runners.
 - A native Slot feature is not claimed; `partdesign.native_slot_pocket` creates a native Pocket from a slot-shaped sketch.
+- Pattern recipes are promoted only for generated construction references; inferring directions or axes from arbitrary model edges/faces remains future work.
 - Arbitrary Shaft/Groove profiles beyond the promoted segment-profile Shaft and rectangular Groove runner are not yet generalized.
 - Sheet Metal features are not supported in v1.0.
 - Product `Position` is not an assembly constraint.
