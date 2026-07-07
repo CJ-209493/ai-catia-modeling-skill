@@ -1,4 +1,4 @@
-version: 1.0.3-draft
+version: 1.0.4-draft
 source_run: catia_recipe_regression_20260706_232109
 total_tests: 30
 classification_counts:

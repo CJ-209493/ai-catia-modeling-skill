@@ -18,7 +18,8 @@ def test_shaft_and_groove_require_explicit_revolution_axis_pattern():
         assert feature["status"] == "live_verified_once"
         assert feature["classification"] == "NATIVE_SUCCESS"
         assert "partdesign.sketch_revolution_axis" in feature["reference_pattern_ids"]
-        assert feature["user_mode"] == "imported_call_pattern_only"
+        assert feature["user_mode"] == "executable_runner_available"
+        assert feature["executable_recipe_ids"]
         assert feature["imported_recipe_ids"]
 
 

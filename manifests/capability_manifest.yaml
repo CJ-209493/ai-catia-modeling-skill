@@ -1,4 +1,4 @@
-version: "1.0.3-draft"
+version: "1.0.4-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -88,21 +88,25 @@ capabilities:
     shaft:
       status: live_verified_once
       classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_shaft_centerline
       imported_recipe_ids:
         - partdesign.regression.t11_shaft_with_sketch_centerline
         - partdesign.regression.t13_v_pulley_by_shaft_profile
       reference_pattern_ids:
         - partdesign.sketch_revolution_axis
-      user_mode: imported_call_pattern_only
+      user_mode: executable_runner_available
       caveat: native Shaft requires sketch.com_object.CenterLine to point at an explicit same-sketch construction axis line; pycatia API availability is not enough
     groove:
       status: live_verified_once
       classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_groove_centerline
       imported_recipe_ids:
         - partdesign.regression.t12_groove_with_sketch_centerline
       reference_pattern_ids:
         - partdesign.sketch_revolution_axis
-      user_mode: imported_call_pattern_only
+      user_mode: executable_runner_available
       caveat: native Groove requires sketch.com_object.CenterLine plus an existing solid context; annular pockets are geometry equivalent
     fillet:
       status: partial_success

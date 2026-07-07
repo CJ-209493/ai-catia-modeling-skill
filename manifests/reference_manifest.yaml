@@ -1,4 +1,4 @@
-version: "1.0.3-draft"
+version: "1.0.4-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -13,3 +13,6 @@ reference_patterns:
       - sketch contains one named construction Line2D used as revolution axis
       - native feature tree contains Shaft or Groove after Part.Update
       - geometry-equivalent revolve/pocket approximations are not native success
+    promoted_recipe_ids:
+      - partdesign.native_shaft_centerline
+      - partdesign.native_groove_centerline

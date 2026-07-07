@@ -1,0 +1,53 @@
+id: partdesign.native_groove_centerline
+title: Native Groove with same-sketch CenterLine
+domain: partdesign
+native_feature: Groove
+status: live_verified_once
+runner: runners/partdesign/native_groove_centerline_runner.py
+summary: Create a base Shaft, then cut a native CATIA Groove using a closed removal profile and construction CenterLine in the same sketch.
+reference_pattern_ids:
+  - partdesign.sketch_revolution_axis
+source_regression_ids:
+  - partdesign.regression.t12_groove_with_sketch_centerline
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Groove_CenterLine
+  base_segments:
+    type: array
+    required: false
+    default:
+      - {length: 120, radius: 20}
+    item_schema:
+      length:
+        type: number
+        unit: mm
+      radius:
+        type: number
+        unit: mm
+  groove:
+    type: object
+    required: false
+    default:
+      start: 55
+      width: 10
+      inner_radius: 14
+      outer_radius: 24
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and first creates a native base Shaft.
+verified_pattern:
+  - create base native Shaft from a same-sketch CenterLine profile
+  - create a closed groove-removal sketch on OriginElements.PlaneXY
+  - create a construction Line2D revolution axis in the same groove sketch
+  - assign sketch.com_object.CenterLine to that construction axis
+  - ShapeFactory.AddNewGroove(sketch)
+  - Part.Update()
+verification:
+  required_native_feature: Groove
+  part_update_required: true
+  required_reference_pattern: partdesign.sketch_revolution_axis
+caveats:
+  - This recipe verifies native Groove creation, not an annular pocket or geometry-equivalent cut.
+  - The groove removal rectangle must intersect the existing base Shaft.

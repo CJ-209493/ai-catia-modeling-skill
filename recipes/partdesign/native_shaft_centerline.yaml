@@ -1,0 +1,47 @@
+id: partdesign.native_shaft_centerline
+title: Native Shaft with same-sketch CenterLine
+domain: partdesign
+native_feature: Shaft
+status: live_verified_once
+runner: runners/partdesign/native_shaft_centerline_runner.py
+summary: Create a stepped revolved profile and a construction revolution axis in the same sketch, then build a native CATIA Shaft.
+reference_pattern_ids:
+  - partdesign.sketch_revolution_axis
+source_regression_ids:
+  - partdesign.regression.t11_shaft_with_sketch_centerline
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Shaft_CenterLine
+  segments:
+    type: array
+    required: false
+    default:
+      - {length: 30, radius: 15}
+      - {length: 50, radius: 22.5}
+      - {length: 40, radius: 12.5}
+    item_schema:
+      length:
+        type: number
+        unit: mm
+      radius:
+        type: number
+        unit: mm
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and uses PlaneXY.
+verified_pattern:
+  - create Part document
+  - create a closed half-profile sketch on OriginElements.PlaneXY
+  - create a construction Line2D revolution axis in the same sketch
+  - assign sketch.com_object.CenterLine to that construction axis
+  - ShapeFactory.AddNewShaft(sketch)
+  - Part.Update()
+verification:
+  required_native_feature: Shaft
+  part_update_required: true
+  required_reference_pattern: partdesign.sketch_revolution_axis
+caveats:
+  - This recipe verifies native Shaft creation with same-sketch CenterLine, not dimensional sketch constraints.
+  - The profile is generated from axial length/radius segments; arbitrary revolved profiles remain Developer Mode work.

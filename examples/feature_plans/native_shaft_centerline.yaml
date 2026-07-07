@@ -1,0 +1,15 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_shaft_centerline
+features:
+  - id: shaft_1
+    recipe_id: partdesign.native_shaft_centerline
+    params:
+      part_number: Demo_Native_Shaft_CenterLine
+      segments:
+        - {length: 30, radius: 15}
+        - {length: 50, radius: 22.5}
+        - {length: 40, radius: 12.5}
+    expected:
+      native_feature: Shaft
+      reference_pattern: partdesign.sketch_revolution_axis

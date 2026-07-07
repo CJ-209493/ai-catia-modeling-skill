@@ -1,4 +1,4 @@
-version: 1.0.3-draft
+version: 1.0.4-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -18,6 +18,48 @@ recipes:
   - sketch
   - partdesign
   - base
+- id: partdesign.native_shaft_centerline
+  title: Native Shaft with same-sketch CenterLine
+  domain: partdesign
+  native_feature: Shaft
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_shaft_centerline.yaml
+  runner: runners/partdesign/native_shaft_centerline_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.sketch_revolution_axis
+  promoted_from:
+  - partdesign.regression.t11_shaft_with_sketch_centerline
+  tags:
+  - shaft
+  - centerline
+  - revolution
+  - sketch
+  - partdesign
+- id: partdesign.native_groove_centerline
+  title: Native Groove with same-sketch CenterLine
+  domain: partdesign
+  native_feature: Groove
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_groove_centerline.yaml
+  runner: runners/partdesign/native_groove_centerline_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.sketch_revolution_axis
+  promoted_from:
+  - partdesign.regression.t12_groove_with_sketch_centerline
+  tags:
+  - groove
+  - centerline
+  - revolution
+  - sketch
+  - partdesign
 - id: knowledgeware.real_param_formula
   title: Real parameter formula
   domain: knowledgeware

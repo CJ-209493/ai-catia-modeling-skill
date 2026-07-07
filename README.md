@@ -19,17 +19,18 @@ The goal is not to benchmark CATIA ability. Benchmarking, boundary tests, and me
 
 ## Project Status
 
-This is v1.0.x draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
+This is v1.0.4 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
 
 The important modeling knowledge is not merely that pycatia exposes a method. Many CATIA APIs are callable while still failing because the selected reference is wrong. For example, native `Shaft` and `Groove` require an explicit revolution axis in the sketch; without that axis, Codex must not claim native success.
 
 Current package state:
 
-- 3 executable User Mode runner recipes: rectangular Pad, real parameter formula, and Product Fix constraint.
+- 5 executable User Mode runner recipes: rectangular Pad, same-sketch CenterLine Shaft, same-sketch CenterLine Groove, real parameter formula, and Product Fix constraint.
 - 16 imported `NATIVE_SUCCESS` CATIA call patterns from the 30-case regression run.
 - 2 `PARTIAL_SUCCESS`, 11 `UNSUPPORTED`, and 1 `HONEST_FAILURE` regression memory entries.
-- Shaft and Groove are included as imported native-success call patterns using the same-sketch `CenterLine` reference pattern, but they are not yet promoted to executable User Mode runners.
+- Shaft and Groove now have promoted executable User Mode runners for the verified same-sketch `CenterLine` reference pattern. The imported regression cards remain as developer evidence and future extension material.
 - Latest live CATIA regression evidence: `catia_recipe_regression_20260706_232109`, recorded in `manifests/regression_manifest.yaml` and summarized in `examples/reports/live_regression_20260706_232109.md`.
+- Latest promoted runner evidence: `examples/reports/live_promoted_revolution_runners_20260706.md`.
 
 ## Requirements
 
@@ -106,7 +107,7 @@ Before executing a feature, Codex should check `manifests/reference_manifest.yam
 
 - `partdesign.sketch_revolution_axis`: use for native `Shaft` and `Groove`; create the closed profile and a named construction Line2D revolution axis in the same sketch before calling `add_new_shaft(sketch)` or `add_new_groove(sketch)`.
 
-This pattern is documented in `references/partdesign/sketch_revolution_axis.md`. It is deliberately separate from executable recipe status: knowing the reference pattern does not by itself mean a stable User Mode runner exists.
+This pattern is documented in `references/partdesign/sketch_revolution_axis.md`. In v1.0.4 it is promoted for two constrained User Mode recipes: `partdesign.native_shaft_centerline` and `partdesign.native_groove_centerline`. Arbitrary revolved profiles still require Developer Mode promotion work.
 
 The 30-case imported regression memory is indexed in `manifests/regression_manifest.yaml`. Native-success entries are also indexed in `manifests/recipe_manifest.yaml` with `runner_kind: imported_call_pattern`, `runner: null`, and `user_mode_allowed: false`. They are useful for Developer Mode recipe promotion and for preventing Codex from rediscovering known pycatia mistakes. The current evidence run was executed live through CATIA COM and generated local CATPart artifacts that are intentionally not committed.
 
@@ -114,6 +115,8 @@ The 30-case imported regression memory is indexed in `manifests/regression_manif
 
 ```powershell
 python cli\run_feature_plan.py examples\feature_plans\rectangular_pad.yaml
+python cli\run_feature_plan.py examples\feature_plans\native_shaft_centerline.yaml
+python cli\run_feature_plan.py examples\feature_plans\native_groove_centerline.yaml
 ```
 
 Search recipes:
@@ -148,7 +151,7 @@ Geometry-equivalent output must not be reported as native CATIA feature success.
 - Solid rect-to-circle multi-section loft is not fully proven.
 - Full 3D rounded-path pipe sweep is not fully proven.
 - Solid helix sweep spring is not fully proven.
-- Shaft and Groove have imported native-success call patterns, but still need promoted executable User Mode runners before they can be run directly from a user feature plan.
+- Arbitrary Shaft/Groove profiles beyond the promoted segment-profile Shaft and rectangular Groove runner are not yet generalized.
 - Sheet Metal features are not supported in v1.0.
 - Product `Position` is not an assembly constraint.
 - BRep-to-BRep Product constraints are not fully proven.

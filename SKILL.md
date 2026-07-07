@@ -21,6 +21,8 @@ For CATIA features that are callable through pycatia but sensitive to reference 
 
 Imported regression recipes with `runner_kind: imported_call_pattern` are verified call memory, not User Mode runners. Use their recipe cards for reference selection and future promotion work; do not execute them through `cli/run_feature_plan.py` until a runner and verifier contract have been added.
 
+`partdesign.native_shaft_centerline` and `partdesign.native_groove_centerline` are promoted User Mode runners for the verified same-sketch `CenterLine` reference pattern. Use them for the constrained segment-profile Shaft and rectangular Groove cases before considering Developer Mode exploration.
+
 ## Workflow
 
 1. Parse the user request into a Feature Plan matching `schemas/feature_plan_schema.yaml`.
@@ -61,11 +63,11 @@ Use this order:
 
 ## Regression Memory
 
-`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.3-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow.
+`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.4-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. The promoted Shaft/Groove runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`.
 
 ## v1.0 Scope
 
-v1.0 primarily prevents common pycatia call mistakes by routing through known-good recipes and imported call memory. It does not fully solve all CATIA reference selection problems, complex BRep selection, solid loft/sweep edge cases, or full assembly BRep constraints.
+v1.0 primarily prevents common pycatia call mistakes by routing through known-good recipes, reference selection patterns, and imported call memory. It does not fully solve all CATIA reference selection problems, arbitrary revolved profiles, complex BRep selection, solid loft/sweep edge cases, or full assembly BRep constraints.
 
 ## Key Files
 

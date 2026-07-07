@@ -1,0 +1,18 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_groove_centerline
+features:
+  - id: groove_1
+    recipe_id: partdesign.native_groove_centerline
+    params:
+      part_number: Demo_Native_Groove_CenterLine
+      base_segments:
+        - {length: 120, radius: 20}
+      groove:
+        start: 55
+        width: 10
+        inner_radius: 14
+        outer_radius: 24
+    expected:
+      native_feature: Groove
+      reference_pattern: partdesign.sketch_revolution_axis
