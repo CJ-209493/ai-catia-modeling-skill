@@ -1,0 +1,59 @@
+id: partdesign.native_hole_unit_conversion
+title: Native Hole with inch-to-millimeter converted dimensions
+domain: partdesign
+native_feature: Hole
+status: live_verified_once
+runner: runners/partdesign/native_hole_unit_conversion_runner.py
+summary: Convert inch inputs to millimeters, create a base Pad, and add a native CATIA Hole from a sketch point.
+reference_pattern_ids:
+  - partdesign.inch_to_mm_parameters
+source_regression_ids:
+  - partdesign.regression.t20_unit_conversion_native_hole
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Hole_Unit_Conversion
+  length_in:
+    type: number
+    unit: in
+    required: false
+    default: 4
+  width_in:
+    type: number
+    unit: in
+    required: false
+    default: 2
+  thickness_in:
+    type: number
+    unit: in
+    required: false
+    default: 0.25
+  hole_diameter_in:
+    type: number
+    unit: in
+    required: false
+    default: 0.5
+  hole_depth_mm:
+    type: number
+    unit: mm
+    required: false
+    default: 20
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Inch inputs must be converted before assignment to CATIA length values.
+verified_pattern:
+  - create Part document
+  - convert inch dimensions using 25.4 mm per inch
+  - create base Pad with converted millimeter dimensions
+  - create point sketch on OriginElements.PlaneXY
+  - ShapeFactory.AddNewHoleFromSketch(point_sketch, depth)
+  - set hole.diameter.value to converted millimeter diameter
+  - Part.Update()
+verification:
+  required_native_feature: Hole
+  part_update_required: true
+  required_reference_pattern: partdesign.inch_to_mm_parameters
+caveats:
+  - This recipe verifies explicit inch-to-mm conversion before CATIA assignment, not generic unit parsing.
+  - It creates a simple native Hole, not counterbore/countersink/threaded variants.

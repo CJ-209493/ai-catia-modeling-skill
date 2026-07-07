@@ -1,0 +1,69 @@
+id: partdesign.native_v_pulley_shaft
+title: Native V pulley Shaft from one half-profile
+domain: partdesign
+native_feature: Shaft
+status: live_verified_once
+runner: runners/partdesign/native_v_pulley_shaft_runner.py
+summary: Create a native CATIA Shaft from one same-sketch CenterLine half-profile that encodes bore radius, outer radius, and V groove geometry.
+reference_pattern_ids:
+  - partdesign.sketch_revolution_axis
+  - partdesign.v_pulley_shaft_profile
+source_regression_ids:
+  - partdesign.regression.t13_v_pulley_by_shaft_profile
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_V_Pulley_Shaft
+  width:
+    type: number
+    unit: mm
+    required: false
+    default: 24
+  bore_radius:
+    type: number
+    unit: mm
+    required: false
+    default: 10
+  outer_radius:
+    type: number
+    unit: mm
+    required: false
+    default: 50
+  groove_start:
+    type: number
+    unit: mm
+    required: false
+    default: 8
+  groove_mid:
+    type: number
+    unit: mm
+    required: false
+    default: 12
+  groove_end:
+    type: number
+    unit: mm
+    required: false
+    default: 16
+  groove_valley_radius:
+    type: number
+    unit: mm
+    required: false
+    default: 42
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and uses a same-sketch construction CenterLine.
+verified_pattern:
+  - create Part document
+  - create a construction Line2D revolution axis in the same sketch
+  - assign sketch.com_object.CenterLine to that construction axis
+  - draw one closed V pulley half-profile with bore and V groove geometry
+  - ShapeFactory.AddNewShaft(sketch)
+  - Part.Update()
+verification:
+  required_native_feature: Shaft
+  part_update_required: true
+  required_reference_pattern: partdesign.sketch_revolution_axis
+caveats:
+  - This recipe verifies one V pulley profile pattern, not arbitrary pulley design synthesis.
+  - The bore and V groove are encoded in the Shaft profile; they are not separate native Hole/Groove features.

@@ -116,6 +116,19 @@ def create_native_shaft(part, body, ref_xy, *, sketch_name, feature_name, segmen
     return shaft
 
 
+def create_native_shaft_from_profile(part, body, ref_xy, *, sketch_name, feature_name, axis_length, draw_profile):
+    sketch, factory_2d, axis = create_centerline_sketch(part, body, ref_xy, sketch_name, axis_length)
+    draw_profile(factory_2d)
+    sketch.com_object.CenterLine = axis.com_object
+    sketch.close_edition()
+    part.update()
+    shaft = part.shape_factory.add_new_shaft(sketch)
+    shaft.name = feature_name
+    part.in_work_object = shaft
+    part.update()
+    return shaft
+
+
 def create_native_groove(part, body, ref_xy, *, sketch_name, feature_name, axis_length, groove):
     sketch, factory_2d, axis = create_centerline_sketch(part, body, ref_xy, sketch_name, axis_length)
     draw_rectangular_groove_profile(

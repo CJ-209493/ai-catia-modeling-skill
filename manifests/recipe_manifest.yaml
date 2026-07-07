@@ -1,4 +1,4 @@
-version: 1.0.8-draft
+version: 1.0.9-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -36,6 +36,27 @@ recipes:
   - hole
   - sketch
   - point
+  - partdesign
+- id: partdesign.native_hole_unit_conversion
+  title: Native Hole with inch-to-millimeter converted dimensions
+  domain: partdesign
+  native_feature: Hole
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_hole_unit_conversion.yaml
+  runner: runners/partdesign/native_hole_unit_conversion_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.inch_to_mm_parameters
+  promoted_from:
+  - partdesign.regression.t20_unit_conversion_native_hole
+  tags:
+  - hole
+  - unit_conversion
+  - inch
+  - millimeter
   - partdesign
 - id: partdesign.native_counterbore_holes
   title: Native counterbore Holes from point sketches
@@ -263,6 +284,28 @@ recipes:
   - centerline
   - revolution
   - sketch
+  - partdesign
+- id: partdesign.native_v_pulley_shaft
+  title: Native V pulley Shaft from one half-profile
+  domain: partdesign
+  native_feature: Shaft
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_v_pulley_shaft.yaml
+  runner: runners/partdesign/native_v_pulley_shaft_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.sketch_revolution_axis
+  - partdesign.v_pulley_shaft_profile
+  promoted_from:
+  - partdesign.regression.t13_v_pulley_by_shaft_profile
+  tags:
+  - shaft
+  - centerline
+  - revolution
+  - v_pulley
   - partdesign
 - id: partdesign.native_groove_centerline
   title: Native Groove with same-sketch CenterLine

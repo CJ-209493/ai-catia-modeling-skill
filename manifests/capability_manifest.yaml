@@ -1,4 +1,4 @@
-version: "1.0.8-draft"
+version: "1.0.9-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -57,6 +57,7 @@ capabilities:
       classification: NATIVE_SUCCESS
       executable_recipe_ids:
         - partdesign.native_hole_from_sketch
+        - partdesign.native_hole_unit_conversion
         - partdesign.native_counterbore_holes
         - partdesign.capsule_with_native_holes
       imported_recipe_ids:
@@ -66,9 +67,21 @@ capabilities:
         - partdesign.regression.t20_unit_conversion_native_hole
         - partdesign.regression.t22_capsule_with_native_holes
       reference_pattern_ids:
+        - partdesign.inch_to_mm_parameters
         - partdesign.counterbore_hole_point_sketch
         - partdesign.capsule_profile_native_holes
       user_mode: executable_runner_available
+    unit_conversion_native_hole:
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_hole_unit_conversion
+      imported_recipe_ids:
+        - partdesign.regression.t20_unit_conversion_native_hole
+      reference_pattern_ids:
+        - partdesign.inch_to_mm_parameters
+      user_mode: executable_runner_available
+      caveat: explicit inch-to-mm conversion only; generic unit parsing remains future work
     counterbore_hole:
       status: live_verified_once
       classification: NATIVE_SUCCESS
@@ -171,13 +184,27 @@ capabilities:
       classification: NATIVE_SUCCESS
       executable_recipe_ids:
         - partdesign.native_shaft_centerline
+        - partdesign.native_v_pulley_shaft
       imported_recipe_ids:
         - partdesign.regression.t11_shaft_with_sketch_centerline
         - partdesign.regression.t13_v_pulley_by_shaft_profile
       reference_pattern_ids:
         - partdesign.sketch_revolution_axis
+        - partdesign.v_pulley_shaft_profile
       user_mode: executable_runner_available
       caveat: native Shaft requires sketch.com_object.CenterLine to point at an explicit same-sketch construction axis line; pycatia API availability is not enough
+    v_pulley_shaft:
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_v_pulley_shaft
+      imported_recipe_ids:
+        - partdesign.regression.t13_v_pulley_by_shaft_profile
+      reference_pattern_ids:
+        - partdesign.sketch_revolution_axis
+        - partdesign.v_pulley_shaft_profile
+      user_mode: executable_runner_available
+      caveat: V groove and bore are encoded in one Shaft half-profile, not separate native Hole or Groove features
     groove:
       status: live_verified_once
       classification: NATIVE_SUCCESS

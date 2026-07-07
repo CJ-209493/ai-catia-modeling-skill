@@ -1,0 +1,20 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_v_pulley_shaft
+features:
+  - id: v_pulley_shaft_1
+    recipe_id: partdesign.native_v_pulley_shaft
+    params:
+      part_number: Demo_Native_V_Pulley_Shaft
+      width: 24
+      bore_radius: 10
+      outer_radius: 50
+      groove_start: 8
+      groove_mid: 12
+      groove_end: 16
+      groove_valley_radius: 42
+    expected:
+      native_feature: Shaft
+      reference_patterns:
+        - partdesign.sketch_revolution_axis
+        - partdesign.v_pulley_shaft_profile

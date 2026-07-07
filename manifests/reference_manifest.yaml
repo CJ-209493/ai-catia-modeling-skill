@@ -1,4 +1,4 @@
-version: "1.0.8-draft"
+version: "1.0.9-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -136,3 +136,29 @@ reference_patterns:
       - arbitrary spline repair is not claimed
     promoted_recipe_ids:
       - partdesign.closed_spline_pad
+  - id: partdesign.v_pulley_shaft_profile
+    title: One-sketch V pulley half-profile for native Shaft
+    domain: partdesign
+    applies_to: [v_pulley_shaft]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/v_pulley_and_units.md
+    failure_memory: []
+    verifier_expectations:
+      - native feature tree contains Shaft after Part.Update
+      - same sketch contains CenterLine revolution axis
+      - V groove and bore boundary are encoded in one closed half-profile
+    promoted_recipe_ids:
+      - partdesign.native_v_pulley_shaft
+  - id: partdesign.inch_to_mm_parameters
+    title: Explicit inch-to-millimeter parameter conversion
+    domain: partdesign
+    applies_to: [unit_conversion_native_hole]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/v_pulley_and_units.md
+    failure_memory: []
+    verifier_expectations:
+      - native feature tree contains Hole after Part.Update
+      - inch inputs are converted using 25.4 before CATIA length assignment
+      - converted millimeter values are recorded in the run report
+    promoted_recipe_ids:
+      - partdesign.native_hole_unit_conversion
