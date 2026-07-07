@@ -20,6 +20,17 @@ def normalize_params(params):
     }
 
 
+def safe_set_part_number(product, part_number):
+    result = {"requested": part_number, "applied": False, "error": ""}
+    try:
+        product.part_number = part_number
+    except Exception as exc:
+        result["error"] = str(exc)
+    else:
+        result["applied"] = True
+    return result
+
+
 def make_report(
     *,
     run_id,
@@ -64,7 +75,7 @@ def build_formula(params, output_dir, feature_id="formula_1", mode="user"):
     app = catia()
     doc = app.documents.add("Part")
     part = doc.part
-    doc.product.part_number = params["part_number"]
+    part_number_result = safe_set_part_number(doc.product, params["part_number"])
 
     parameters = part.parameters
     input_param = parameters.create_real(params["input_name"], params["input_value"])
@@ -74,7 +85,7 @@ def build_formula(params, output_dir, feature_id="formula_1", mode="user"):
     formula = part.relations.create_formula("Formula_Output", "", output_param, formula_body)
     part.update()
 
-    catpart_path = output_dir / f"{params['part_number']}.CATPart"
+    catpart_path = (output_dir / f"{params['part_number']}.CATPart").resolve()
     doc.save_as(str(catpart_path))
     report = make_report(
         run_id=datetime.now().strftime("%Y%m%d_%H%M%S"),
@@ -95,6 +106,7 @@ def build_formula(params, output_dir, feature_id="formula_1", mode="user"):
             "formula_name": getattr(formula, "name", "Formula_Output"),
             "output_value": float(output_param.value),
             "params": params,
+            "part_number_assignment": part_number_result,
         },
     )
     report_path = output_dir / "real_param_formula_report.json"

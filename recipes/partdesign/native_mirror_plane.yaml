@@ -54,11 +54,13 @@ preconditions:
   - Runner creates a new Part document, base Pad, and seed Pad before adding Mirror.
 verified_pattern:
   - create Part document
-  - create base rectangular Pad and seed circular Pad
+  - create base rectangular Pad
+  - create an explicit PlaneXY offset reference at the base Pad top face
+  - create seed circular Pad from a sketch on the top-entry offset plane
   - set Part.InWorkObject to the seed feature
   - create PlaneYZ reference with Part.CreateReferenceFromObject(OriginElements.PlaneYZ)
   - ShapeFactory.AddNewMirror(mirror_plane_reference)
-  - native Mirror exists after Part.Update()
+  - native Mirror exists after Part.Update() and CATIA screenshot visual check
 verification:
   required_native_feature: Mirror
   part_update_required: true

@@ -9,8 +9,8 @@ features:
       plate_width: 180
       plate_height: 100
       plate_depth: 12
-      seed_x: -60
-      seed_y: -30
+      seed_x: 50
+      seed_y: 20
       seed_radius: 8
       seed_depth: 8
       instances_1: 4

@@ -29,6 +29,16 @@ parameters:
     unit: mm
     required: false
     default: 12
+  seed_x:
+    type: number
+    unit: mm
+    required: false
+    default: 50
+  seed_y:
+    type: number
+    unit: mm
+    required: false
+    default: 20
   seed_radius:
     type: number
     unit: mm
@@ -57,10 +67,12 @@ preconditions:
   - Runner creates a new Part document, base Pad, seed Pad, and construction direction references.
 verified_pattern:
   - create Part document
-  - create base rectangular Pad and seed circular Pad
+  - create base rectangular Pad
+  - create an explicit PlaneXY offset reference at the base Pad top face
+  - create seed circular Pad from a sketch on the top-entry offset plane
   - create explicit X and Y HybridShape line direction references
   - ShapeFactory.AddNewRectPattern(seed_feature, instances, spacing, direction_refs)
-  - native RectPattern exists after Part.Update()
+  - native RectPattern exists after Part.Update() and CATIA screenshot visual check
 verification:
   required_native_feature: RectPattern
   part_update_required: true

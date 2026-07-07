@@ -18,6 +18,7 @@ from runners.partdesign.profile_pad_common import (  # noqa: E402
     catpart_output_path,
     create_base_pad,
     create_native_counterbore_hole_from_sketch,
+    create_offset_plane_reference,
     create_part,
     make_partdesign_report,
     run_id_now,
@@ -92,11 +93,17 @@ def build_native_counterbore_holes(params, output_dir, feature_id="counterbore_h
         height=params["plate_height"],
         depth=params["plate_depth"],
     )
+    top_ref = create_offset_plane_reference(
+        part,
+        ref_xy,
+        offset=params["plate_depth"],
+        container_name="Counterbore_Entry_Plane_References",
+    )
     for index, (x, y) in enumerate(params["positions"], start=1):
         create_native_counterbore_hole_from_sketch(
             part,
             body,
-            ref_xy,
+            top_ref,
             sketch_name=f"Counterbore_PointSketch_{index}",
             feature_name=f"Native_Counterbore_Hole_{index}",
             x=x,
@@ -118,7 +125,7 @@ def build_native_counterbore_holes(params, output_dir, feature_id="counterbore_h
         classification="NATIVE_SUCCESS",
         part_update_success=True,
         verifier_passed=True,
-        notes="Native CATIA counterbore Hole features created from point sketches; Part.Update passed.",
+        notes="Native CATIA counterbore Hole features created from top-entry point sketches on an offset plane; Part.Update passed.",
         extra={"params": params, "base_native_feature": "Pad", "part_number_assignment": part_number_result},
     )
     write_report(output_dir, "native_counterbore_holes_report.json", report)

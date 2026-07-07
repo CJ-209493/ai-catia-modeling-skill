@@ -77,6 +77,7 @@ def create_native_hole_from_sketch(part, body, ref_xy, *, sketch_name, feature_n
     hole = part.shape_factory.add_new_hole_from_sketch(sketch, depth)
     hole.name = feature_name
     hole.diameter.value = diameter
+    hole.reverse()
     part.in_work_object = hole
     part.update()
     return hole
@@ -92,6 +93,7 @@ def create_native_slot_pocket(part, body, ref_xy, *, sketch_name, feature_name, 
     part.update()
     pocket = part.shape_factory.add_new_pocket(sketch, depth)
     pocket.name = feature_name
+    pocket.direction_orientation = 0
     part.in_work_object = pocket
     part.update()
     return pocket

@@ -2,6 +2,8 @@
 
 Native success requires a native CATIA feature-tree entry and a successful update.
 
+For promoted geometric recipes, native success also requires a reviewed CATIA screenshot that visibly matches the intended shape. A hidden, off-body, wrong-direction, or visually absent feature is not a successful recipe promotion.
+
 Examples:
 
 - Native Shell requires a `Shell` feature.

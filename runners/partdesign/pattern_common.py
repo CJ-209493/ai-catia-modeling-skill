@@ -43,6 +43,16 @@ def create_circle_pocket(part, body, ref_xy, *, sketch_name, feature_name, x, y,
     return pocket
 
 
+def create_offset_plane_reference(part, ref_xy, *, offset, container_name):
+    construction = part.hybrid_bodies.add()
+    construction.name = container_name
+    plane = part.hybrid_shape_factory.add_new_plane_offset(ref_xy, offset, False)
+    plane.name = f"PlaneXY_Offset_{offset:g}"
+    construction.append_hybrid_shape(plane)
+    part.update()
+    return part.create_reference_from_object(plane)
+
+
 def create_construction_body(part):
     construction = part.hybrid_bodies.add()
     construction.name = "AI_CATIA_Pattern_References"

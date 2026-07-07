@@ -30,6 +30,17 @@ def normalize_params(params):
     }
 
 
+def safe_set_part_number(product, part_number):
+    result = {"requested": part_number, "applied": False, "error": ""}
+    try:
+        product.part_number = part_number
+    except Exception as exc:
+        result["error"] = str(exc)
+    else:
+        result["applied"] = True
+    return result
+
+
 def make_report(
     *,
     run_id,
@@ -74,7 +85,7 @@ def build_rectangular_pad(params, output_dir, feature_id="base_pad", mode="user"
     app = catia()
     doc = app.documents.add("Part")
     part = doc.part
-    doc.product.part_number = params["part_number"]
+    part_number_result = safe_set_part_number(doc.product, params["part_number"])
 
     body = part.bodies.item(1)
     body.name = "PartBody"
@@ -92,7 +103,7 @@ def build_rectangular_pad(params, output_dir, feature_id="base_pad", mode="user"
     part.in_work_object = pad
     part.update()
 
-    catpart_path = output_dir / f"{params['part_number']}.CATPart"
+    catpart_path = (output_dir / f"{params['part_number']}.CATPart").resolve()
     doc.save_as(str(catpart_path))
     report = make_report(
         run_id=datetime.now().strftime("%Y%m%d_%H%M%S"),
@@ -112,6 +123,7 @@ def build_rectangular_pad(params, output_dir, feature_id="base_pad", mode="user"
             "expected_bbox": [params["width"], params["height"], params["depth"]],
             "classification": "NATIVE_SUCCESS",
             "params": params,
+            "part_number_assignment": part_number_result,
         },
     )
     report_path = output_dir / "rectangular_pad_report.json"

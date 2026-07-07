@@ -1,4 +1,4 @@
-version: "1.0.13-draft"
+version: "1.0.14-draft"
 os:
   required: Windows
 catia:
@@ -19,3 +19,5 @@ security:
   commit_catpart_outputs: false
 developer_mode:
   required_for_recipe_promotion: true
+  geometric_recipe_promotion_requires_catia_screenshot_review: true
+  latest_visual_verification_report: examples/reports/live_visual_verification_20260707.md

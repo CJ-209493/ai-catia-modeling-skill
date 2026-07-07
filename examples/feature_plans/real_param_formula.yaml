@@ -1,0 +1,14 @@
+mode: user
+units: mm
+output_dir: outputs/demo_real_param_formula
+features:
+  - id: formula_1
+    recipe_id: knowledgeware.real_param_formula
+    params:
+      part_number: Demo_Real_Param_Formula
+      input_name: Input
+      output_name: Output
+      input_value: 5
+      multiplier: 2
+    expected:
+      native_feature: Formula

@@ -48,10 +48,12 @@ preconditions:
   - Runner creates a new Part document, disk Pad, seed Pocket, center point, and axis reference.
 verified_pattern:
   - create Part document
-  - create disk Pad and seed circular Pocket
+  - create disk Pad
+  - create an explicit PlaneXY offset reference at the disk top face
+  - create center and seed circular Pockets from sketches on the top-entry offset plane
   - create explicit center point and Z-axis HybridShape line references
   - ShapeFactory.AddNewCircPattern(seed_feature, instances, angle, center_ref, axis_ref)
-  - native CircPattern exists after Part.Update()
+  - native CircPattern exists after Part.Update() and CATIA screenshot visual check
 verification:
   required_native_feature: CircPattern
   part_update_required: true

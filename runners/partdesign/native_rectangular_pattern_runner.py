@@ -21,6 +21,7 @@ from runners.partdesign.pattern_common import (  # noqa: E402
     create_circle_pad,
     create_construction_body,
     create_native_rectangular_pattern,
+    create_offset_plane_reference,
     create_part,
     make_partdesign_report,
     run_id_now,
@@ -40,8 +41,8 @@ def normalize_params(params):
         "plate_width": float(params.get("plate_width", 180.0)),
         "plate_height": float(params.get("plate_height", 100.0)),
         "plate_depth": float(params.get("plate_depth", 12.0)),
-        "seed_x": float(params.get("seed_x", -60.0)),
-        "seed_y": float(params.get("seed_y", -30.0)),
+        "seed_x": float(params.get("seed_x", 50.0)),
+        "seed_y": float(params.get("seed_y", 20.0)),
         "seed_radius": float(params.get("seed_radius", 8.0)),
         "seed_depth": float(params.get("seed_depth", 8.0)),
         "instances_1": int(params.get("instances_1", 4)),
@@ -100,10 +101,16 @@ def build_native_rectangular_pattern(params, output_dir, feature_id="rect_patter
         height=params["plate_height"],
         depth=params["plate_depth"],
     )
+    top_ref = create_offset_plane_reference(
+        part,
+        ref_xy,
+        offset=params["plate_depth"],
+        container_name="RectPattern_Top_References",
+    )
     seed = create_circle_pad(
         part,
         body,
-        ref_xy,
+        top_ref,
         sketch_name="RectPattern_SeedBoss_Profile",
         feature_name="RectPattern_SeedBoss",
         x=params["seed_x"],

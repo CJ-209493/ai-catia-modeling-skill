@@ -8,10 +8,13 @@ Use these reference patterns before attempting native CATIA rectangular or circu
 
 Verified pattern:
 
+- Create the base Pad first.
+- Create an explicit PlaneXY offset reference at the top face height.
+- Create the seed Pad sketch on that top offset plane, not on the bottom XY plane.
 - Create construction HybridShape lines for the first and second pattern directions.
 - Convert those lines to CATIA references with `part.create_reference_from_object(line)`.
 - Pass the references as `direction_1_ref` and `direction_2_ref` to `add_new_rect_pattern`.
-- Confirm `Part.Update()` passes and the feature tree contains `RectPattern`.
+- Confirm `Part.Update()` passes, the feature tree contains `RectPattern`, and the CATIA screenshot shows the pattern instances on the intended body.
 
 ## Circular Pattern Center and Axis References
 
@@ -19,7 +22,10 @@ Verified pattern:
 
 Verified pattern:
 
+- Create the disk Pad first.
+- Create an explicit PlaneXY offset reference at the disk top face height.
+- Create center and seed Pocket sketches on that top offset plane so the pockets cut into the disk.
 - Create a construction point at the intended pattern center.
 - Create a construction HybridShape line in the intended axis direction.
 - Pass the center point reference and axis line reference to `add_new_circ_pattern`.
-- Confirm `Part.Update()` passes and the feature tree contains `CircPattern`.
+- Confirm `Part.Update()` passes, the feature tree contains `CircPattern`, and the CATIA screenshot shows the patterned pockets.

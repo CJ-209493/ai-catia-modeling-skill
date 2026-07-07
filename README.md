@@ -19,13 +19,13 @@ The goal is not to benchmark CATIA ability. Benchmarking, boundary tests, and me
 
 ## Project Status
 
-This is v1.0.13 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
+This is v1.0.14 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
 
 The important modeling knowledge is not merely that pycatia exposes a method. Many CATIA APIs are callable while still failing because the selected reference is wrong. For example, native `Shaft` and `Groove` require an explicit revolution axis in the sketch; without that axis, Codex must not claim native success.
 
 Current package state:
 
-- 22 executable User Mode runner recipes: rectangular Pad, native Hole from sketch point, native Hole with inch-to-mm conversion, native counterbore Holes, native slot Pocket, offset Plane Pad, rounded rectangle Pad, capsule Pad with native Holes, closed spline Pad, native RectPattern, native CircPattern, native Mirror across PlaneYZ, native Shell from selected face reference, selected-edge native ConstRadEdgeFillet, selected-edge native Chamfer, native Split from explicit offset PlaneXY, native Intersect between generated Bodies, same-sketch CenterLine Shaft, V pulley Shaft, same-sketch CenterLine Groove, real parameter formula, and Product Fix constraint.
+- 23 executable User Mode runner recipes: rectangular Pad, native Hole from sketch point, native Hole with inch-to-mm conversion, native counterbore Holes, native slot Pocket, offset Plane Pad, rounded rectangle Pad, capsule Pad with native Holes, closed spline Pad, native RectPattern, native CircPattern, native Mirror across PlaneYZ, native Shell from selected face reference, selected-edge native ConstRadEdgeFillet, selected-edge native Chamfer, native Split from explicit offset PlaneXY, native Intersect between generated Bodies, same-sketch CenterLine Shaft, V pulley Shaft, same-sketch CenterLine Groove, formula-driven parametric plate with native Holes, real parameter formula, and Product Fix constraint.
 - 16 imported `NATIVE_SUCCESS` CATIA call patterns from the 30-case regression run; all are now represented by promoted executable runners or a stricter promoted runner family.
 - 2 `PARTIAL_SUCCESS`, 11 `UNSUPPORTED`, and 1 `HONEST_FAILURE` regression memory entries.
 - Shaft and Groove now have promoted executable User Mode runners for the verified same-sketch `CenterLine` reference pattern. The imported regression cards remain as developer evidence and future extension material.
@@ -50,6 +50,7 @@ Current package state:
 - Latest chamfer runner evidence: `examples/reports/live_promoted_chamfer_runner_20260707.md`.
 - Latest split runner evidence: `examples/reports/live_promoted_split_runner_20260707.md`.
 - Latest intersect runner evidence: `examples/reports/live_promoted_intersect_runner_20260707.md`.
+- Latest full live CATIA visual verification evidence: `examples/reports/live_visual_verification_20260707.md`. The generated screenshots and CATIA documents were moved outside the installable package to `../ai-catia-modeling-skill-runtime-evidence/outputs_20260707_live_visual` and are intentionally not committed.
 
 ## Requirements
 
@@ -98,6 +99,7 @@ Developer Mode:
 - may create new recipes
 - may promote recipes after verification
 - must preserve failure memory and verifier evidence
+- must capture and review a CATIA Viewer screenshot before promoting a geometric recipe; a visibly wrong, hidden, or absent feature is not a passing recipe
 
 ## Natural Language to Feature Plan
 
@@ -168,6 +170,9 @@ python cli\run_feature_plan.py examples\feature_plans\native_intersect_two_bodie
 python cli\run_feature_plan.py examples\feature_plans\native_shaft_centerline.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_v_pulley_shaft.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_groove_centerline.yaml
+python cli\run_feature_plan.py examples\feature_plans\parametric_plate_formula_holes.yaml
+python cli\run_feature_plan.py examples\feature_plans\real_param_formula.yaml
+python cli\run_feature_plan.py examples\feature_plans\product_fix_constraint.yaml
 ```
 
 Search recipes:
@@ -197,6 +202,8 @@ The skill must distinguish:
 
 Geometry-equivalent output must not be reported as native CATIA feature success.
 
+For promoted geometric recipes, CATIA API success, `Part.Update`, and native feature-tree checks are still not enough. The generated CATIA Viewer screenshot must visibly match the intended feature. Knowledgeware-only and Assembly-tree recipes use parameter, relation, constraint, and product-tree verification because their screenshots are not geometric proof.
+
 ## Current Unsupported or Narrow Boundaries
 
 - Solid rect-to-circle multi-section loft is not fully proven.
@@ -204,7 +211,7 @@ Geometry-equivalent output must not be reported as native CATIA feature success.
 - Solid helix sweep spring is not fully proven.
 - Countersink/threaded Hole variants are not yet promoted to User Mode runners.
 - A native Slot feature is not claimed; `partdesign.native_slot_pocket` creates a native Pocket from a slot-shaped sketch.
-- Counterbore is promoted only through native Hole type/head properties; visual top/bottom direction is not independently measured by the current verifier.
+- Counterbore is promoted only through native Hole type/head properties from top-entry point sketches on an explicit offset plane; countersink/threaded variants remain future work.
 - Rounded rectangle and capsule recipes use tangent-arc sketches; they do not claim separate native Fillet features or full sketch constraint completeness.
 - Closed spline Pad is promoted only for a first-point-repeated closed profile; arbitrary spline repair remains future work.
 - Unit conversion is promoted only for explicit inch-to-mm numeric conversion; generic text/unit parsing remains future work.
@@ -239,7 +246,7 @@ If another user gets an install error, ask for the exact error text and run:
 
 ```powershell
 python cli\validate_install_package.py .
-python C:\Users\User\.codex\skills\.system\skill-creator\scripts\quick_validate.py .
+python "$env:USERPROFILE\.codex\skills\.system\skill-creator\scripts\quick_validate.py" .
 ```
 
 Common causes are installing the wrong directory, stale generated CATIA files in the package, invalid `SKILL.md` frontmatter, missing recipe runner paths, or private GitHub access not being available to the installer.

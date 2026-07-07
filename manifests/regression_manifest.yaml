@@ -1,4 +1,4 @@
-version: 1.0.13-draft
+version: 1.0.14-draft
 source_run: catia_recipe_regression_20260706_232109
 total_tests: 30
 classification_counts:
@@ -42,8 +42,9 @@ entries:
   part_update_success: true
   feature_tree_contains:
   - Hole
-  note: Native counterbore Hole features created; top/bottom visual direction is not
-    independently measured.
+  note: Imported regression created native counterbore Hole features. The promoted
+    runner now uses top-entry point sketches on an offset plane and has live visual
+    screenshot evidence in examples/reports/live_visual_verification_20260707.md.
   recipe_card: recipes/partdesign/regression/t04_native_counterbore_holes_hole_verified_once.md
 - test_id: T05
   feature_type: slot_through_pocket

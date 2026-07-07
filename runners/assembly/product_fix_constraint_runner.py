@@ -18,6 +18,17 @@ def normalize_params(params):
     }
 
 
+def safe_set_part_number(product, part_number):
+    result = {"requested": part_number, "applied": False, "error": ""}
+    try:
+        product.part_number = part_number
+    except Exception as exc:
+        result["error"] = str(exc)
+    else:
+        result["applied"] = True
+    return result
+
+
 def make_report(
     *,
     run_id,
@@ -62,6 +73,7 @@ def build_product_fix_constraint(params, output_dir, feature_id="fix_1", mode="u
     app = catia()
     doc = app.documents.add("Product")
     product = doc.product
+    product_number_result = safe_set_part_number(product, params["product_number"])
     child_a = product.products.add_new_product(params["component_a"])
     child_b = product.products.add_new_product(params["component_b"])
     constraints = product.constraints()
@@ -71,7 +83,7 @@ def build_product_fix_constraint(params, output_dir, feature_id="fix_1", mode="u
     product.update()
     after = constraints.count
 
-    catproduct_path = output_dir / f"{params['product_number']}.CATProduct"
+    catproduct_path = (output_dir / f"{params['product_number']}.CATProduct").resolve()
     doc.save_as(str(catproduct_path))
     report = make_report(
         run_id=datetime.now().strftime("%Y%m%d_%H%M%S"),
@@ -94,6 +106,7 @@ def build_product_fix_constraint(params, output_dir, feature_id="fix_1", mode="u
             "constraint_count_after": after,
             "components": [child_a.part_number, child_b.part_number],
             "params": params,
+            "part_number_assignment": product_number_result,
         },
     )
     report_path = output_dir / "product_fix_constraint_report.json"

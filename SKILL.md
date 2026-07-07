@@ -46,12 +46,16 @@ Imported regression recipes with `runner_kind: imported_call_pattern` are verifi
 3. Search `manifests/recipe_manifest.yaml` for verified recipes.
 4. If the selected recipe has an executable runner and is allowed in the current mode, execute the matching runner from `runners/`.
 5. Run verifiers from `verifiers/`.
-6. Classify each feature as `NATIVE_SUCCESS`, `GEOMETRY_EQUIVALENT`, `PARTIAL_SUCCESS`, `HONEST_FAILURE`, or `UNSUPPORTED`.
-7. Write a run report matching `schemas/report_schema.yaml`.
+6. For Developer Mode promotion or validation work, capture a CATIA Viewer screenshot and review it against the intended feature. A wrong-direction, off-body, hidden, or visually absent feature is not a passed recipe.
+7. Classify each feature as `NATIVE_SUCCESS`, `GEOMETRY_EQUIVALENT`, `PARTIAL_SUCCESS`, `HONEST_FAILURE`, or `UNSUPPORTED`.
+8. Write a run report matching `schemas/report_schema.yaml`.
 
 ## Mandatory Verification Rules
 
 - API call success is not enough. `Part.Update` and verification must pass.
+- For promoted geometric recipes, CATIA screenshot review must also pass. Feature-tree success with visibly wrong geometry is not enough.
+- Developer Mode promotion must leave CATIA Viewer screenshot evidence from a live CATIA session; a headless COM run without visual review is not promotion evidence.
+- Knowledgeware-only and Assembly-tree recipes may use parameter/product-tree verification; their screenshots are not geometric proof.
 - Native Shell / Mirror / Circular Pattern / Edge Fillet / Intersect / Sheet Metal / Assembly Constraint cannot be claimed unless the verifier confirms a native CATIA feature tree entry.
 - Native `Shaft` and `Groove` require the `partdesign.sketch_revolution_axis` reference pattern unless a recipe documents a stronger verified alternative.
 - `Product.Position` is not an Assembly Constraint.
@@ -89,7 +93,7 @@ Use this order:
 
 ## Regression Memory
 
-`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.13-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`, `examples/reports/live_promoted_cut_runners_20260707.md`, `examples/reports/live_promoted_pattern_runners_20260707.md`, `examples/reports/live_promoted_transform_shell_runners_20260707.md`, `examples/reports/live_promoted_profile_hole_runners_20260707.md`, `examples/reports/live_promoted_remaining_native_runners_20260707.md`, `examples/reports/live_promoted_edge_fillet_runner_20260707.md`, `examples/reports/live_promoted_chamfer_runner_20260707.md`, `examples/reports/live_promoted_split_runner_20260707.md`, and `examples/reports/live_promoted_intersect_runner_20260707.md`.
+`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.14-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_visual_verification_20260707.md` plus the earlier `examples/reports/live_promoted_*.md` reports.
 
 ## v1.0 Scope
 

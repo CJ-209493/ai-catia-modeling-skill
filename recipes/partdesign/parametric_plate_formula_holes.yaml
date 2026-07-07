@@ -1,0 +1,74 @@
+id: partdesign.parametric_plate_formula_holes
+title: Formula-driven parametric plate with native Holes
+domain: partdesign
+native_feature: Formula
+status: live_verified_once
+runner: runners/partdesign/parametric_plate_formula_holes_runner.py
+summary: Create visible length parameters, bind sketch dimensions and native Hole dimensions with Knowledgeware formulas, then update Length from 120 mm to 150 mm.
+reference_pattern_ids:
+  - knowledgeware.formula_driven_sketch_dimensions
+source_regression_ids:
+  - partdesign.regression.t19_parameters_formulas
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: T19_parametric_plate
+  length:
+    type: number
+    unit: mm
+    required: false
+    default: 120
+  width:
+    type: number
+    unit: mm
+    required: false
+    default: 60
+  thickness:
+    type: number
+    unit: mm
+    required: false
+    default: 8
+  hole_dia:
+    type: number
+    unit: mm
+    required: false
+    default: 8
+  edge_offset:
+    type: number
+    unit: mm
+    required: false
+    default: 12
+  updated_length:
+    type: number
+    unit: mm
+    required: false
+    default: 150
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and does not rely on pre-existing geometry.
+verified_pattern:
+  - create visible LENGTH parameters Length, Width, Thickness, HoleDia, and EdgeOffset
+  - create base sketch lines and add horizontal/vertical constraints while sketch is open
+  - constrain right/left/top/bottom base edges to the sketch absolute axes and bind them to Length / 2 and Width / 2
+  - close the sketch and bind constraint dimensions with Relations.CreateFormula
+  - create native Pad and bind Pad first-limit dimension to Thickness
+  - create four point sketches and add point-to-axis distance constraints while each sketch is open
+  - set point distance constraint sides to preserve each quadrant
+  - bind each point distance to Length / 2 - EdgeOffset and Width / 2 - EdgeOffset
+  - create four native Hole features, reverse each bottom-XY Hole into the Pad, and bind diameter/depth dimensions to HoleDia and Thickness
+  - change Length to 150 mm and confirm Part.Update keeps all constraints updated
+  - capture top and isometric CATIA screenshots and confirm the plate remains rectangular with four visible holes
+verification:
+  required_native_feature: Formula
+  secondary_native_features:
+    - Pad
+    - Hole
+  part_update_required: true
+  required_reference_pattern: knowledgeware.formula_driven_sketch_dimensions
+  length_update_mm: 150
+caveats:
+  - This recipe verifies a constrained formula-driven rectangular plate with four point-sketch native Holes.
+  - The point offsets use distance to the sketch absolute axis, not arbitrary edge inference.
+  - A feature-tree success without visual review is not sufficient for this recipe because under-constrained sketches can update into incorrect geometry.
+  - It does not solve arbitrary sketch constraint inference, arbitrary formula parsing, or full design-intent constraint synthesis.

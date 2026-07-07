@@ -18,6 +18,7 @@ from runners.partdesign.pattern_common import (  # noqa: E402
     catpart_output_path,
     create_base_pad,
     create_circle_pad,
+    create_offset_plane_reference,
     create_part,
     make_partdesign_report,
     run_id_now,
@@ -90,10 +91,16 @@ def build_native_mirror_plane(params, output_dir, feature_id="mirror_1", mode="u
         height=params["plate_height"],
         depth=params["plate_depth"],
     )
+    top_ref = create_offset_plane_reference(
+        part,
+        ref_xy,
+        offset=params["plate_depth"],
+        container_name="Mirror_Top_References",
+    )
     seed = create_circle_pad(
         part,
         body,
-        ref_xy,
+        top_ref,
         sketch_name="Mirror_SeedBoss_Profile",
         feature_name="Mirror_SeedBoss_PosX",
         x=params["seed_x"],

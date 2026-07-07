@@ -8,11 +8,14 @@ Use these reference patterns before attempting native CATIA Mirror or Shell feat
 
 Verified pattern:
 
+- Create the base Pad first.
+- Create an explicit PlaneXY offset reference at the top face height.
+- Create the seed Pad sketch on that top offset plane so the mirrored seed is visible on the body.
 - Create the seed feature that should be mirrored.
 - Set `part.in_work_object` to the seed feature.
 - Create a reference from an explicit support plane, such as `part.origin_elements.plane_yz`.
 - Pass that reference to `add_new_mirror`.
-- Confirm `Part.Update()` passes and the feature tree contains `Mirror`.
+- Confirm `Part.Update()` passes, the feature tree contains `Mirror`, and the CATIA screenshot shows the mirrored feature.
 
 Do not create copied pads or pockets and call the result native Mirror. That is geometry-equivalent only.
 

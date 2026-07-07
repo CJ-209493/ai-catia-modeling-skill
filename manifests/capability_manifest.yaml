@@ -1,4 +1,4 @@
-version: "1.0.13-draft"
+version: "1.0.14-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -20,12 +20,24 @@ native_feature_rules:
   api_call_success_is_not_enough: true
   part_update_required: true
   verifier_required: true
+  screenshot_review_required_for_geometric_promotion: true
   geometry_equivalent_is_not_native: true
   imported_call_pattern_is_not_executable_runner: true
 capability_sources:
   executable_recipe_manifest: manifests/recipe_manifest.yaml
   regression_manifest: manifests/regression_manifest.yaml
   reference_manifest: manifests/reference_manifest.yaml
+visual_verification:
+  latest_report: examples/reports/live_visual_verification_20260707.md
+  latest_local_evidence_root: ../ai-catia-modeling-skill-runtime-evidence/outputs_20260707_live_visual/visual_verification/final_run_v2
+  latest_summary: ../ai-catia-modeling-skill-runtime-evidence/outputs_20260707_live_visual/visual_verification/final_run_v2/final_visual_run_summary.json
+  latest_contact_sheets:
+    - ../ai-catia-modeling-skill-runtime-evidence/outputs_20260707_live_visual/visual_verification/final_run_v2/contact_sheets/final_contact_sheet_1.png
+    - ../ai-catia-modeling-skill-runtime-evidence/outputs_20260707_live_visual/visual_verification/final_run_v2/contact_sheets/final_contact_sheet_2.png
+    - ../ai-catia-modeling-skill-runtime-evidence/outputs_20260707_live_visual/visual_verification/final_run_v2/contact_sheets/final_contact_sheet_3.png
+    - ../ai-catia-modeling-skill-runtime-evidence/outputs_20260707_live_visual/visual_verification/final_run_v2/contact_sheets/final_contact_sheet_4.png
+  committed_artifacts: false
+  note: CATIA screenshots and CATPart/CATProduct outputs are local runtime evidence outside the installable skill package and are intentionally not committed.
 capabilities:
   partdesign:
     pad:
@@ -307,10 +319,16 @@ capabilities:
         - knowledgeware.real_param_formula
       caveat: formula-driven sketch binding is not yet covered by the T19 regression case
     formula_driven_sketch:
-      status: unsupported
-      classification: UNSUPPORTED
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.parametric_plate_formula_holes
+      reference_pattern_ids:
+        - knowledgeware.formula_driven_sketch_dimensions
+      user_mode: executable_runner_available
       failure_card_ids:
         - failures/regression/t19_parameters_formulas_unsupported.md
+      caveat: constrained formula-driven sketch dimensions are promoted only for the T19-style rectangular plate with native point-sketch Holes; arbitrary sketch constraint inference and formula parsing remain future work
   assembly:
     product_fix_constraint:
       status: live_verified_once

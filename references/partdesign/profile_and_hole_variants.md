@@ -9,10 +9,11 @@ Native counterbore holes are still CATIA `Hole` features. Do not model counterbo
 Verified pattern:
 
 - Create a base Pad first.
-- Create one point sketch per hole on the support sketch plane.
+- Create an explicit PlaneXY offset reference at the top face height.
+- Create one point sketch per hole on the top-entry offset plane, not on the bottom XY plane.
 - Call `ShapeFactory.AddNewHoleFromSketch(point_sketch, depth)`.
 - Set `hole.type = 2`, `hole.diameter.value`, `hole.head_diameter.value`, and `hole.head_depth.value`.
-- Confirm `Part.Update()` passes and the feature tree contains `Hole`.
+- Confirm `Part.Update()` passes, the feature tree contains `Hole`, and the CATIA screenshot shows the counterbores opening on the intended face.
 
 ## Offset Plane Pad Support
 

@@ -21,6 +21,7 @@ from runners.partdesign.pattern_common import (  # noqa: E402
     create_circle_pocket,
     create_construction_body,
     create_native_circular_pattern,
+    create_offset_plane_reference,
     create_part,
     make_partdesign_report,
     run_id_now,
@@ -99,10 +100,16 @@ def build_native_circular_pattern(params, output_dir, feature_id="circ_pattern_1
         radius=params["disk_radius"],
         depth=params["disk_depth"],
     )
+    top_ref = create_offset_plane_reference(
+        part,
+        ref_xy,
+        offset=params["disk_depth"],
+        container_name="CircPattern_Top_References",
+    )
     create_circle_pocket(
         part,
         body,
-        ref_xy,
+        top_ref,
         sketch_name="CircPattern_CenterHole_Profile",
         feature_name="CircPattern_CenterHolePocket",
         x=0.0,
@@ -113,7 +120,7 @@ def build_native_circular_pattern(params, output_dir, feature_id="circ_pattern_1
     seed = create_circle_pocket(
         part,
         body,
-        ref_xy,
+        top_ref,
         sketch_name="CircPattern_SeedPocket_Profile",
         feature_name="CircPattern_SeedPocket",
         x=params["seed_x"],

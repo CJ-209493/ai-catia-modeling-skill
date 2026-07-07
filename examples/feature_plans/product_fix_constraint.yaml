@@ -1,0 +1,12 @@
+mode: user
+units: mm
+output_dir: outputs/demo_product_fix_constraint
+features:
+  - id: fix_1
+    recipe_id: assembly.product_fix_constraint
+    params:
+      product_number: Demo_Product_Fix_Constraint
+      component_a: Component_A
+      component_b: Component_B
+    expected:
+      native_feature: Constraints

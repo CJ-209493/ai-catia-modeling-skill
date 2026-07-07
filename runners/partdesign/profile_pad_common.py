@@ -56,7 +56,7 @@ def create_offset_plane_reference(part, ref_xy, *, offset, container_name="AI_CA
 def create_native_counterbore_hole_from_sketch(
     part,
     body,
-    ref_xy,
+    support_ref,
     *,
     sketch_name,
     feature_name,
@@ -67,17 +67,16 @@ def create_native_counterbore_hole_from_sketch(
     head_diameter,
     head_depth,
 ):
-    hole = create_native_hole_from_sketch(
-        part,
-        body,
-        ref_xy,
-        sketch_name=sketch_name,
-        feature_name=feature_name,
-        x=x,
-        y=y,
-        depth=depth,
-        diameter=diameter,
-    )
+    part.in_work_object = body
+    sketch = body.sketches.add(support_ref)
+    sketch.name = sketch_name
+    factory_2d = sketch.open_edition()
+    factory_2d.create_point(x, y)
+    sketch.close_edition()
+    part.update()
+    hole = part.shape_factory.add_new_hole_from_sketch(sketch, depth)
+    hole.name = feature_name
+    hole.diameter.value = diameter
     hole.type = 2
     hole.head_diameter.value = head_diameter
     hole.head_depth.value = head_depth

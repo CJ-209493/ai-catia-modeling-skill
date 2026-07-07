@@ -54,10 +54,11 @@ preconditions:
 verified_pattern:
   - create Part document
   - create base rectangular Pad on OriginElements.PlaneXY
-  - create one point sketch per counterbore center
+  - create an explicit PlaneXY offset reference at the base Pad top face
+  - create one point sketch per counterbore center on the top-entry offset plane
   - ShapeFactory.AddNewHoleFromSketch(point_sketch, depth)
   - set hole.type, hole.diameter.value, hole.head_diameter.value, and hole.head_depth.value
-  - Part.Update()
+  - Part.Update() and CATIA screenshot visual check
 verification:
   required_native_feature: Hole
   part_update_required: true
@@ -65,4 +66,4 @@ verification:
 caveats:
   - This recipe verifies native counterbore Hole features, not pocket-modeled counterbore geometry.
   - Countersink and threaded Hole variants still require separate promotion.
-  - Top/bottom visual direction is not independently measured by the current verifier.
+  - Visual promotion requires the counterbores to open on the intended face; bottom-XY point sketches can create feature-tree success with no visible top counterbore.

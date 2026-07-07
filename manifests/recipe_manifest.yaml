@@ -1,4 +1,4 @@
-version: 1.0.13-draft
+version: 1.0.14-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -409,6 +409,29 @@ recipes:
   - centerline
   - revolution
   - sketch
+  - partdesign
+- id: partdesign.parametric_plate_formula_holes
+  title: Formula-driven parametric plate with native Holes
+  domain: partdesign
+  native_feature: Formula
+  status: live_verified_once
+  recipe_card: recipes/partdesign/parametric_plate_formula_holes.yaml
+  runner: runners/partdesign/parametric_plate_formula_holes_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/parameter_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - knowledgeware.formula_driven_sketch_dimensions
+  promoted_from:
+  - partdesign.regression.t19_parameters_formulas
+  tags:
+  - formula
+  - parameters
+  - sketch_constraints
+  - hole
+  - pad
   - partdesign
 - id: knowledgeware.real_param_formula
   title: Real parameter formula

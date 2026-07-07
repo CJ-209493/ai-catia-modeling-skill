@@ -1,4 +1,4 @@
-version: "1.0.13-draft"
+version: "1.0.14-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -132,6 +132,21 @@ reference_patterns:
       - arbitrary BooleanIntersection construction remains unpromoted
     promoted_recipe_ids:
       - partdesign.native_intersect_two_bodies
+  - id: knowledgeware.formula_driven_sketch_dimensions
+    title: Open-sketch constraints bound to Knowledgeware formulas
+    domain: knowledgeware
+    applies_to: [formula_driven_sketch]
+    status: reference_pattern_known
+    reference_doc: references/knowledgeware/formula_driven_sketch_dimensions.md
+    failure_memory:
+      - failures/regression/t19_parameters_formulas_unsupported.md
+    verifier_expectations:
+      - sketch constraints are created while the sketch is still open
+      - constraint dimensions are bound with Relations.CreateFormula after the sketch closes
+      - changing Length to 150 mm updates the base length and hole X offset dimensions
+      - arbitrary sketch constraint inference remains unpromoted
+    promoted_recipe_ids:
+      - partdesign.parametric_plate_formula_holes
   - id: partdesign.counterbore_hole_point_sketch
     title: Point sketch and COM properties for native counterbore Hole
     domain: partdesign
