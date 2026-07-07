@@ -1,0 +1,66 @@
+id: partdesign.native_hole_from_sketch
+title: Native Hole from sketch point
+domain: partdesign
+native_feature: Hole
+status: live_verified_once
+runner: runners/partdesign/native_hole_from_sketch_runner.py
+summary: Create a base Pad, create a point sketch on PlaneXY, then build a native CATIA Hole with ShapeFactory.AddNewHoleFromSketch.
+source_regression_ids:
+  - partdesign.regression.t02_boss_with_native_through_hole
+  - partdesign.regression.t03_four_native_holes
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Hole_From_Sketch
+  plate_width:
+    type: number
+    unit: mm
+    required: false
+    default: 100
+  plate_height:
+    type: number
+    unit: mm
+    required: false
+    default: 60
+  plate_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 12
+  hole_x:
+    type: number
+    unit: mm
+    required: false
+    default: 0
+  hole_y:
+    type: number
+    unit: mm
+    required: false
+    default: 0
+  hole_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 25
+  diameter:
+    type: number
+    unit: mm
+    required: false
+    default: 10
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and a base Pad before the Hole.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad on OriginElements.PlaneXY
+  - create point sketch on OriginElements.PlaneXY
+  - ShapeFactory.AddNewHoleFromSketch(point_sketch, depth)
+  - set hole.diameter.value
+  - Part.Update()
+verification:
+  required_native_feature: Hole
+  part_update_required: true
+caveats:
+  - This recipe verifies native Hole creation from a sketch point, not counterbore/countersink/threaded-hole variants.
+  - Hole direction and exact support-face selection remain narrower than a full BRep reference selector in v1.0.

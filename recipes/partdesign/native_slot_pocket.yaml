@@ -1,0 +1,59 @@
+id: partdesign.native_slot_pocket
+title: Native slot Pocket from racetrack sketch
+domain: partdesign
+native_feature: Pocket
+status: live_verified_once
+runner: runners/partdesign/native_slot_pocket_runner.py
+summary: Create a base Pad, draw a closed racetrack slot sketch, then build a native CATIA Pocket.
+source_regression_ids:
+  - partdesign.regression.t05_slot_through_pocket
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Slot_Pocket
+  plate_width:
+    type: number
+    unit: mm
+    required: false
+    default: 100
+  plate_height:
+    type: number
+    unit: mm
+    required: false
+    default: 50
+  plate_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 10
+  slot_half_center_distance:
+    type: number
+    unit: mm
+    required: false
+    default: 24
+  slot_radius:
+    type: number
+    unit: mm
+    required: false
+    default: 6
+  pocket_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 22
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and a base Pad before the Pocket.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad on OriginElements.PlaneXY
+  - create closed racetrack sketch on OriginElements.PlaneXY
+  - ShapeFactory.AddNewPocket(sketch, depth)
+  - Part.Update()
+verification:
+  required_native_feature: Pocket
+  part_update_required: true
+caveats:
+  - This recipe verifies a native Pocket feature, not a native Slot feature type.
+  - The pocket depth defaults beyond the base Pad thickness to create a through cut.

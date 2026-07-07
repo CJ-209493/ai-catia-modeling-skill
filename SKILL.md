@@ -23,6 +23,8 @@ Imported regression recipes with `runner_kind: imported_call_pattern` are verifi
 
 `partdesign.native_shaft_centerline` and `partdesign.native_groove_centerline` are promoted User Mode runners for the verified same-sketch `CenterLine` reference pattern. Use them for the constrained segment-profile Shaft and rectangular Groove cases before considering Developer Mode exploration.
 
+`partdesign.native_hole_from_sketch` and `partdesign.native_slot_pocket` are promoted User Mode runners for constrained base-pad cut cases. Do not extrapolate them to counterbore/countersink/threaded Hole variants or native Slot features without Developer Mode promotion.
+
 ## Workflow
 
 1. Parse the user request into a Feature Plan matching `schemas/feature_plan_schema.yaml`.
@@ -63,7 +65,7 @@ Use this order:
 
 ## Regression Memory
 
-`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.4-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. The promoted Shaft/Groove runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`.
+`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.5-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md` and `examples/reports/live_promoted_cut_runners_20260707.md`.
 
 ## v1.0 Scope
 

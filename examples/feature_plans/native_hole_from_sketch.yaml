@@ -1,0 +1,17 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_hole_from_sketch
+features:
+  - id: hole_1
+    recipe_id: partdesign.native_hole_from_sketch
+    params:
+      part_number: Demo_Native_Hole_From_Sketch
+      plate_width: 100
+      plate_height: 60
+      plate_depth: 12
+      hole_x: 0
+      hole_y: 0
+      hole_depth: 25
+      diameter: 10
+    expected:
+      native_feature: Hole

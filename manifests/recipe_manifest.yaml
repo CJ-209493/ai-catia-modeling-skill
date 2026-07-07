@@ -1,4 +1,4 @@
-version: 1.0.4-draft
+version: 1.0.5-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -18,6 +18,44 @@ recipes:
   - sketch
   - partdesign
   - base
+- id: partdesign.native_hole_from_sketch
+  title: Native Hole from sketch point
+  domain: partdesign
+  native_feature: Hole
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_hole_from_sketch.yaml
+  runner: runners/partdesign/native_hole_from_sketch_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  promoted_from:
+  - partdesign.regression.t02_boss_with_native_through_hole
+  - partdesign.regression.t03_four_native_holes
+  tags:
+  - hole
+  - sketch
+  - point
+  - partdesign
+- id: partdesign.native_slot_pocket
+  title: Native slot Pocket from racetrack sketch
+  domain: partdesign
+  native_feature: Pocket
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_slot_pocket.yaml
+  runner: runners/partdesign/native_slot_pocket_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  promoted_from:
+  - partdesign.regression.t05_slot_through_pocket
+  tags:
+  - pocket
+  - slot
+  - racetrack
+  - sketch
+  - partdesign
 - id: partdesign.native_shaft_centerline
   title: Native Shaft with same-sketch CenterLine
   domain: partdesign

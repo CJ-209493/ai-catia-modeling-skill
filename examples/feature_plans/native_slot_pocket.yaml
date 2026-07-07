@@ -1,0 +1,16 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_slot_pocket
+features:
+  - id: slot_pocket_1
+    recipe_id: partdesign.native_slot_pocket
+    params:
+      part_number: Demo_Native_Slot_Pocket
+      plate_width: 100
+      plate_height: 50
+      plate_depth: 10
+      slot_half_center_distance: 24
+      slot_radius: 6
+      pocket_depth: 22
+    expected:
+      native_feature: Pocket

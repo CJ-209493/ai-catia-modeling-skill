@@ -1,4 +1,4 @@
-version: "1.0.4-draft"
+version: "1.0.5-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -40,19 +40,23 @@ capabilities:
     pocket:
       status: live_verified_once
       classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_slot_pocket
       imported_recipe_ids:
         - partdesign.regression.t05_slot_through_pocket
-      user_mode: imported_call_pattern_only
+      user_mode: executable_runner_available
     hole:
       status: live_verified_once
       classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_hole_from_sketch
       imported_recipe_ids:
         - partdesign.regression.t02_boss_with_native_through_hole
         - partdesign.regression.t03_four_native_holes
         - partdesign.regression.t04_native_counterbore_holes
         - partdesign.regression.t20_unit_conversion_native_hole
         - partdesign.regression.t22_capsule_with_native_holes
-      user_mode: imported_call_pattern_only
+      user_mode: executable_runner_available
     counterbore_hole:
       status: live_verified_once
       classification: NATIVE_SUCCESS
