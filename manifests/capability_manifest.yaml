@@ -1,4 +1,4 @@
-version: "1.0.9-draft"
+version: "1.0.10-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -217,11 +217,16 @@ capabilities:
       user_mode: executable_runner_available
       caveat: native Groove requires sketch.com_object.CenterLine plus an existing solid context; annular pockets are geometry equivalent
     fillet:
-      status: partial_success
-      classification: PARTIAL_SUCCESS
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_edge_fillet_selected_edge
+      reference_pattern_ids:
+        - partdesign.edge_fillet_selected_edge_ref
+      user_mode: executable_runner_available
       failure_card_ids:
         - failures/regression/t01_pad_plus_single_edge_fillet_partial_success.md
-      caveat: native fillet feature was created, but exact edge filtering is not promoted as a repeatable recipe
+      caveat: constrained native ConstRadEdgeFillet is promoted only for selected-edge index references; exact four-vertical-edge filtering and arbitrary edge intent remain future verifier work
     chamfer:
       status: unsupported
       classification: UNSUPPORTED

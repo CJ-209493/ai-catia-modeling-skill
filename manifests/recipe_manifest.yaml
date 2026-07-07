@@ -1,4 +1,4 @@
-version: 1.0.9-draft
+version: 1.0.10-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -263,6 +263,27 @@ recipes:
   - shell
   - selected_face
   - face_reference
+  - partdesign
+- id: partdesign.native_edge_fillet_selected_edge
+  title: Native ConstRadEdgeFillet from selected edge reference
+  domain: partdesign
+  native_feature: ConstRadEdgeFillet
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_edge_fillet_selected_edge.yaml
+  runner: runners/partdesign/native_edge_fillet_selected_edge_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.edge_fillet_selected_edge_ref
+  promoted_from:
+  - partdesign.regression.t01_pad_plus_single_edge_fillet
+  tags:
+  - fillet
+  - edge_fillet
+  - selected_edge
+  - edge_reference
   - partdesign
 - id: partdesign.native_shaft_centerline
   title: Native Shaft with same-sketch CenterLine

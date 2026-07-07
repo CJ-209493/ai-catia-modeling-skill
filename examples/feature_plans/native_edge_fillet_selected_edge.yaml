@@ -1,0 +1,17 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_edge_fillet_selected_edge
+features:
+  - id: edge_fillet_1
+    recipe_id: partdesign.native_edge_fillet_selected_edge
+    params:
+      part_number: Demo_Native_Edge_Fillet_Selected_Edge
+      plate_width: 120
+      plate_height: 80
+      plate_depth: 20
+      radius: 5
+      selected_edge_index: 1
+      propagation: 1
+    expected:
+      native_feature: ConstRadEdgeFillet
+      reference_pattern: partdesign.edge_fillet_selected_edge_ref

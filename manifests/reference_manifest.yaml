@@ -1,4 +1,4 @@
-version: "1.0.9-draft"
+version: "1.0.10-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -71,6 +71,22 @@ reference_patterns:
       - manual wall construction is not native shell success
     promoted_recipe_ids:
       - partdesign.native_shell_selected_face
+  - id: partdesign.edge_fillet_selected_edge_ref
+    title: Selected edge reference for native ConstRadEdgeFillet
+    domain: partdesign
+    applies_to: [edge_fillet]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/edge_selection_features.md
+    failure_memory:
+      - failures/regression/t01_pad_plus_single_edge_fillet_partial_success.md
+      - failures/regression/t16_fillet_chamfer_order_unsupported.md
+    verifier_expectations:
+      - native feature tree contains ConstRadEdgeFillet after Part.Update
+      - edge reference comes from Selection.Search("Topology.Edge,sel") scoped to the generated target feature
+      - rounded sketch profiles or manual geometry are not native edge fillet success
+      - exact four-vertical-edge filtering remains unpromoted
+    promoted_recipe_ids:
+      - partdesign.native_edge_fillet_selected_edge
   - id: partdesign.counterbore_hole_point_sketch
     title: Point sketch and COM properties for native counterbore Hole
     domain: partdesign

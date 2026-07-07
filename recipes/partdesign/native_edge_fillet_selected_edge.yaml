@@ -1,0 +1,62 @@
+id: partdesign.native_edge_fillet_selected_edge
+title: Native ConstRadEdgeFillet from selected edge reference
+domain: partdesign
+native_feature: ConstRadEdgeFillet
+status: live_verified_once
+runner: runners/partdesign/native_edge_fillet_selected_edge_runner.py
+summary: Create a base Pad and build a native CATIA constant-radius edge fillet from a CATIA selection-derived edge reference.
+reference_pattern_ids:
+  - partdesign.edge_fillet_selected_edge_ref
+source_regression_ids:
+  - partdesign.regression.t01_pad_plus_single_edge_fillet
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Edge_Fillet_Selected_Edge
+  plate_width:
+    type: number
+    unit: mm
+    required: false
+    default: 120
+  plate_height:
+    type: number
+    unit: mm
+    required: false
+    default: 80
+  plate_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 20
+  radius:
+    type: number
+    unit: mm
+    required: false
+    default: 5
+  selected_edge_index:
+    type: integer
+    required: false
+    default: 1
+  propagation:
+    type: integer
+    required: false
+    default: 1
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and base Pad before selecting edges.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad as the fillet target
+  - select edges from the base Pad with Selection.Search(Topology.Edge,sel)
+  - get the selected edge reference with Selection.Item2(index).Reference
+  - ShapeFactory.AddNewSolidEdgeFilletWithConstantRadius(edge_reference, propagation, radius)
+  - native ConstRadEdgeFillet exists after Part.Update()
+verification:
+  required_native_feature: ConstRadEdgeFillet
+  part_update_required: true
+  required_reference_pattern: partdesign.edge_fillet_selected_edge_ref
+caveats:
+  - This recipe verifies native ConstRadEdgeFillet creation from a selection-derived edge reference.
+  - The selected edge is currently index-based; exact four vertical edges or arbitrary semantic edge intent needs future verifier work.
+  - Chamfer ordering remains unsupported and is not promoted by this recipe.
