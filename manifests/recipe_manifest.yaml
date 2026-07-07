@@ -1,4 +1,4 @@
-version: 1.0.2-draft
+version: 1.0.3-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -56,13 +56,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Hole
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T02
   tags:
   - regression
   - imported
   - hole
   - boss_with_native_through_hole
+  live_verified_at: '2026-07-06T23:21:11'
 - id: partdesign.regression.t03_four_native_holes
   title: T03 four_native_holes
   domain: partdesign
@@ -76,13 +77,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Hole
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T03
   tags:
   - regression
   - imported
   - hole
   - four_native_holes
+  live_verified_at: '2026-07-06T23:21:11'
 - id: partdesign.regression.t04_native_counterbore_holes
   title: T04 native_counterbore_holes
   domain: partdesign
@@ -96,13 +98,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Hole
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T04
   tags:
   - regression
   - imported
   - hole
   - native_counterbore_holes
+  live_verified_at: '2026-07-06T23:21:11'
 - id: partdesign.regression.t05_slot_through_pocket
   title: T05 slot_through_pocket
   domain: partdesign
@@ -116,13 +119,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Pocket
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T05
   tags:
   - regression
   - imported
   - pocket
   - slot_through_pocket
+  live_verified_at: '2026-07-06T23:21:11'
 - id: partdesign.regression.t06_offset_plane_secondary_pad
   title: T06 offset_plane_secondary_pad
   domain: partdesign
@@ -136,13 +140,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Pad
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T06
   tags:
   - regression
   - imported
   - pad
   - offset_plane_secondary_pad
+  live_verified_at: '2026-07-06T23:21:12'
 - id: partdesign.regression.t08_rectangular_pattern
   title: T08 rectangular_pattern
   domain: partdesign
@@ -156,13 +161,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - RectPattern
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T08
   tags:
   - regression
   - imported
   - rectpattern
   - rectangular_pattern
+  live_verified_at: '2026-07-06T23:21:12'
 - id: partdesign.regression.t09_circular_pattern
   title: T09 circular_pattern
   domain: partdesign
@@ -176,13 +182,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - CircPattern
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T09
   tags:
   - regression
   - imported
   - circpattern
   - circular_pattern
+  live_verified_at: '2026-07-06T23:21:12'
 - id: partdesign.regression.t10_mirror
   title: T10 mirror
   domain: partdesign
@@ -196,13 +203,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Mirror
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T10
   tags:
   - regression
   - imported
   - mirror
   - mirror
+  live_verified_at: '2026-07-06T23:21:12'
 - id: partdesign.regression.t11_shaft_with_sketch_centerline
   title: T11 shaft_with_sketch_centerline
   domain: partdesign
@@ -216,13 +224,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Shaft
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T11
   tags:
   - regression
   - imported
   - shaft
   - shaft_with_sketch_centerline
+  live_verified_at: '2026-07-06T23:21:12'
 - id: partdesign.regression.t12_groove_with_sketch_centerline
   title: T12 groove_with_sketch_centerline
   domain: partdesign
@@ -236,13 +245,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Groove
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T12
   tags:
   - regression
   - imported
   - groove
   - groove_with_sketch_centerline
+  live_verified_at: '2026-07-06T23:21:12'
 - id: partdesign.regression.t13_v_pulley_by_shaft_profile
   title: T13 v_pulley_by_shaft_profile
   domain: partdesign
@@ -256,13 +266,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Shaft
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T13
   tags:
   - regression
   - imported
   - shaft
   - v_pulley_by_shaft_profile
+  live_verified_at: '2026-07-06T23:21:12'
 - id: partdesign.regression.t14_shell_from_face_reference
   title: T14 shell_from_face_reference
   domain: partdesign
@@ -276,13 +287,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Shell
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T14
   tags:
   - regression
   - imported
   - shell
   - shell_from_face_reference
+  live_verified_at: '2026-07-06T23:21:12'
 - id: partdesign.regression.t20_unit_conversion_native_hole
   title: T20 unit_conversion_native_hole
   domain: partdesign
@@ -296,13 +308,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Hole
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T20
   tags:
   - regression
   - imported
   - hole
   - unit_conversion_native_hole
+  live_verified_at: '2026-07-06T23:21:13'
 - id: partdesign.regression.t21_rounded_rectangle_pad
   title: T21 rounded_rectangle_pad
   domain: partdesign
@@ -316,13 +329,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Pad
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T21
   tags:
   - regression
   - imported
   - pad
   - rounded_rectangle_pad
+  live_verified_at: '2026-07-06T23:21:13'
 - id: partdesign.regression.t22_capsule_with_native_holes
   title: T22 capsule_with_native_holes
   domain: partdesign
@@ -336,13 +350,14 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Hole
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T22
   tags:
   - regression
   - imported
   - hole
   - capsule_with_native_holes
+  live_verified_at: '2026-07-06T23:21:13'
 - id: partdesign.regression.t23_closed_spline_pad
   title: T23 closed_spline_pad
   domain: partdesign
@@ -356,10 +371,11 @@ recipes:
   part_update_success: true
   feature_tree_contains:
   - Pad
-  source_run: catia_recipe_regression_20260706_010608
+  source_run: catia_recipe_regression_20260706_232109
   test_id: T23
   tags:
   - regression
   - imported
   - pad
   - closed_spline_pad
+  live_verified_at: '2026-07-06T23:21:13'

@@ -10,6 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_regression_manifest_indexes_all_30_boundary_cases():
     manifest = yaml.safe_load((ROOT / "manifests" / "regression_manifest.yaml").read_text(encoding="utf-8"))
 
+    assert manifest["source_run"] == "catia_recipe_regression_20260706_232109"
+    assert manifest["live_verified_at"] == "2026-07-06T23:21:09"
     assert manifest["total_tests"] == 30
     assert len(manifest["entries"]) == 30
     assert manifest["classification_counts"] == {
@@ -73,3 +75,12 @@ def test_capability_manifest_references_existing_recipes_and_failure_cards():
                     assert recipe_id in recipe_ids
             for failure_card in feature.get("failure_card_ids", []):
                 assert (ROOT / failure_card).exists()
+
+
+def test_live_regression_report_is_sanitized_for_github():
+    report = ROOT / "examples" / "reports" / "live_regression_20260706_232109.md"
+    text = report.read_text(encoding="utf-8")
+
+    assert "catia_recipe_regression_20260706_232109" in text
+    assert "C:\\Users" not in text
+    assert ".CATPart" not in text

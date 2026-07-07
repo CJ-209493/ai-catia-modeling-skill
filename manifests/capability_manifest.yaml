@@ -1,4 +1,4 @@
-version: "1.0.2-draft"
+version: "1.0.3-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user

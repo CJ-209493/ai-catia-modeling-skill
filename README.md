@@ -29,6 +29,7 @@ Current package state:
 - 16 imported `NATIVE_SUCCESS` CATIA call patterns from the 30-case regression run.
 - 2 `PARTIAL_SUCCESS`, 11 `UNSUPPORTED`, and 1 `HONEST_FAILURE` regression memory entries.
 - Shaft and Groove are included as imported native-success call patterns using the same-sketch `CenterLine` reference pattern, but they are not yet promoted to executable User Mode runners.
+- Latest live CATIA regression evidence: `catia_recipe_regression_20260706_232109`, recorded in `manifests/regression_manifest.yaml` and summarized in `examples/reports/live_regression_20260706_232109.md`.
 
 ## Requirements
 
@@ -107,7 +108,7 @@ Before executing a feature, Codex should check `manifests/reference_manifest.yam
 
 This pattern is documented in `references/partdesign/sketch_revolution_axis.md`. It is deliberately separate from executable recipe status: knowing the reference pattern does not by itself mean a stable User Mode runner exists.
 
-The 30-case imported regression memory is indexed in `manifests/regression_manifest.yaml`. Native-success entries are also indexed in `manifests/recipe_manifest.yaml` with `runner_kind: imported_call_pattern`, `runner: null`, and `user_mode_allowed: false`. They are useful for Developer Mode recipe promotion and for preventing Codex from rediscovering known pycatia mistakes.
+The 30-case imported regression memory is indexed in `manifests/regression_manifest.yaml`. Native-success entries are also indexed in `manifests/recipe_manifest.yaml` with `runner_kind: imported_call_pattern`, `runner: null`, and `user_mode_allowed: false`. They are useful for Developer Mode recipe promotion and for preventing Codex from rediscovering known pycatia mistakes. The current evidence run was executed live through CATIA COM and generated local CATPart artifacts that are intentionally not committed.
 
 ## Run a Verified Recipe
 

@@ -48,5 +48,6 @@ part.update()
 Reference selection and InWorkObject state must match the recorded context.
 
 ## Source Run
+- source_run: catia_recipe_regression_20260706_232109
 - test_id: T21
-- timestamp: 2026-07-06T01:06:16
+- timestamp: 2026-07-06T23:21:13

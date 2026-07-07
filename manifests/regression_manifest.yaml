@@ -1,5 +1,5 @@
-version: 1.0.2-draft
-source_run: catia_recipe_regression_20260706_010608
+version: 1.0.3-draft
+source_run: catia_recipe_regression_20260706_232109
 total_tests: 30
 classification_counts:
   NATIVE_SUCCESS: 16
@@ -268,6 +268,7 @@ entries:
   classification: HONEST_FAILURE
   part_update_success: false
   feature_tree_contains: []
-  note: "\u5C3A\u5BF8\u7EA6\u675F\u51B2\u7A81\uFF1A\u540C\u4E00 X \u5411\u5C3A\u5BF8\
-    \u4E0D\u80FD\u540C\u65F6\u7B49\u4E8E 100 mm \u548C 80 mm\u3002"
+  note: 尺寸约束冲突：同一 X 向尺寸不能同时等于 100 mm 和 80 mm。
   failure_card: failures/regression/t30_constraint_conflict_honest_failure.md
+live_verified_at: '2026-07-06T23:21:09'
+live_catia_run: true

@@ -61,7 +61,7 @@ Use this order:
 
 ## Regression Memory
 
-`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.2-draft it indexes 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow.
+`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.3-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow.
 
 ## v1.0 Scope
 

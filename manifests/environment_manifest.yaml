@@ -1,4 +1,4 @@
-version: "1.0.2-draft"
+version: "1.0.3-draft"
 os:
   required: Windows
 catia:

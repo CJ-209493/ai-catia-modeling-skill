@@ -49,5 +49,6 @@ hole_diameter = 0.5 * mm
 Reference selection and InWorkObject state must match the recorded context.
 
 ## Source Run
+- source_run: catia_recipe_regression_20260706_232109
 - test_id: T20
-- timestamp: 2026-07-06T01:06:15
+- timestamp: 2026-07-06T23:21:13
