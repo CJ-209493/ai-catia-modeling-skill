@@ -27,6 +27,8 @@ Imported regression recipes with `runner_kind: imported_call_pattern` are verifi
 
 `partdesign.native_rectangular_pattern` and `partdesign.native_circular_pattern` are promoted User Mode runners for constrained seed-feature pattern cases. They require explicit construction direction, center, or axis references; copied geometry is only geometry-equivalent unless the native pattern feature verifies.
 
+`partdesign.native_mirror_plane` and `partdesign.native_shell_selected_face` are promoted User Mode runners for constrained transform and shell cases. Mirror requires the seed feature as `Part.InWorkObject` plus an explicit PlaneYZ reference. Shell requires a CATIA selection-derived face reference and is currently index-based, not arbitrary semantic face selection.
+
 ## Workflow
 
 1. Parse the user request into a Feature Plan matching `schemas/feature_plan_schema.yaml`.
@@ -53,6 +55,8 @@ Reference selection patterns live in `manifests/reference_manifest.yaml` and `re
 
 For `Shaft` and `Groove`, read `references/partdesign/sketch_revolution_axis.md`. The core rule is: create the closed profile and an explicitly named construction Line2D revolution axis in the same sketch before calling `add_new_shaft(sketch)` or `add_new_groove(sketch)`.
 
+For `RectPattern` and `CircPattern`, read `references/partdesign/pattern_references.md`. For `Mirror` and `Shell`, read `references/partdesign/transform_shell_references.md`. Explicit copied geometry is not native pattern or mirror success, and manually built thin walls are not native Shell success.
+
 ## Recipe Selection
 
 Read `manifests/capability_manifest.yaml` first to understand current v1.0 coverage. Then read only the recipe cards needed for the requested feature.
@@ -67,7 +71,7 @@ Use this order:
 
 ## Regression Memory
 
-`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.6-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`, `examples/reports/live_promoted_cut_runners_20260707.md`, and `examples/reports/live_promoted_pattern_runners_20260707.md`.
+`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.7-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`, `examples/reports/live_promoted_cut_runners_20260707.md`, `examples/reports/live_promoted_pattern_runners_20260707.md`, and `examples/reports/live_promoted_transform_shell_runners_20260707.md`.
 
 ## v1.0 Scope
 

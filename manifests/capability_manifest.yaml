@@ -1,4 +1,4 @@
-version: "1.0.6-draft"
+version: "1.0.7-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -86,17 +86,25 @@ capabilities:
     mirror:
       status: live_verified_once
       classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_mirror_plane
       imported_recipe_ids:
         - partdesign.regression.t10_mirror
-      user_mode: imported_call_pattern_only
-      verifier_note: must confirm native Mirror feature
+      reference_pattern_ids:
+        - partdesign.mirror_plane_ref
+      user_mode: executable_runner_available
+      caveat: native Mirror currently covers a generated seed feature mirrored across explicit PlaneYZ; arbitrary mirror plane selection remains future work
     shell:
       status: live_verified_once
       classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_shell_selected_face
       imported_recipe_ids:
         - partdesign.regression.t14_shell_from_face_reference
-      user_mode: imported_call_pattern_only
-      verifier_note: must confirm native Shell feature and removed face
+      reference_pattern_ids:
+        - partdesign.shell_selected_face_ref
+      user_mode: executable_runner_available
+      caveat: removed-face selection is constrained to a CATIA selection index; arbitrary face intent remains future verifier work
     shaft:
       status: live_verified_once
       classification: NATIVE_SUCCESS

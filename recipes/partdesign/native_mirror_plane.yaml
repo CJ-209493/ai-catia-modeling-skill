@@ -1,0 +1,69 @@
+id: partdesign.native_mirror_plane
+title: Native Mirror from seed feature and PlaneYZ
+domain: partdesign
+native_feature: Mirror
+status: live_verified_once
+runner: runners/partdesign/native_mirror_plane_runner.py
+summary: Create a seed Pad and build a native CATIA Mirror using an explicit OriginElements PlaneYZ reference.
+reference_pattern_ids:
+  - partdesign.mirror_plane_ref
+source_regression_ids:
+  - partdesign.regression.t10_mirror
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Mirror_Plane
+  plate_width:
+    type: number
+    unit: mm
+    required: false
+    default: 180
+  plate_height:
+    type: number
+    unit: mm
+    required: false
+    default: 100
+  plate_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 12
+  seed_x:
+    type: number
+    unit: mm
+    required: false
+    default: 45
+  seed_y:
+    type: number
+    unit: mm
+    required: false
+    default: 0
+  seed_radius:
+    type: number
+    unit: mm
+    required: false
+    default: 8
+  seed_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 10
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document, base Pad, and seed Pad before adding Mirror.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad and seed circular Pad
+  - set Part.InWorkObject to the seed feature
+  - create PlaneYZ reference with Part.CreateReferenceFromObject(OriginElements.PlaneYZ)
+  - ShapeFactory.AddNewMirror(mirror_plane_reference)
+  - native Mirror exists after Part.Update()
+verification:
+  required_native_feature: Mirror
+  part_update_required: true
+  required_reference_pattern: partdesign.mirror_plane_ref
+caveats:
+  - This recipe verifies native Mirror creation from a generated seed feature and PlaneYZ.
+  - Explicit copied geometry must be reported as geometry-equivalent, not native Mirror success.
+  - Arbitrary mirror plane selection remains Developer Mode promotion work.

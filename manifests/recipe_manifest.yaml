@@ -1,4 +1,4 @@
-version: 1.0.6-draft
+version: 1.0.7-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -97,6 +97,46 @@ recipes:
   - circular_pattern
   - pattern
   - axis_reference
+  - partdesign
+- id: partdesign.native_mirror_plane
+  title: Native Mirror from seed feature and PlaneYZ
+  domain: partdesign
+  native_feature: Mirror
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_mirror_plane.yaml
+  runner: runners/partdesign/native_mirror_plane_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.mirror_plane_ref
+  promoted_from:
+  - partdesign.regression.t10_mirror
+  tags:
+  - mirror
+  - plane
+  - transformation
+  - partdesign
+- id: partdesign.native_shell_selected_face
+  title: Native Shell from selected face reference
+  domain: partdesign
+  native_feature: Shell
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_shell_selected_face.yaml
+  runner: runners/partdesign/native_shell_selected_face_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.shell_selected_face_ref
+  promoted_from:
+  - partdesign.regression.t14_shell_from_face_reference
+  tags:
+  - shell
+  - selected_face
+  - face_reference
   - partdesign
 - id: partdesign.native_shaft_centerline
   title: Native Shaft with same-sketch CenterLine

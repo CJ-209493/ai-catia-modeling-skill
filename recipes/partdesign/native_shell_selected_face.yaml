@@ -1,0 +1,63 @@
+id: partdesign.native_shell_selected_face
+title: Native Shell from selected face reference
+domain: partdesign
+native_feature: Shell
+status: live_verified_once
+runner: runners/partdesign/native_shell_selected_face_runner.py
+summary: Create a base Pad and build a native CATIA Shell using a CATIA selection-derived face reference.
+reference_pattern_ids:
+  - partdesign.shell_selected_face_ref
+source_regression_ids:
+  - partdesign.regression.t14_shell_from_face_reference
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Shell_Selected_Face
+  box_width:
+    type: number
+    unit: mm
+    required: false
+    default: 120
+  box_height:
+    type: number
+    unit: mm
+    required: false
+    default: 80
+  box_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 50
+  inside_thickness:
+    type: number
+    unit: mm
+    required: false
+    default: 3
+  outside_thickness:
+    type: number
+    unit: mm
+    required: false
+    default: 0
+  selected_face_index:
+    type: integer
+    required: false
+    default: 1
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and base box Pad before selecting a face.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad as the shell body
+  - select faces from the base Pad with Selection.Search(Topology.Face,sel)
+  - get the selected face reference with Selection.Item2(index).Reference
+  - ShapeFactory.AddNewShell(face_reference, inside_thickness, outside_thickness)
+  - native Shell exists after Part.Update()
+verification:
+  required_native_feature: Shell
+  part_update_required: true
+  required_reference_pattern: partdesign.shell_selected_face_ref
+caveats:
+  - This recipe verifies native Shell creation from a selection-derived face reference.
+  - The selected face is currently index-based; arbitrary semantic face intent needs future verifier work.
+  - Manually building thin walls is geometry-equivalent or partial, not native Shell success.

@@ -1,4 +1,4 @@
-version: "1.0.6-draft"
+version: "1.0.7-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -43,3 +43,31 @@ reference_patterns:
       - explicit copied holes are geometry equivalent only
     promoted_recipe_ids:
       - partdesign.native_circular_pattern
+  - id: partdesign.mirror_plane_ref
+    title: Explicit mirror plane reference for Mirror
+    domain: partdesign
+    applies_to: [mirror]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/transform_shell_references.md
+    failure_memory:
+      - failures/mirror_explicit_copy_not_native.md
+    verifier_expectations:
+      - native feature tree contains Mirror after Part.Update
+      - mirror plane reference is explicit
+      - explicit copied geometry is not native mirror success
+    promoted_recipe_ids:
+      - partdesign.native_mirror_plane
+  - id: partdesign.shell_selected_face_ref
+    title: Selected face reference for Shell
+    domain: partdesign
+    applies_to: [shell]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/transform_shell_references.md
+    failure_memory:
+      - failures/shell_manual_walls_not_native.md
+    verifier_expectations:
+      - native feature tree contains Shell after Part.Update
+      - removed face reference comes from CATIA selection/reference
+      - manual wall construction is not native shell success
+    promoted_recipe_ids:
+      - partdesign.native_shell_selected_face

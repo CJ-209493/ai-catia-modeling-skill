@@ -1,0 +1,18 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_mirror_plane
+features:
+  - id: mirror_1
+    recipe_id: partdesign.native_mirror_plane
+    params:
+      part_number: Demo_Native_Mirror_Plane
+      plate_width: 180
+      plate_height: 100
+      plate_depth: 12
+      seed_x: 45
+      seed_y: 0
+      seed_radius: 8
+      seed_depth: 10
+    expected:
+      native_feature: Mirror
+      reference_pattern: partdesign.mirror_plane_ref
