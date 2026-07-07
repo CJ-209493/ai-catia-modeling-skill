@@ -33,6 +33,12 @@ def run_plan(plan_path):
             raise SystemExit(f"Unsupported recipe: {feature['recipe_id']}")
         if mode == "user" and recipe["status"] not in USER_ALLOWED_STATUSES:
             raise SystemExit(f"Recipe {recipe['id']} is not allowed in User Mode")
+        if not recipe.get("runner"):
+            raise SystemExit(
+                f"Recipe {recipe['id']} has no executable runner; use its recipe card as Developer Mode reference or promote it with a runner first"
+            )
+        if mode == "user" and not recipe.get("user_mode_allowed", True):
+            raise SystemExit(f"Recipe {recipe['id']} is not allowed in User Mode")
         runner = ROOT / recipe["runner"]
         subprocess.check_call([sys.executable, str(runner), str(plan_path)], cwd=str(ROOT))
 

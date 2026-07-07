@@ -1,0 +1,273 @@
+version: 1.0.2-draft
+source_run: catia_recipe_regression_20260706_010608
+total_tests: 30
+classification_counts:
+  NATIVE_SUCCESS: 16
+  PARTIAL_SUCCESS: 2
+  UNSUPPORTED: 11
+  HONEST_FAILURE: 1
+entries:
+- test_id: T01
+  feature_type: pad_plus_single_edge_fillet
+  native_feature: ConstRadEdgeFillet
+  classification: PARTIAL_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - ConstRadEdgeFillet
+  note: Pad and native fillet feature created; exact four-vertical-edge filtering
+    is not yet encoded.
+  failure_card: failures/regression/t01_pad_plus_single_edge_fillet_partial_success.md
+- test_id: T02
+  feature_type: boss_with_native_through_hole
+  native_feature: Hole
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  note: ''
+  recipe_card: recipes/partdesign/regression/t02_boss_with_native_through_hole_hole_verified_once.md
+- test_id: T03
+  feature_type: four_native_holes
+  native_feature: Hole
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  note: ''
+  recipe_card: recipes/partdesign/regression/t03_four_native_holes_hole_verified_once.md
+- test_id: T04
+  feature_type: native_counterbore_holes
+  native_feature: Hole
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  note: Native counterbore Hole features created; top/bottom visual direction is not
+    independently measured.
+  recipe_card: recipes/partdesign/regression/t04_native_counterbore_holes_hole_verified_once.md
+- test_id: T05
+  feature_type: slot_through_pocket
+  native_feature: Pocket
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Pocket
+  note: ''
+  recipe_card: recipes/partdesign/regression/t05_slot_through_pocket_pocket_verified_once.md
+- test_id: T06
+  feature_type: offset_plane_secondary_pad
+  native_feature: Pad
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Pad
+  note: ''
+  recipe_card: recipes/partdesign/regression/t06_offset_plane_secondary_pad_pad_verified_once.md
+- test_id: T07
+  feature_type: rib_or_stiffener
+  native_feature: Rib/Stiffener
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: No verified Rib/Stiffener recipe yet.
+  failure_card: failures/regression/t07_rib_or_stiffener_unsupported.md
+- test_id: T08
+  feature_type: rectangular_pattern
+  native_feature: RectPattern
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - RectPattern
+  note: ''
+  recipe_card: recipes/partdesign/regression/t08_rectangular_pattern_rectpattern_verified_once.md
+- test_id: T09
+  feature_type: circular_pattern
+  native_feature: CircPattern
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - CircPattern
+  note: ''
+  recipe_card: recipes/partdesign/regression/t09_circular_pattern_circpattern_verified_once.md
+- test_id: T10
+  feature_type: mirror
+  native_feature: Mirror
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Mirror
+  note: ''
+  recipe_card: recipes/partdesign/regression/t10_mirror_mirror_verified_once.md
+- test_id: T11
+  feature_type: shaft_with_sketch_centerline
+  native_feature: Shaft
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Shaft
+  note: ''
+  recipe_card: recipes/partdesign/regression/t11_shaft_with_sketch_centerline_shaft_verified_once.md
+- test_id: T12
+  feature_type: groove_with_sketch_centerline
+  native_feature: Groove
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Groove
+  note: ''
+  recipe_card: recipes/partdesign/regression/t12_groove_with_sketch_centerline_groove_verified_once.md
+- test_id: T13
+  feature_type: v_pulley_by_shaft_profile
+  native_feature: Shaft
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Shaft
+  note: V pulley generated as one native Shaft profile with central bore and V groove
+    geometry in profile.
+  recipe_card: recipes/partdesign/regression/t13_v_pulley_by_shaft_profile_shaft_verified_once.md
+- test_id: T14
+  feature_type: shell_from_face_reference
+  native_feature: Shell
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Shell
+  note: Native Shell feature created; removed-face ordering is not independently verified
+    as top face.
+  recipe_card: recipes/partdesign/regression/t14_shell_from_face_reference_shell_verified_once.md
+- test_id: T15
+  feature_type: draft_shell
+  native_feature: Draft/Shell
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: Draft recipe is not verified yet.
+  failure_card: failures/regression/t15_draft_shell_unsupported.md
+- test_id: T16
+  feature_type: fillet_chamfer_order
+  native_feature: Fillet/Chamfer
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: Exact ordered edge selection and Chamfer recipe are not verified yet.
+  failure_card: failures/regression/t16_fillet_chamfer_order_unsupported.md
+- test_id: T17
+  feature_type: boolean_intersection
+  native_feature: BooleanIntersection
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: Multi-body boolean intersection recipe is not verified yet.
+  failure_card: failures/regression/t17_boolean_intersection_unsupported.md
+- test_id: T18
+  feature_type: angled_cut
+  native_feature: Split/Cut
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: Angled split/cut recipe is not verified yet.
+  failure_card: failures/regression/t18_angled_cut_unsupported.md
+- test_id: T19
+  feature_type: parameters_formulas
+  native_feature: Knowledgeware
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: Formula-driven sketch binding is not verified yet.
+  failure_card: failures/regression/t19_parameters_formulas_unsupported.md
+- test_id: T20
+  feature_type: unit_conversion_native_hole
+  native_feature: Hole
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  note: ''
+  recipe_card: recipes/partdesign/regression/t20_unit_conversion_native_hole_hole_verified_once.md
+- test_id: T21
+  feature_type: rounded_rectangle_pad
+  native_feature: Pad
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Pad
+  note: ''
+  recipe_card: recipes/partdesign/regression/t21_rounded_rectangle_pad_pad_verified_once.md
+- test_id: T22
+  feature_type: capsule_with_native_holes
+  native_feature: Hole
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  note: ''
+  recipe_card: recipes/partdesign/regression/t22_capsule_with_native_holes_hole_verified_once.md
+- test_id: T23
+  feature_type: closed_spline_pad
+  native_feature: Pad
+  classification: NATIVE_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Pad
+  note: ''
+  recipe_card: recipes/partdesign/regression/t23_closed_spline_pad_pad_verified_once.md
+- test_id: T24
+  feature_type: loft
+  native_feature: Loft
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: Loft/Multi-section Solid recipe is not verified.
+  failure_card: failures/regression/t24_loft_unsupported.md
+- test_id: T25
+  feature_type: sweep_pipe
+  native_feature: Sweep
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: 3D Sweep recipe is not verified.
+  failure_card: failures/regression/t25_sweep_pipe_unsupported.md
+- test_id: T26
+  feature_type: helix_spring
+  native_feature: Helix/Sweep
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: Helix + Sweep recipe is not verified.
+  failure_card: failures/regression/t26_helix_spring_unsupported.md
+- test_id: T27
+  feature_type: simplified_thread_boundary
+  native_feature: Pad
+  classification: PARTIAL_SUCCESS
+  part_update_success: true
+  feature_tree_contains:
+  - Pad
+  note: Simplified bolt geometry created; real helical M10x1.5 thread is still not
+    generated.
+  failure_card: failures/regression/t27_simplified_thread_boundary_partial_success.md
+- test_id: T28
+  feature_type: assembly_constraints
+  native_feature: AssemblyConstraint
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: This rerun is CATPart-only; real Product assembly constraints are not verified.
+  failure_card: failures/regression/t28_assembly_constraints_unsupported.md
+- test_id: T29
+  feature_type: hinge_assembly
+  native_feature: AssemblyConstraint
+  classification: UNSUPPORTED
+  part_update_success: false
+  feature_tree_contains: []
+  note: This rerun is CATPart-only; hinge Product constraints are not verified.
+  failure_card: failures/regression/t29_hinge_assembly_unsupported.md
+- test_id: T30
+  feature_type: constraint_conflict
+  native_feature: SketchConstraint
+  classification: HONEST_FAILURE
+  part_update_success: false
+  feature_tree_contains: []
+  note: "\u5C3A\u5BF8\u7EA6\u675F\u51B2\u7A81\uFF1A\u540C\u4E00 X \u5411\u5C3A\u5BF8\
+    \u4E0D\u80FD\u540C\u65F6\u7B49\u4E8E 100 mm \u548C 80 mm\u3002"
+  failure_card: failures/regression/t30_constraint_conflict_honest_failure.md

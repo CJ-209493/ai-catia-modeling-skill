@@ -15,16 +15,18 @@ For CATIA features that are callable through pycatia but sensitive to reference 
 
 ## Modes
 
-- **User Mode**: use only recipes with status `stable`, `verified_repeatable`, or `live_verified_once`.
+- **User Mode**: execute only recipes with status `stable`, `verified_repeatable`, or `live_verified_once` that also have an executable `runner` and `user_mode_allowed: true`.
 - **Developer Mode**: required to create new recipes, promote recipes, run boundary tests, or write new pycatia calls.
 - If mode is not specified, default to User Mode.
+
+Imported regression recipes with `runner_kind: imported_call_pattern` are verified call memory, not User Mode runners. Use their recipe cards for reference selection and future promotion work; do not execute them through `cli/run_feature_plan.py` until a runner and verifier contract have been added.
 
 ## Workflow
 
 1. Parse the user request into a Feature Plan matching `schemas/feature_plan_schema.yaml`.
 2. Read `manifests/capability_manifest.yaml` and `manifests/reference_manifest.yaml` for required reference selection patterns.
 3. Search `manifests/recipe_manifest.yaml` for verified recipes.
-4. Execute the matching runner from `runners/`.
+4. If the selected recipe has an executable runner and is allowed in the current mode, execute the matching runner from `runners/`.
 5. Run verifiers from `verifiers/`.
 6. Classify each feature as `NATIVE_SUCCESS`, `GEOMETRY_EQUIVALENT`, `PARTIAL_SUCCESS`, `HONEST_FAILURE`, or `UNSUPPORTED`.
 7. Write a run report matching `schemas/report_schema.yaml`.
@@ -53,16 +55,22 @@ Use this order:
 
 1. Exact verified recipe match.
 2. Compatible verified recipe with explicit caveat.
-3. `UNSUPPORTED` or `HONEST_FAILURE` report.
-4. Developer Mode exploration only if explicitly enabled.
+3. Imported call pattern card, if no executable runner exists.
+4. `PARTIAL_SUCCESS`, `UNSUPPORTED`, or `HONEST_FAILURE` report.
+5. Developer Mode exploration only if explicitly enabled.
+
+## Regression Memory
+
+`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.2-draft it indexes 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow.
 
 ## v1.0 Scope
 
-v1.0 primarily prevents common pycatia call mistakes by routing through known-good recipes. It does not fully solve all CATIA reference selection problems, complex BRep selection, solid loft/sweep edge cases, or full assembly BRep constraints.
+v1.0 primarily prevents common pycatia call mistakes by routing through known-good recipes and imported call memory. It does not fully solve all CATIA reference selection problems, complex BRep selection, solid loft/sweep edge cases, or full assembly BRep constraints.
 
 ## Key Files
 
 - `manifests/recipe_manifest.yaml`: searchable recipe index.
+- `manifests/regression_manifest.yaml`: 30-case imported regression memory and failure boundary index.
 - `manifests/reference_manifest.yaml`: reference selection patterns that recipes depend on.
 - `recipes/`: recipe cards with status and constraints.
 - `references/`: reusable reference construction notes for fragile CATIA selections.

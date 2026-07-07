@@ -23,6 +23,13 @@ This is v1.0.x draft. It initially addresses wrong pycatia call patterns and rep
 
 The important modeling knowledge is not merely that pycatia exposes a method. Many CATIA APIs are callable while still failing because the selected reference is wrong. For example, native `Shaft` and `Groove` require an explicit revolution axis in the sketch; without that axis, Codex must not claim native success.
 
+Current package state:
+
+- 3 executable User Mode runner recipes: rectangular Pad, real parameter formula, and Product Fix constraint.
+- 16 imported `NATIVE_SUCCESS` CATIA call patterns from the 30-case regression run.
+- 2 `PARTIAL_SUCCESS`, 11 `UNSUPPORTED`, and 1 `HONEST_FAILURE` regression memory entries.
+- Shaft and Groove are included as imported native-success call patterns using the same-sketch `CenterLine` reference pattern, but they are not yet promoted to executable User Mode runners.
+
 ## Requirements
 
 - Windows
@@ -59,6 +66,7 @@ Installers should point at the directory that contains `SKILL.md`. Do not point 
 User Mode:
 
 - uses only `stable`, `verified_repeatable`, or `live_verified_once` recipes
+- requires an executable `runner` and `user_mode_allowed: true`
 - does not create new recipes
 - does not invent fresh pycatia code
 - reports unsupported or partial features honestly
@@ -93,11 +101,13 @@ Use `templates/feature_plan_template.yaml` as the starting point.
 
 ## Reference Selection Patterns
 
-Before executing a feature, Codex should check `manifests/reference_manifest.yaml` for required reference construction. The first v1.0.1 draft pattern is:
+Before executing a feature, Codex should check `manifests/reference_manifest.yaml` for required reference construction. The core draft reference pattern is:
 
 - `partdesign.sketch_revolution_axis`: use for native `Shaft` and `Groove`; create the closed profile and a named construction Line2D revolution axis in the same sketch before calling `add_new_shaft(sketch)` or `add_new_groove(sketch)`.
 
 This pattern is documented in `references/partdesign/sketch_revolution_axis.md`. It is deliberately separate from executable recipe status: knowing the reference pattern does not by itself mean a stable User Mode runner exists.
+
+The 30-case imported regression memory is indexed in `manifests/regression_manifest.yaml`. Native-success entries are also indexed in `manifests/recipe_manifest.yaml` with `runner_kind: imported_call_pattern`, `runner: null`, and `user_mode_allowed: false`. They are useful for Developer Mode recipe promotion and for preventing Codex from rediscovering known pycatia mistakes.
 
 ## Run a Verified Recipe
 
@@ -109,7 +119,10 @@ Search recipes:
 
 ```powershell
 python cli\search_recipe.py pad
+python cli\search_recipe.py shaft
 ```
+
+Search results label executable runners separately from imported call patterns and reference-only patterns.
 
 Open the latest report:
 
@@ -134,7 +147,7 @@ Geometry-equivalent output must not be reported as native CATIA feature success.
 - Solid rect-to-circle multi-section loft is not fully proven.
 - Full 3D rounded-path pipe sweep is not fully proven.
 - Solid helix sweep spring is not fully proven.
-- Shaft and Groove have a documented same-sketch axis reference pattern, but still need promoted executable User Mode recipes before they can be called as stable recipes.
+- Shaft and Groove have imported native-success call patterns, but still need promoted executable User Mode runners before they can be run directly from a user feature plan.
 - Sheet Metal features are not supported in v1.0.
 - Product `Position` is not an assembly constraint.
 - BRep-to-BRep Product constraints are not fully proven.

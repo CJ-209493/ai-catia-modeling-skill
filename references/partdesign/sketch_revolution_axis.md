@@ -11,6 +11,7 @@ Use this reference pattern before attempting native CATIA `Shaft` or `Groove` fe
 - Create the closed profile and the revolution axis in the same sketch.
 - Name the axis line explicitly, for example `REV_AXIS`.
 - Mark the axis line as construction geometry.
+- Assign the line as the sketch center line with `sketch.com_object.CenterLine = axis_line.com_object`.
 - Keep the revolved profile on the intended side of the axis.
 - Call the native operation only after the profile and axis are both present.
 - Verify `Part.Update()` and confirm the feature tree contains native `Shaft` or `Groove`.
@@ -29,6 +30,7 @@ factory_2d = sketch.open_edition()
 axis_line = factory_2d.create_line(0.0, -50.0, 0.0, 50.0)
 axis_line.name = "REV_AXIS"
 axis_line.construction = True
+sketch.com_object.CenterLine = axis_line.com_object
 
 sketch.close_edition()
 part.update()

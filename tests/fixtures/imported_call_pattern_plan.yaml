@@ -1,0 +1,5 @@
+mode: user
+features:
+  - id: shaft
+    recipe_id: partdesign.regression.t11_shaft_with_sketch_centerline
+    params: {}

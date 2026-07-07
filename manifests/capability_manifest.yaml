@@ -1,4 +1,4 @@
-version: "1.0.1-draft"
+version: "1.0.2-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -21,70 +21,171 @@ native_feature_rules:
   part_update_required: true
   verifier_required: true
   geometry_equivalent_is_not_native: true
+  imported_call_pattern_is_not_executable_runner: true
+capability_sources:
+  executable_recipe_manifest: manifests/recipe_manifest.yaml
+  regression_manifest: manifests/regression_manifest.yaml
+  reference_manifest: manifests/reference_manifest.yaml
 capabilities:
   partdesign:
     pad:
       status: live_verified_once
-      recipe_ids:
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
         - partdesign.rectangular_pad
+      imported_recipe_ids:
+        - partdesign.regression.t06_offset_plane_secondary_pad
+        - partdesign.regression.t21_rounded_rectangle_pad
+        - partdesign.regression.t23_closed_spline_pad
     pocket:
       status: live_verified_once
+      classification: NATIVE_SUCCESS
+      imported_recipe_ids:
+        - partdesign.regression.t05_slot_through_pocket
+      user_mode: imported_call_pattern_only
     hole:
       status: live_verified_once
+      classification: NATIVE_SUCCESS
+      imported_recipe_ids:
+        - partdesign.regression.t02_boss_with_native_through_hole
+        - partdesign.regression.t03_four_native_holes
+        - partdesign.regression.t04_native_counterbore_holes
+        - partdesign.regression.t20_unit_conversion_native_hole
+        - partdesign.regression.t22_capsule_with_native_holes
+      user_mode: imported_call_pattern_only
     counterbore_hole:
       status: live_verified_once
+      classification: NATIVE_SUCCESS
+      imported_recipe_ids:
+        - partdesign.regression.t04_native_counterbore_holes
+      user_mode: imported_call_pattern_only
     rect_pattern:
       status: live_verified_once
+      classification: NATIVE_SUCCESS
+      imported_recipe_ids:
+        - partdesign.regression.t08_rectangular_pattern
+      user_mode: imported_call_pattern_only
     circ_pattern:
       status: live_verified_once
+      classification: NATIVE_SUCCESS
+      imported_recipe_ids:
+        - partdesign.regression.t09_circular_pattern
+      user_mode: imported_call_pattern_only
     mirror:
       status: live_verified_once
+      classification: NATIVE_SUCCESS
+      imported_recipe_ids:
+        - partdesign.regression.t10_mirror
+      user_mode: imported_call_pattern_only
       verifier_note: must confirm native Mirror feature
     shell:
       status: live_verified_once
+      classification: NATIVE_SUCCESS
+      imported_recipe_ids:
+        - partdesign.regression.t14_shell_from_face_reference
+      user_mode: imported_call_pattern_only
       verifier_note: must confirm native Shell feature and removed face
-    fillet:
-      status: live_verified_once
-    chamfer:
-      status: live_verified_once
-    draft:
-      status: live_verified_once
-    stiffener:
-      status: live_verified_once
-    rib:
-      status: live_verified_once
-    split:
-      status: live_verified_once
-    intersect:
-      status: live_verified_once
     shaft:
-      status: reference_pattern_known
-      user_mode: unsupported_without_verified_recipe
-      reference_pattern_ids:
-        - partdesign.sketch_revolution_axis
-      caveat: native Shaft requires an explicit same-sketch construction axis line; pycatia API availability is not enough
-    groove:
-      status: reference_pattern_known
-      user_mode: unsupported_without_verified_recipe
-      reference_pattern_ids:
-        - partdesign.sketch_revolution_axis
-      caveat: native Groove requires an explicit same-sketch construction axis line plus existing solid context; annular pockets are geometry equivalent
-    thread:
       status: live_verified_once
-      caveat: verified CATIA Thread feature, not solid helical geometry
+      classification: NATIVE_SUCCESS
+      imported_recipe_ids:
+        - partdesign.regression.t11_shaft_with_sketch_centerline
+        - partdesign.regression.t13_v_pulley_by_shaft_profile
+      reference_pattern_ids:
+        - partdesign.sketch_revolution_axis
+      user_mode: imported_call_pattern_only
+      caveat: native Shaft requires sketch.com_object.CenterLine to point at an explicit same-sketch construction axis line; pycatia API availability is not enough
+    groove:
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      imported_recipe_ids:
+        - partdesign.regression.t12_groove_with_sketch_centerline
+      reference_pattern_ids:
+        - partdesign.sketch_revolution_axis
+      user_mode: imported_call_pattern_only
+      caveat: native Groove requires sketch.com_object.CenterLine plus an existing solid context; annular pockets are geometry equivalent
+    fillet:
+      status: partial_success
+      classification: PARTIAL_SUCCESS
+      failure_card_ids:
+        - failures/regression/t01_pad_plus_single_edge_fillet_partial_success.md
+      caveat: native fillet feature was created, but exact edge filtering is not promoted as a repeatable recipe
+    chamfer:
+      status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t16_fillet_chamfer_order_unsupported.md
+    draft:
+      status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t15_draft_shell_unsupported.md
+    stiffener:
+      status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t07_rib_or_stiffener_unsupported.md
+    rib:
+      status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t07_rib_or_stiffener_unsupported.md
+    split:
+      status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t18_angled_cut_unsupported.md
+    intersect:
+      status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t17_boolean_intersection_unsupported.md
+    thread:
+      status: partial_success
+      classification: PARTIAL_SUCCESS
+      failure_card_ids:
+        - failures/regression/t27_simplified_thread_boundary_partial_success.md
+      caveat: simplified bolt geometry is not a real solid helical thread; cosmetic thread is not solid thread
     solid_loft:
       status: unsupported
-      caveat: hybrid surface loft is verified; solid multi-section loft needs more work
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t24_loft_unsupported.md
+    sweep_pipe:
+      status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t25_sweep_pipe_unsupported.md
     solid_helix_sweep:
       status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t26_helix_spring_unsupported.md
     sheet_metal:
       status: unsupported
+      classification: UNSUPPORTED
   knowledgeware:
     real_param_formula:
       status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - knowledgeware.real_param_formula
+      caveat: formula-driven sketch binding is not yet covered by the T19 regression case
+    formula_driven_sketch:
+      status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t19_parameters_formulas_unsupported.md
   assembly:
     product_fix_constraint:
       status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - assembly.product_fix_constraint
     brep_to_brep_constraints:
       status: unsupported
+      classification: UNSUPPORTED
+      failure_card_ids:
+        - failures/regression/t28_assembly_constraints_unsupported.md
+        - failures/regression/t29_hinge_assembly_unsupported.md
       caveat: Product.Position is not Assembly Constraint

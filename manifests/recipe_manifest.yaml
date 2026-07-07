@@ -1,33 +1,365 @@
-version: "1.0.1-draft"
+version: 1.0.2-draft
 recipes:
-  - id: partdesign.rectangular_pad
-    title: Rectangular Pad on XY plane
-    domain: partdesign
-    native_feature: Pad
-    status: stable
-    recipe_card: recipes/partdesign/rectangular_pad.yaml
-    runner: runners/partdesign/rectangular_pad_runner.py
-    verifier:
-      - verifiers/feature_tree_verifier.py
-      - verifiers/geometry_verifier.py
-      - verifiers/semantic_classifier.py
-    user_mode_allowed: true
-    tags: [pad, rectangle, sketch, partdesign, base]
-  - id: knowledgeware.real_param_formula
-    title: Real parameter formula
-    domain: knowledgeware
-    native_feature: Formula
-    status: live_verified_once
-    recipe_card: recipes/knowledgeware/real_param_formula.yaml
-    runner: runners/knowledgeware/real_param_formula_runner.py
-    user_mode_allowed: true
-    tags: [formula, parameter, knowledgeware]
-  - id: assembly.product_fix_constraint
-    title: Product mono-element Fix constraint
-    domain: assembly
-    native_feature: Constraints
-    status: live_verified_once
-    recipe_card: recipes/assembly/product_fix_constraint.yaml
-    runner: runners/assembly/product_fix_constraint_runner.py
-    user_mode_allowed: true
-    tags: [assembly, product, constraint, fix]
+- id: partdesign.rectangular_pad
+  title: Rectangular Pad on XY plane
+  domain: partdesign
+  native_feature: Pad
+  status: stable
+  recipe_card: recipes/partdesign/rectangular_pad.yaml
+  runner: runners/partdesign/rectangular_pad_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/geometry_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  tags:
+  - pad
+  - rectangle
+  - sketch
+  - partdesign
+  - base
+- id: knowledgeware.real_param_formula
+  title: Real parameter formula
+  domain: knowledgeware
+  native_feature: Formula
+  status: live_verified_once
+  recipe_card: recipes/knowledgeware/real_param_formula.yaml
+  runner: runners/knowledgeware/real_param_formula_runner.py
+  user_mode_allowed: true
+  tags:
+  - formula
+  - parameter
+  - knowledgeware
+- id: assembly.product_fix_constraint
+  title: Product mono-element Fix constraint
+  domain: assembly
+  native_feature: Constraints
+  status: live_verified_once
+  recipe_card: recipes/assembly/product_fix_constraint.yaml
+  runner: runners/assembly/product_fix_constraint_runner.py
+  user_mode_allowed: true
+  tags:
+  - assembly
+  - product
+  - constraint
+  - fix
+- id: partdesign.regression.t02_boss_with_native_through_hole
+  title: T02 boss_with_native_through_hole
+  domain: partdesign
+  native_feature: Hole
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t02_boss_with_native_through_hole_hole_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T02
+  tags:
+  - regression
+  - imported
+  - hole
+  - boss_with_native_through_hole
+- id: partdesign.regression.t03_four_native_holes
+  title: T03 four_native_holes
+  domain: partdesign
+  native_feature: Hole
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t03_four_native_holes_hole_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T03
+  tags:
+  - regression
+  - imported
+  - hole
+  - four_native_holes
+- id: partdesign.regression.t04_native_counterbore_holes
+  title: T04 native_counterbore_holes
+  domain: partdesign
+  native_feature: Hole
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t04_native_counterbore_holes_hole_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T04
+  tags:
+  - regression
+  - imported
+  - hole
+  - native_counterbore_holes
+- id: partdesign.regression.t05_slot_through_pocket
+  title: T05 slot_through_pocket
+  domain: partdesign
+  native_feature: Pocket
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t05_slot_through_pocket_pocket_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Pocket
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T05
+  tags:
+  - regression
+  - imported
+  - pocket
+  - slot_through_pocket
+- id: partdesign.regression.t06_offset_plane_secondary_pad
+  title: T06 offset_plane_secondary_pad
+  domain: partdesign
+  native_feature: Pad
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t06_offset_plane_secondary_pad_pad_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Pad
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T06
+  tags:
+  - regression
+  - imported
+  - pad
+  - offset_plane_secondary_pad
+- id: partdesign.regression.t08_rectangular_pattern
+  title: T08 rectangular_pattern
+  domain: partdesign
+  native_feature: RectPattern
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t08_rectangular_pattern_rectpattern_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - RectPattern
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T08
+  tags:
+  - regression
+  - imported
+  - rectpattern
+  - rectangular_pattern
+- id: partdesign.regression.t09_circular_pattern
+  title: T09 circular_pattern
+  domain: partdesign
+  native_feature: CircPattern
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t09_circular_pattern_circpattern_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - CircPattern
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T09
+  tags:
+  - regression
+  - imported
+  - circpattern
+  - circular_pattern
+- id: partdesign.regression.t10_mirror
+  title: T10 mirror
+  domain: partdesign
+  native_feature: Mirror
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t10_mirror_mirror_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Mirror
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T10
+  tags:
+  - regression
+  - imported
+  - mirror
+  - mirror
+- id: partdesign.regression.t11_shaft_with_sketch_centerline
+  title: T11 shaft_with_sketch_centerline
+  domain: partdesign
+  native_feature: Shaft
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t11_shaft_with_sketch_centerline_shaft_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Shaft
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T11
+  tags:
+  - regression
+  - imported
+  - shaft
+  - shaft_with_sketch_centerline
+- id: partdesign.regression.t12_groove_with_sketch_centerline
+  title: T12 groove_with_sketch_centerline
+  domain: partdesign
+  native_feature: Groove
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t12_groove_with_sketch_centerline_groove_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Groove
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T12
+  tags:
+  - regression
+  - imported
+  - groove
+  - groove_with_sketch_centerline
+- id: partdesign.regression.t13_v_pulley_by_shaft_profile
+  title: T13 v_pulley_by_shaft_profile
+  domain: partdesign
+  native_feature: Shaft
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t13_v_pulley_by_shaft_profile_shaft_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Shaft
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T13
+  tags:
+  - regression
+  - imported
+  - shaft
+  - v_pulley_by_shaft_profile
+- id: partdesign.regression.t14_shell_from_face_reference
+  title: T14 shell_from_face_reference
+  domain: partdesign
+  native_feature: Shell
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t14_shell_from_face_reference_shell_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Shell
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T14
+  tags:
+  - regression
+  - imported
+  - shell
+  - shell_from_face_reference
+- id: partdesign.regression.t20_unit_conversion_native_hole
+  title: T20 unit_conversion_native_hole
+  domain: partdesign
+  native_feature: Hole
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t20_unit_conversion_native_hole_hole_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T20
+  tags:
+  - regression
+  - imported
+  - hole
+  - unit_conversion_native_hole
+- id: partdesign.regression.t21_rounded_rectangle_pad
+  title: T21 rounded_rectangle_pad
+  domain: partdesign
+  native_feature: Pad
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t21_rounded_rectangle_pad_pad_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Pad
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T21
+  tags:
+  - regression
+  - imported
+  - pad
+  - rounded_rectangle_pad
+- id: partdesign.regression.t22_capsule_with_native_holes
+  title: T22 capsule_with_native_holes
+  domain: partdesign
+  native_feature: Hole
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t22_capsule_with_native_holes_hole_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Hole
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T22
+  tags:
+  - regression
+  - imported
+  - hole
+  - capsule_with_native_holes
+- id: partdesign.regression.t23_closed_spline_pad
+  title: T23 closed_spline_pad
+  domain: partdesign
+  native_feature: Pad
+  status: live_verified_once
+  classification: NATIVE_SUCCESS
+  recipe_card: recipes/partdesign/regression/t23_closed_spline_pad_pad_verified_once.md
+  runner: null
+  runner_kind: imported_call_pattern
+  user_mode_allowed: false
+  part_update_success: true
+  feature_tree_contains:
+  - Pad
+  source_run: catia_recipe_regression_20260706_010608
+  test_id: T23
+  tags:
+  - regression
+  - imported
+  - pad
+  - closed_spline_pad

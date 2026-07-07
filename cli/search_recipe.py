@@ -45,15 +45,20 @@ def search(query):
     return matches
 
 
+def format_result(item):
+    if item["kind"] == "recipe":
+        if item.get("runner_kind") == "imported_call_pattern":
+            return f"{item['id']} [{item['status']}/imported call pattern] -> recipe card: {item['recipe_card']}"
+        return f"{item['id']} [{item['status']}] -> runner: {item['runner']}"
+    return f"{item['id']} [{item['status']}] -> reference only: {item['reference_doc']}"
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("query")
     args = parser.parse_args()
     for item in search(args.query):
-        if item["kind"] == "recipe":
-            print(f"{item['id']} [{item['status']}] -> {item['runner']}")
-        else:
-            print(f"{item['id']} [{item['status']}] -> reference only: {item['reference_doc']}")
+        print(format_result(item))
 
 
 if __name__ == "__main__":
