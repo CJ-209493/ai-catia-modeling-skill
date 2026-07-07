@@ -1,0 +1,65 @@
+id: partdesign.native_intersect_two_bodies
+title: Native Intersect between generated target and tool Bodies
+domain: partdesign
+native_feature: Intersect
+status: live_verified_once
+runner: runners/partdesign/native_intersect_two_bodies_runner.py
+summary: Create two overlapping generated Bodies and add a native CATIA Intersect after setting Part.InWorkObject to the target Body.
+reference_pattern_ids:
+  - partdesign.intersect_target_body_ref
+source_regression_ids:
+  - partdesign.regression.t17_boolean_intersection
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Intersect_Two_Bodies
+  target_width:
+    type: number
+    unit: mm
+    required: false
+    default: 120
+  target_height:
+    type: number
+    unit: mm
+    required: false
+    default: 80
+  target_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 30
+  tool_width:
+    type: number
+    unit: mm
+    required: false
+    default: 80
+  tool_height:
+    type: number
+    unit: mm
+    required: false
+    default: 50
+  tool_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 25
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document with one target Body and one tool Body.
+  - The generated rectangular Pads overlap so the intersection is non-empty.
+verified_pattern:
+  - create Part document
+  - create a target Body with a rectangular Pad
+  - create a separate generated tool Body with an overlapping rectangular Pad
+  - set part.in_work_object = target_body immediately before ShapeFactory.AddNewIntersect
+  - ShapeFactory.AddNewIntersect(tool_body)
+  - native Intersect exists after Part.Update()
+verification:
+  required_native_feature: Intersect
+  part_update_required: true
+  required_reference_pattern: partdesign.intersect_target_body_ref
+caveats:
+  - This recipe verifies native Intersect for generated overlapping target/tool Bodies only.
+  - The target Body must be active through Part.InWorkObject before AddNewIntersect.
+  - It does not verify arbitrary BooleanIntersection construction, arbitrary Body selection, or design-intent body discovery.

@@ -19,13 +19,13 @@ The goal is not to benchmark CATIA ability. Benchmarking, boundary tests, and me
 
 ## Project Status
 
-This is v1.0.12 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
+This is v1.0.13 draft. It initially addresses wrong pycatia call patterns and repeated code-generation mistakes. It leaves room for future upgrades around robust reference selection, complex edge/face filtering, solid loft/sweep, sheet metal, and BRep-to-BRep assembly constraints.
 
 The important modeling knowledge is not merely that pycatia exposes a method. Many CATIA APIs are callable while still failing because the selected reference is wrong. For example, native `Shaft` and `Groove` require an explicit revolution axis in the sketch; without that axis, Codex must not claim native success.
 
 Current package state:
 
-- 21 executable User Mode runner recipes: rectangular Pad, native Hole from sketch point, native Hole with inch-to-mm conversion, native counterbore Holes, native slot Pocket, offset Plane Pad, rounded rectangle Pad, capsule Pad with native Holes, closed spline Pad, native RectPattern, native CircPattern, native Mirror across PlaneYZ, native Shell from selected face reference, selected-edge native ConstRadEdgeFillet, selected-edge native Chamfer, native Split from explicit offset PlaneXY, same-sketch CenterLine Shaft, V pulley Shaft, same-sketch CenterLine Groove, real parameter formula, and Product Fix constraint.
+- 22 executable User Mode runner recipes: rectangular Pad, native Hole from sketch point, native Hole with inch-to-mm conversion, native counterbore Holes, native slot Pocket, offset Plane Pad, rounded rectangle Pad, capsule Pad with native Holes, closed spline Pad, native RectPattern, native CircPattern, native Mirror across PlaneYZ, native Shell from selected face reference, selected-edge native ConstRadEdgeFillet, selected-edge native Chamfer, native Split from explicit offset PlaneXY, native Intersect between generated Bodies, same-sketch CenterLine Shaft, V pulley Shaft, same-sketch CenterLine Groove, real parameter formula, and Product Fix constraint.
 - 16 imported `NATIVE_SUCCESS` CATIA call patterns from the 30-case regression run; all are now represented by promoted executable runners or a stricter promoted runner family.
 - 2 `PARTIAL_SUCCESS`, 11 `UNSUPPORTED`, and 1 `HONEST_FAILURE` regression memory entries.
 - Shaft and Groove now have promoted executable User Mode runners for the verified same-sketch `CenterLine` reference pattern. The imported regression cards remain as developer evidence and future extension material.
@@ -38,6 +38,7 @@ Current package state:
 - Edge Fillet now has a promoted executable User Mode runner for constrained selected-edge index references. Exact four-vertical-edge filtering, arbitrary edge intent, and ordered fillet/chamfer workflows remain future work.
 - Chamfer now has a promoted executable User Mode runner for constrained selected-edge index references and explicit Chamfer enum values. Ordered fillet/chamfer edge grouping remains future work.
 - Split now has a promoted executable User Mode runner for generated offset PlaneXY references. Arbitrary angled cut plane synthesis remains future work.
+- Intersect now has a promoted executable User Mode runner for generated overlapping target/tool Bodies. Arbitrary BooleanIntersection construction and semantic Body selection remain future work.
 - Latest live CATIA regression evidence: `catia_recipe_regression_20260706_232109`, recorded in `manifests/regression_manifest.yaml` and summarized in `examples/reports/live_regression_20260706_232109.md`.
 - Latest promoted runner evidence: `examples/reports/live_promoted_revolution_runners_20260706.md`.
 - Latest promoted cut runner evidence: `examples/reports/live_promoted_cut_runners_20260707.md`.
@@ -48,6 +49,7 @@ Current package state:
 - Latest edge-fillet runner evidence: `examples/reports/live_promoted_edge_fillet_runner_20260707.md`.
 - Latest chamfer runner evidence: `examples/reports/live_promoted_chamfer_runner_20260707.md`.
 - Latest split runner evidence: `examples/reports/live_promoted_split_runner_20260707.md`.
+- Latest intersect runner evidence: `examples/reports/live_promoted_intersect_runner_20260707.md`.
 
 ## Requirements
 
@@ -137,8 +139,9 @@ Before executing a feature, Codex should check `manifests/reference_manifest.yam
 - `partdesign.v_pulley_shaft_profile`: encode bore and V groove geometry in one native Shaft half-profile.
 - `partdesign.inch_to_mm_parameters`: convert inch inputs with 25.4 before assigning CATIA millimeter values.
 - `partdesign.split_offset_plane_ref`: create an explicit offset PlaneXY reference and set `Part.InWorkObject` to the target Body before native `Split`.
+- `partdesign.intersect_target_body_ref`: create generated overlapping target/tool Bodies and set `Part.InWorkObject` to the target Body before native `Intersect`.
 
-These patterns are documented in `references/partdesign/sketch_revolution_axis.md`, `references/partdesign/pattern_references.md`, `references/partdesign/transform_shell_references.md`, `references/partdesign/edge_selection_features.md`, `references/partdesign/profile_and_hole_variants.md`, `references/partdesign/v_pulley_and_units.md`, and `references/partdesign/split_references.md`. Arbitrary revolved profiles, arbitrary pattern reference inference, arbitrary mirror planes, semantic Shell face selection, arbitrary edge filtering and operation ordering, arbitrary angled cut plane synthesis, arbitrary spline repair, generic unit parsing, and full sketch constraint inference still require Developer Mode promotion work.
+These patterns are documented in `references/partdesign/sketch_revolution_axis.md`, `references/partdesign/pattern_references.md`, `references/partdesign/transform_shell_references.md`, `references/partdesign/edge_selection_features.md`, `references/partdesign/profile_and_hole_variants.md`, `references/partdesign/v_pulley_and_units.md`, `references/partdesign/split_references.md`, and `references/partdesign/boolean_references.md`. Arbitrary revolved profiles, arbitrary pattern reference inference, arbitrary mirror planes, semantic Shell face selection, arbitrary edge filtering and operation ordering, arbitrary angled cut plane synthesis, arbitrary BooleanIntersection construction, arbitrary spline repair, generic unit parsing, and full sketch constraint inference still require Developer Mode promotion work.
 
 The 30-case imported regression memory is indexed in `manifests/regression_manifest.yaml`. Native-success entries are also indexed in `manifests/recipe_manifest.yaml` with `runner_kind: imported_call_pattern`, `runner: null`, and `user_mode_allowed: false`. They are useful for Developer Mode recipe promotion and for preventing Codex from rediscovering known pycatia mistakes. The current evidence run was executed live through CATIA COM and generated local CATPart artifacts that are intentionally not committed.
 
@@ -161,6 +164,7 @@ python cli\run_feature_plan.py examples\feature_plans\native_shell_selected_face
 python cli\run_feature_plan.py examples\feature_plans\native_edge_fillet_selected_edge.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_chamfer_selected_edge.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_split_offset_plane.yaml
+python cli\run_feature_plan.py examples\feature_plans\native_intersect_two_bodies.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_shaft_centerline.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_v_pulley_shaft.yaml
 python cli\run_feature_plan.py examples\feature_plans\native_groove_centerline.yaml
@@ -211,6 +215,7 @@ Geometry-equivalent output must not be reported as native CATIA feature success.
 - Edge Fillet is promoted only for a selection-index edge reference that verifies `ConstRadEdgeFillet`; exact four-vertical-edge filtering and ordered fillet/chamfer workflows remain future work.
 - Chamfer is promoted only for a selection-index edge reference that verifies `Chamfer`; ordered fillet/chamfer edge grouping remains future work.
 - Split is promoted only for generated offset PlaneXY references and explicit target Body `InWorkObject` state; arbitrary angled cut plane synthesis remains future work.
+- Intersect is promoted only for generated overlapping target/tool Bodies and explicit target Body `InWorkObject` state; arbitrary BooleanIntersection construction and semantic Body discovery remain future work.
 - Arbitrary Shaft/Groove profiles beyond the promoted segment-profile Shaft and rectangular Groove runner are not yet generalized.
 - Sheet Metal features are not supported in v1.0.
 - Product `Position` is not an assembly constraint.

@@ -1,4 +1,4 @@
-version: "1.0.12-draft"
+version: "1.0.13-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -117,6 +117,21 @@ reference_patterns:
       - arbitrary angled cut plane synthesis remains unpromoted
     promoted_recipe_ids:
       - partdesign.native_split_offset_plane
+  - id: partdesign.intersect_target_body_ref
+    title: Target Body InWorkObject state for native Intersect
+    domain: partdesign
+    applies_to: [intersect]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/boolean_references.md
+    failure_memory:
+      - failures/regression/t17_boolean_intersection_unsupported.md
+    verifier_expectations:
+      - native feature tree contains Intersect after Part.Update
+      - Part.InWorkObject is set to the target Body before ShapeFactory.AddNewIntersect
+      - tool Body is a generated Body with overlapping solid geometry
+      - arbitrary BooleanIntersection construction remains unpromoted
+    promoted_recipe_ids:
+      - partdesign.native_intersect_two_bodies
   - id: partdesign.counterbore_hole_point_sketch
     title: Point sketch and COM properties for native counterbore Hole
     domain: partdesign

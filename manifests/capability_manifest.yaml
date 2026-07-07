@@ -1,4 +1,4 @@
-version: "1.0.12-draft"
+version: "1.0.13-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -265,10 +265,16 @@ capabilities:
         - failures/regression/t18_angled_cut_unsupported.md
       caveat: constrained native Split is promoted only for generated offset PlaneXY references with explicit target Body InWorkObject state; arbitrary angled cut plane synthesis remains future work
     intersect:
-      status: unsupported
-      classification: UNSUPPORTED
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_intersect_two_bodies
+      reference_pattern_ids:
+        - partdesign.intersect_target_body_ref
+      user_mode: executable_runner_available
       failure_card_ids:
         - failures/regression/t17_boolean_intersection_unsupported.md
+      caveat: constrained native Intersect is promoted only for generated overlapping target/tool Bodies with explicit target Body InWorkObject state; arbitrary BooleanIntersection construction remains future work
     thread:
       status: partial_success
       classification: PARTIAL_SUCCESS

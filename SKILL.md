@@ -37,6 +37,8 @@ Imported regression recipes with `runner_kind: imported_call_pattern` are verifi
 
 `partdesign.native_split_offset_plane` is a promoted User Mode runner for constrained native `Split` creation from an explicit offset PlaneXY reference. It requires `part.in_work_object = body` immediately before `ShapeFactory.AddNewSplit`; it does not solve arbitrary angled cut plane synthesis.
 
+`partdesign.native_intersect_two_bodies` is a promoted User Mode runner for constrained native `Intersect` creation between generated overlapping target/tool Bodies. It requires `part.in_work_object = target_body` immediately before `ShapeFactory.AddNewIntersect(tool_body)`; it does not solve arbitrary BooleanIntersection construction or semantic Body discovery.
+
 ## Workflow
 
 1. Parse the user request into a Feature Plan matching `schemas/feature_plan_schema.yaml`.
@@ -50,7 +52,7 @@ Imported regression recipes with `runner_kind: imported_call_pattern` are verifi
 ## Mandatory Verification Rules
 
 - API call success is not enough. `Part.Update` and verification must pass.
-- Native Shell / Mirror / Circular Pattern / Edge Fillet / Sheet Metal / Assembly Constraint cannot be claimed unless the verifier confirms a native CATIA feature tree entry.
+- Native Shell / Mirror / Circular Pattern / Edge Fillet / Intersect / Sheet Metal / Assembly Constraint cannot be claimed unless the verifier confirms a native CATIA feature tree entry.
 - Native `Shaft` and `Groove` require the `partdesign.sketch_revolution_axis` reference pattern unless a recipe documents a stronger verified alternative.
 - `Product.Position` is not an Assembly Constraint.
 - Cosmetic thread is not solid thread.
@@ -71,6 +73,8 @@ For V pulley Shaft and inch-to-mm native Hole conversion, read `references/partd
 
 For native Split, read `references/partdesign/split_references.md`. The core rule is: create an explicit splitting plane reference and set `part.in_work_object = body` before calling `add_new_split`.
 
+For native Intersect, read `references/partdesign/boolean_references.md`. The core rule is: create generated target/tool Bodies, then set `part.in_work_object = target_body` before calling `add_new_intersect(tool_body)`.
+
 ## Recipe Selection
 
 Read `manifests/capability_manifest.yaml` first to understand current v1.0 coverage. Then read only the recipe cards needed for the requested feature.
@@ -85,7 +89,7 @@ Use this order:
 
 ## Regression Memory
 
-`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.12-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`, `examples/reports/live_promoted_cut_runners_20260707.md`, `examples/reports/live_promoted_pattern_runners_20260707.md`, `examples/reports/live_promoted_transform_shell_runners_20260707.md`, `examples/reports/live_promoted_profile_hole_runners_20260707.md`, `examples/reports/live_promoted_remaining_native_runners_20260707.md`, `examples/reports/live_promoted_edge_fillet_runner_20260707.md`, `examples/reports/live_promoted_chamfer_runner_20260707.md`, and `examples/reports/live_promoted_split_runner_20260707.md`.
+`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.13-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`, `examples/reports/live_promoted_cut_runners_20260707.md`, `examples/reports/live_promoted_pattern_runners_20260707.md`, `examples/reports/live_promoted_transform_shell_runners_20260707.md`, `examples/reports/live_promoted_profile_hole_runners_20260707.md`, `examples/reports/live_promoted_remaining_native_runners_20260707.md`, `examples/reports/live_promoted_edge_fillet_runner_20260707.md`, `examples/reports/live_promoted_chamfer_runner_20260707.md`, `examples/reports/live_promoted_split_runner_20260707.md`, and `examples/reports/live_promoted_intersect_runner_20260707.md`.
 
 ## v1.0 Scope
 

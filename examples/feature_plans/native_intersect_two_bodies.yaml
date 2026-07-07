@@ -1,0 +1,17 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_intersect_two_bodies
+features:
+  - id: intersect_1
+    recipe_id: partdesign.native_intersect_two_bodies
+    params:
+      part_number: Demo_Native_Intersect_Two_Bodies
+      target_width: 120
+      target_height: 80
+      target_depth: 30
+      tool_width: 80
+      tool_height: 50
+      tool_depth: 25
+    expected:
+      native_feature: Intersect
+      reference_pattern: partdesign.intersect_target_body_ref

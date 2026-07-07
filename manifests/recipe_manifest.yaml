@@ -1,4 +1,4 @@
-version: 1.0.12-draft
+version: 1.0.13-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -323,6 +323,27 @@ recipes:
   tags:
   - split
   - offset_plane
+  - in_work_object
+  - partdesign
+- id: partdesign.native_intersect_two_bodies
+  title: Native Intersect between generated target and tool Bodies
+  domain: partdesign
+  native_feature: Intersect
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_intersect_two_bodies.yaml
+  runner: runners/partdesign/native_intersect_two_bodies_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.intersect_target_body_ref
+  promoted_from:
+  - partdesign.regression.t17_boolean_intersection
+  tags:
+  - intersect
+  - boolean
+  - two_body
   - in_work_object
   - partdesign
 - id: partdesign.native_shaft_centerline
