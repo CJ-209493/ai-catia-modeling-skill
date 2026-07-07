@@ -43,6 +43,14 @@ python cli\validate_environment.py --live
 
 The first command checks Python dependencies. `--live` also attempts to connect to CATIA.
 
+Check the skill package before sharing or installing:
+
+```powershell
+python cli\validate_install_package.py .
+```
+
+Installers should point at the directory that contains `SKILL.md`. Do not point an installer at the parent `CATIA_Harness` folder, a generated `outputs` folder, or a folder that contains `.CATPart`, `.CATProduct`, `.env`, SQLite databases, screenshots, or logs.
+
 ## User Mode vs Developer Mode
 
 User Mode:
@@ -130,6 +138,17 @@ Use the draft skill at <repo-path> for this request. Read SKILL.md first, then f
 ```
 
 You can also patch and test the project directly by running its CLI and tests from this repository. This keeps the draft out of global skill discovery while still letting Codex use it explicitly.
+
+## Installation Troubleshooting
+
+If another user gets an install error, ask for the exact error text and run:
+
+```powershell
+python cli\validate_install_package.py .
+python C:\Users\User\.codex\skills\.system\skill-creator\scripts\quick_validate.py .
+```
+
+Common causes are installing the wrong directory, stale generated CATIA files in the package, invalid `SKILL.md` frontmatter, missing recipe runner paths, or private GitHub access not being available to the installer.
 
 ## GitHub Notes
 

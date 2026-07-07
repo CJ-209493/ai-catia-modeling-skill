@@ -13,9 +13,9 @@ __pycache__/
 *.cgr
 
 # Runtime outputs
-outputs/
-reports/
-logs/
+/outputs/
+/reports/
+/logs/
 *.log
 *.sqlite
 *.sqlite3
