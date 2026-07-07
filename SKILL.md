@@ -33,6 +33,8 @@ Imported regression recipes with `runner_kind: imported_call_pattern` are verifi
 
 `partdesign.native_edge_fillet_selected_edge` is a promoted User Mode runner for constrained native `ConstRadEdgeFillet` creation from a selection-derived edge reference. It is index-based and does not solve exact four-vertical-edge filtering, arbitrary edge intent, or ordered fillet/chamfer workflows.
 
+`partdesign.native_chamfer_selected_edge` is a promoted User Mode runner for constrained native `Chamfer` creation from a selection-derived edge reference. It is index-based and uses explicit Chamfer enum values; it does not solve ordered fillet/chamfer edge grouping.
+
 ## Workflow
 
 1. Parse the user request into a Feature Plan matching `schemas/feature_plan_schema.yaml`.
@@ -59,7 +61,7 @@ Reference selection patterns live in `manifests/reference_manifest.yaml` and `re
 
 For `Shaft` and `Groove`, read `references/partdesign/sketch_revolution_axis.md`. The core rule is: create the closed profile and an explicitly named construction Line2D revolution axis in the same sketch before calling `add_new_shaft(sketch)` or `add_new_groove(sketch)`.
 
-For `RectPattern` and `CircPattern`, read `references/partdesign/pattern_references.md`. For `Mirror` and `Shell`, read `references/partdesign/transform_shell_references.md`. For selected-edge `ConstRadEdgeFillet`, read `references/partdesign/edge_selection_features.md`. Explicit copied geometry is not native pattern or mirror success, manually built thin walls are not native Shell success, and rounded sketch geometry is not native edge Fillet success.
+For `RectPattern` and `CircPattern`, read `references/partdesign/pattern_references.md`. For `Mirror` and `Shell`, read `references/partdesign/transform_shell_references.md`. For selected-edge `ConstRadEdgeFillet` and `Chamfer`, read `references/partdesign/edge_selection_features.md`. Explicit copied geometry is not native pattern or mirror success, manually built thin walls are not native Shell success, and rounded or beveled sketch geometry is not native edge Fillet/Chamfer success.
 
 For native counterbore Holes, offset-plane Pads, tangent-arc rounded/capsule profiles, and closed spline Pads, read `references/partdesign/profile_and_hole_variants.md`. Pocket-modeled counterbores and holes are not native Hole success.
 
@@ -79,7 +81,7 @@ Use this order:
 
 ## Regression Memory
 
-`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.10-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`, `examples/reports/live_promoted_cut_runners_20260707.md`, `examples/reports/live_promoted_pattern_runners_20260707.md`, `examples/reports/live_promoted_transform_shell_runners_20260707.md`, `examples/reports/live_promoted_profile_hole_runners_20260707.md`, `examples/reports/live_promoted_remaining_native_runners_20260707.md`, and `examples/reports/live_promoted_edge_fillet_runner_20260707.md`.
+`manifests/regression_manifest.yaml` records the imported 30-case CATIA call regression run. In v1.0.11-draft it indexes the live CATIA run `catia_recipe_regression_20260706_232109`: 16 `NATIVE_SUCCESS` call patterns, 2 `PARTIAL_SUCCESS` cases, 11 `UNSUPPORTED` cases, and 1 `HONEST_FAILURE`. These records are developer-stage memory and capability boundary evidence, not a benchmark and not a normal user workflow. Promoted runner evidence is summarized in `examples/reports/live_promoted_revolution_runners_20260706.md`, `examples/reports/live_promoted_cut_runners_20260707.md`, `examples/reports/live_promoted_pattern_runners_20260707.md`, `examples/reports/live_promoted_transform_shell_runners_20260707.md`, `examples/reports/live_promoted_profile_hole_runners_20260707.md`, `examples/reports/live_promoted_remaining_native_runners_20260707.md`, `examples/reports/live_promoted_edge_fillet_runner_20260707.md`, and `examples/reports/live_promoted_chamfer_runner_20260707.md`.
 
 ## v1.0 Scope
 

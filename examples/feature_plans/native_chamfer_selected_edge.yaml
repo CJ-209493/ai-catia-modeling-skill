@@ -1,0 +1,20 @@
+mode: user
+units: mm
+output_dir: outputs/demo_native_chamfer_selected_edge
+features:
+  - id: chamfer_1
+    recipe_id: partdesign.native_chamfer_selected_edge
+    params:
+      part_number: Demo_Native_Chamfer_Selected_Edge
+      plate_width: 120
+      plate_height: 80
+      plate_depth: 20
+      length_1: 3
+      length_2_or_angle: 3
+      selected_edge_index: 1
+      propagation: 1
+      mode: 0
+      orientation: 0
+    expected:
+      native_feature: Chamfer
+      reference_pattern: partdesign.chamfer_selected_edge_ref

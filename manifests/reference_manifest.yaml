@@ -1,4 +1,4 @@
-version: "1.0.10-draft"
+version: "1.0.11-draft"
 reference_patterns:
   - id: partdesign.sketch_revolution_axis
     title: Same-sketch revolution axis for Shaft and Groove
@@ -87,6 +87,21 @@ reference_patterns:
       - exact four-vertical-edge filtering remains unpromoted
     promoted_recipe_ids:
       - partdesign.native_edge_fillet_selected_edge
+  - id: partdesign.chamfer_selected_edge_ref
+    title: Selected edge reference for native Chamfer
+    domain: partdesign
+    applies_to: [chamfer]
+    status: reference_pattern_known
+    reference_doc: references/partdesign/edge_selection_features.md
+    failure_memory:
+      - failures/regression/t16_fillet_chamfer_order_unsupported.md
+    verifier_expectations:
+      - native feature tree contains Chamfer after Part.Update
+      - edge reference comes from Selection.Search("Topology.Edge,sel") scoped to the generated target feature
+      - ShapeFactory.AddNewChamfer receives explicit propagation, mode, and orientation enum values
+      - ordered fillet/chamfer edge grouping remains unpromoted
+    promoted_recipe_ids:
+      - partdesign.native_chamfer_selected_edge
   - id: partdesign.counterbore_hole_point_sketch
     title: Point sketch and COM properties for native counterbore Hole
     domain: partdesign

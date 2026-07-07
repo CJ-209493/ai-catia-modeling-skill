@@ -1,4 +1,4 @@
-version: "1.0.10-draft"
+version: "1.0.11-draft"
 project: ai-catia-modeling-skill
 purpose: recipe_driven_catia_v5_modeling
 default_mode: user
@@ -228,10 +228,16 @@ capabilities:
         - failures/regression/t01_pad_plus_single_edge_fillet_partial_success.md
       caveat: constrained native ConstRadEdgeFillet is promoted only for selected-edge index references; exact four-vertical-edge filtering and arbitrary edge intent remain future verifier work
     chamfer:
-      status: unsupported
-      classification: UNSUPPORTED
+      status: live_verified_once
+      classification: NATIVE_SUCCESS
+      executable_recipe_ids:
+        - partdesign.native_chamfer_selected_edge
+      reference_pattern_ids:
+        - partdesign.chamfer_selected_edge_ref
+      user_mode: executable_runner_available
       failure_card_ids:
         - failures/regression/t16_fillet_chamfer_order_unsupported.md
+      caveat: constrained native Chamfer is promoted only for selected-edge index references; ordered fillet/chamfer edge grouping remains future verifier work
     draft:
       status: unsupported
       classification: UNSUPPORTED

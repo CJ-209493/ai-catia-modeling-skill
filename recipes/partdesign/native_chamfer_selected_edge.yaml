@@ -1,0 +1,78 @@
+id: partdesign.native_chamfer_selected_edge
+title: Native Chamfer from selected edge reference
+domain: partdesign
+native_feature: Chamfer
+status: live_verified_once
+runner: runners/partdesign/native_chamfer_selected_edge_runner.py
+summary: Create a base Pad and build a native CATIA two-length Chamfer from a CATIA selection-derived edge reference.
+reference_pattern_ids:
+  - partdesign.chamfer_selected_edge_ref
+source_regression_ids:
+  - partdesign.regression.t16_fillet_chamfer_order
+parameters:
+  part_number:
+    type: string
+    required: false
+    default: Native_Chamfer_Selected_Edge
+  plate_width:
+    type: number
+    unit: mm
+    required: false
+    default: 120
+  plate_height:
+    type: number
+    unit: mm
+    required: false
+    default: 80
+  plate_depth:
+    type: number
+    unit: mm
+    required: false
+    default: 20
+  length_1:
+    type: number
+    unit: mm
+    required: false
+    default: 3
+  length_2_or_angle:
+    type: number
+    unit: mm
+    required: false
+    default: 3
+  selected_edge_index:
+    type: integer
+    required: false
+    default: 1
+  propagation:
+    type: integer
+    required: false
+    default: 1
+    enum_note: CatChamferPropagation.catMinimalChamfer
+  mode:
+    type: integer
+    required: false
+    default: 0
+    enum_note: CatChamferMode.catTwoLengthChamfer
+  orientation:
+    type: integer
+    required: false
+    default: 0
+    enum_note: CatChamferOrientation.catNoReverseChamfer
+preconditions:
+  - CATIA V5 is running or can be launched by COM.
+  - Runner creates a new Part document and base Pad before selecting edges.
+verified_pattern:
+  - create Part document
+  - create base rectangular Pad as the chamfer target
+  - select edges from the base Pad with Selection.Search(Topology.Edge,sel)
+  - get the selected edge reference with Selection.Item2(index).Reference
+  - ShapeFactory.AddNewChamfer(edge_reference, propagation, mode, orientation, length_1, length_2_or_angle)
+  - native Chamfer exists after Part.Update()
+verification:
+  required_native_feature: Chamfer
+  part_update_required: true
+  required_reference_pattern: partdesign.chamfer_selected_edge_ref
+caveats:
+  - This recipe verifies native Chamfer creation from a selection-derived edge reference.
+  - The selected edge is currently index-based; arbitrary semantic edge intent needs future verifier work.
+  - The broader ordered fillet/chamfer workflow from T16 remains unsupported by this recipe.

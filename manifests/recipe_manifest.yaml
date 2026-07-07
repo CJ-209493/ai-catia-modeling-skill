@@ -1,4 +1,4 @@
-version: 1.0.10-draft
+version: 1.0.11-draft
 recipes:
 - id: partdesign.rectangular_pad
   title: Rectangular Pad on XY plane
@@ -282,6 +282,26 @@ recipes:
   tags:
   - fillet
   - edge_fillet
+  - selected_edge
+  - edge_reference
+  - partdesign
+- id: partdesign.native_chamfer_selected_edge
+  title: Native Chamfer from selected edge reference
+  domain: partdesign
+  native_feature: Chamfer
+  status: live_verified_once
+  recipe_card: recipes/partdesign/native_chamfer_selected_edge.yaml
+  runner: runners/partdesign/native_chamfer_selected_edge_runner.py
+  verifier:
+  - verifiers/feature_tree_verifier.py
+  - verifiers/semantic_classifier.py
+  user_mode_allowed: true
+  reference_pattern_ids:
+  - partdesign.chamfer_selected_edge_ref
+  promoted_from:
+  - partdesign.regression.t16_fillet_chamfer_order
+  tags:
+  - chamfer
   - selected_edge
   - edge_reference
   - partdesign
